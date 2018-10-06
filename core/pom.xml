@@ -8,6 +8,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>framework</module>
+        <module>customer</module>
+        <module>framefork-web</module>
     </modules>
     <packaging>pom</packaging>
 
