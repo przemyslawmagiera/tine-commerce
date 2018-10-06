@@ -65,5 +65,10 @@
 		</plugins>
 	</build>
 
+	<modules>
+		<module>admin</module>
+		<module>core</module>
+	</modules>
+
 
 </project>
