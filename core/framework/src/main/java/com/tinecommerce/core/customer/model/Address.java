@@ -1,5 +1,6 @@
 package com.tinecommerce.core.customer.model;
 
+import com.tinecommerce.core.AbstractEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Address {
+public class Address extends AbstractEntity {
 
     @NotBlank
     @Size(max = 255)
@@ -51,8 +52,8 @@ public class Address {
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
             name = "address_person",
-            inverseJoinColumns = {@JoinColumn(name = "person_id", referencedColumnName = "person_id")},
-            joinColumns = {@JoinColumn(name = "address_id", referencedColumnName = "address_id")}
+            inverseJoinColumns = {@JoinColumn(name = "person_id", referencedColumnName = "id")},
+            joinColumns = {@JoinColumn(name = "address_id", referencedColumnName = "id")}
     )
     List<Customer> customers = new ArrayList<>();
 

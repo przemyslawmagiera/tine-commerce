@@ -12,7 +12,7 @@ import java.util.Currency;
 @Getter
 @Setter
 @Entity
-@Table(name = "Product",
+@Table(name = "Price",
         indexes = {
 //                @Index(name = "idx_environment_name", columnList = "name"),
 //                @Index(name = "idx_environment_project_id", columnList = "project_id"),
@@ -26,9 +26,9 @@ import java.util.Currency;
 @AllArgsConstructor
 public class Price extends AbstractEntity {
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "currency", nullable = false)
     private Currency currency;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 }

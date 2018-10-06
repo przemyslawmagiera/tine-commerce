@@ -13,6 +13,6 @@ public class CategoryFeatureValue extends AbstractEntity
 
    @ManyToOne(targetEntity = CategoryFeature.class, optional = false, cascade = CascadeType.ALL)
    @JoinColumn(name = "category_feature_id")
-   protected CategoryFeature classificationAttribute;
+   protected CategoryFeature categoryFeature;
 
 }
