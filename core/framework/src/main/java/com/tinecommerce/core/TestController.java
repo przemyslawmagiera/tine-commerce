@@ -1,6 +1,8 @@
 package com.tinecommerce.core;
 
-import com.tinecommerce.core.catalog.repository.CategoryTreeRepository;
+import com.tinecommerce.core.catalog.repository.CategoryRepository;
+import com.tinecommerce.core.catalog.repository.ProductRepository;
+import com.tinecommerce.core.catalog.service.CategoryFeatureService;
 import com.tinecommerce.core.catalog.service.impl.CategoryServiceImpl;
 import com.tinecommerce.core.solr.SolrIndexServiceImpl;
 import com.tinecommerce.core.solr.SolrSearchServiceImpl;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 @RestController
 public class TestController {
@@ -22,17 +23,21 @@ public class TestController {
     SolrSearchServiceImpl solrSearchService;
 
     @Autowired
-    CategoryTreeRepository categoryTreeRepository;
+    CategoryRepository categoryRepository;
 
     @Autowired
     CategoryServiceImpl categoryService;
 
+    @Autowired
+    CategoryFeatureService categoryFeatureService;
+
+    @Autowired
+    ProductRepository productRepository;
 
     @GetMapping("/")
     public String getResults() throws IOException, SolrServerException {
 //        solrIndexService.buildIndex();
-        categoryTreeRepository.findAll();
-        categoryService.getAllChildCategories(categoryTreeRepository.getById(1L).get(), new ArrayList<>());
+        categoryFeatureService.getCategoryFeaturesForProduct(productRepository.getOne(1L));
         return null;
     }
 }

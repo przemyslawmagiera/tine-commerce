@@ -24,10 +24,10 @@ public class SolrIndexServiceImpl {
         for (Product product : products) {
             SolrInputDocument doc = new SolrInputDocument();
 //            doc.addField("cat", product.getCategories());
+
             doc.addField("id", product.getId());
             doc.addField("name", product.getName());
             client.add(doc);
-            client.commit();
         }
         client.commit();
     }

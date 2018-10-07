@@ -29,6 +29,7 @@ public class Product extends AbstractNameableEntity {
 
     @Setter(AccessLevel.NONE)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
     private Set<Price> prices;
 
     @Setter(AccessLevel.NONE)

@@ -1,9 +1,11 @@
 package com.tinecommerce.core.catalog.service.impl;
 
 import com.tinecommerce.core.catalog.model.Category;
+import com.tinecommerce.core.catalog.repository.CategoryRepository;
 import com.tinecommerce.core.catalog.service.CategoryService;
 import com.tinecommerce.core.exception.CircularEntityConnectionException;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -15,8 +17,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     private static final Logger LOGGER = Logger.getLogger(CategoryServiceImpl.class);
 
-    public List<Category> getAllChildCategories(final Category category) {
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Transactional
+    public List<Category> getAllChildCategories(Category category) {
         final List<Category> result = new ArrayList<>();
+        category = categoryRepository.getOne(category.getId());
         getAllChildCategories(category, result);
         return result;
     }
@@ -26,24 +33,23 @@ public class CategoryServiceImpl implements CategoryService {
         result.add(category);
     }
 
-    public List<Category> getAllParentCategories(final Category category) {
+    @Transactional
+    public List<Category> getAllParentCategories(Category category) {
         final List<Category> result = new ArrayList<>();
+        category = categoryRepository.getOne(category.getId());
         getAllParentCategories(category, result);
         return result;
     }
 
     private void getAllParentCategories(final Category category, final List<Category> result) {
-        category.getParentCategories().forEach(parent -> this.getAllChildCategories(parent, result));
+        category.getParentCategories().forEach(parent -> this.getAllParentCategories(parent, result));
         result.add(category);
     }
 
     public Boolean canAddChildToCategory(final Category category, final Category child) {
-        final List<Category> childCategories = new ArrayList<>();
-        getAllChildCategories(category,childCategories);
-        return childCategories.contains(child);
+        return getAllChildCategories(category).contains(child);
     }
 
-    @Transactional
     public void addChildToCategory(final Category category, final Category child) throws CircularEntityConnectionException {
         if(canAddChildToCategory(category, child)) {
             category.addChildCategories(child);

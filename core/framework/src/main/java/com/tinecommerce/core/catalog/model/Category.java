@@ -18,8 +18,8 @@ public class Category extends AbstractNameableEntity {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name="product_category",
-            joinColumns= @JoinColumn(name="product_id"),
-            inverseJoinColumns=@JoinColumn(name="category_id"))
+            joinColumns= @JoinColumn(name="category_id"),
+            inverseJoinColumns=@JoinColumn(name="product_id"))
     private Set<Product> products = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
