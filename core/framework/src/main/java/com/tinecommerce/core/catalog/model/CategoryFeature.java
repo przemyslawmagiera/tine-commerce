@@ -1,31 +1,35 @@
 package com.tinecommerce.core.catalog.model;
 
-import com.tinecommerce.core.AbstractNamableEntity;
+import com.tinecommerce.core.AbstractNameableEntity;
 import com.tinecommerce.core.catalog.enumeration.CategoryFeatureType;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "Category_feature")
-public class CategoryFeature extends AbstractNamableEntity
+@Getter
+@Setter
+public class CategoryFeature extends AbstractNameableEntity
 {
 
    @Enumerated(EnumType.STRING)
    @Column(name = "TYPE", length = 64, nullable = false)
-   protected CategoryFeatureType type;
+   private CategoryFeatureType type;
 
    @OneToMany(targetEntity = CategoryFeatureAssignment.class, mappedBy = "categoryFeature", cascade = CascadeType.ALL,
            orphanRemoval = true)
-   protected Set<CategoryFeatureAssignment> categoryFeatureAssignments;
+   private Set<CategoryFeatureAssignment> categoryFeatureAssignments;
 
    @OneToMany(targetEntity = CategoryFeatureValue.class, mappedBy = "categoryFeature", fetch = FetchType.LAZY,
            cascade = CascadeType.ALL, orphanRemoval = true)
-   protected Set<CategoryFeatureValue> categoryFeatureValues;
+   private Set<CategoryFeatureValue> categoryFeatureValues;
 
    @Column(name = "searchable", nullable = false)
-   protected Boolean searchable;
+   private Boolean searchable;
 
    @Column(name = "facet", nullable = false)
-   protected Boolean facet;
+   private Boolean facet;
 }

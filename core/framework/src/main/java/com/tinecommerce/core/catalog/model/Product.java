@@ -1,8 +1,7 @@
 package com.tinecommerce.core.catalog.model;
 
 
-import com.tinecommerce.core.AbstractEntity;
-import com.tinecommerce.core.AbstractNamableEntity;
+import com.tinecommerce.core.AbstractNameableEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,7 +25,7 @@ import java.util.stream.Stream;
         })
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class Product extends AbstractNamableEntity {
+public class Product extends AbstractNameableEntity {
 
     @Setter(AccessLevel.NONE)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)

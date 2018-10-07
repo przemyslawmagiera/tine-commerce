@@ -1,7 +1,9 @@
 package com.tinecommerce.core;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
@@ -15,7 +17,9 @@ import java.io.Serializable;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class AbstractNamableEntity extends AbstractEntity implements Serializable {
+@ToString
+@EqualsAndHashCode(callSuper = true)
+public abstract class AbstractNameableEntity extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = -2968157318009412565L;
 

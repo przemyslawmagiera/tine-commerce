@@ -1,13 +1,16 @@
 package com.tinecommerce.core.catalog.model;
 
 import com.tinecommerce.core.AbstractEntity;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "category_feature_assignment")
+@Getter
+@Setter
 public class CategoryFeatureAssignment extends AbstractEntity
 {
 
