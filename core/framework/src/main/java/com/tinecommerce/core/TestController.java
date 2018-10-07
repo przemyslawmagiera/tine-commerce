@@ -4,7 +4,7 @@ import com.tinecommerce.core.catalog.repository.CategoryRepository;
 import com.tinecommerce.core.catalog.repository.ProductRepository;
 import com.tinecommerce.core.catalog.service.CategoryFeatureService;
 import com.tinecommerce.core.catalog.service.impl.CategoryServiceImpl;
-import com.tinecommerce.core.solr.SolrIndexServiceImpl;
+import com.tinecommerce.core.solr.SolrIndexService;
 import com.tinecommerce.core.solr.SolrSearchServiceImpl;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.io.IOException;
 public class TestController {
 
     @Autowired
-    SolrIndexServiceImpl solrIndexService;
+    SolrIndexService solrIndexService;
 
     @Autowired
     SolrSearchServiceImpl solrSearchService;

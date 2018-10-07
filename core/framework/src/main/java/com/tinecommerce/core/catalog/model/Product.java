@@ -2,7 +2,6 @@ package com.tinecommerce.core.catalog.model;
 
 
 import com.tinecommerce.core.AbstractNameableEntity;
-import com.tinecommerce.core.solr.IndexableEntity;
 import lombok.*;
 
 import javax.persistence.*;

@@ -1,13 +1,16 @@
-package com.tinecommerce.core.solr;
+package com.tinecommerce.core.solr.impl;
 
+import com.tinecommerce.core.AbstractEntity;
 import com.tinecommerce.core.catalog.model.Product;
 import com.tinecommerce.core.catalog.repository.ProductRepository;
 import com.tinecommerce.core.extension.ExtensionUtil;
+import com.tinecommerce.core.solr.SolrIndexService;
+import com.tinecommerce.core.solr.model.SearchField;
+import com.tinecommerce.core.solr.repository.SearchFieldRepository;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.common.SolrInputDocument;
-import org.reflections.Reflections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,29 +21,29 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class SolrIndexServiceImpl {
+public class SolrIndexServiceImpl implements SolrIndexService{
 
     @Autowired
     private ProductRepository productRepository;
 
-    public void buildIndex() throws IOException, SolrServerException, NoSuchFieldException {
+    @Autowired
+    private SearchFieldRepository searchFieldRepository;
+
+    @Override
+    public void rebuildIndex() throws IOException, SolrServerException {
         SolrClient client = new HttpSolrClient.Builder("http://localhost:8983/solr/tenecommerce").build();
         List<? extends Product> products = productRepository.findAllPolimorficEntities();
-        List<String> fields = new ArrayList<>();
-        client.deleteByQuery("*");
-        fields.add("name");
-        fields.add("cecha");
+        List<SearchField> fields = searchFieldRepository.findAll();
+        clearIndex();
         for (Product product : products) {
             SolrInputDocument doc = new SolrInputDocument();
-            Reflections reflections = new Reflections("com.tinecommerce");
-            Set<Class<? extends Product>> classes = reflections.getSubTypesOf(Product.class);
-            classes.add(Product.class);
-            for (String field : fields) {
-                for (Class<? extends Product> cls : classes) {
+            Set<Class<? extends AbstractEntity>> classes = ExtensionUtil.getProductSubclasses();
+            for (SearchField field : fields) {
+                for (Class<? extends AbstractEntity> cls : classes) {
                     try {
-                        Field classField = cls.getDeclaredField(field);
+                        Field classField = cls.getDeclaredField(field.getName());
                         classField.setAccessible(true);
-                        doc.addField(field, classField.get(product));
+                        doc.addField(field.getName(), classField.get(product));
                     } catch (NoSuchFieldException | IllegalAccessException ignored) {
                     }
                 }
@@ -48,5 +51,10 @@ public class SolrIndexServiceImpl {
             client.add(doc);
         }
         client.commit();
+    }
+
+    private void clearIndex() throws IOException, SolrServerException {
+        SolrClient client = new HttpSolrClient.Builder("http://localhost:8983/solr/tenecommerce").build();
+        client.deleteByQuery("*");
     }
 }

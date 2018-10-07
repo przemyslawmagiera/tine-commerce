@@ -1,8 +1,13 @@
 package com.tinecommerce.core.extension;
 
+import com.tinecommerce.core.AbstractEntity;
+import com.tinecommerce.core.AbstractNameableEntity;
 import com.tinecommerce.core.catalog.model.Product;
+import org.apache.solr.common.SolrInputDocument;
 import org.reflections.Reflections;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -19,5 +24,14 @@ public class ExtensionUtil {
             }
         }
         return ceilingClass;
+    }
+
+    public static Set<Class<? extends AbstractEntity>> getProductSubclasses(){
+        Reflections reflections = new Reflections("com.tinecommerce");
+        Set<Class<? extends Product>> classes = reflections.getSubTypesOf(Product.class);
+        classes.add(Product.class);
+        Set<Class<? extends AbstractEntity>> allClasses = new HashSet<>(classes);
+        allClasses.add(AbstractNameableEntity.class);
+        return allClasses;
     }
 }
