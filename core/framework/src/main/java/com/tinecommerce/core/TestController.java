@@ -37,6 +37,8 @@ public class TestController {
     @GetMapping("/")
     public String getResults() throws IOException, SolrServerException {
 //        solrIndexService.buildIndex();
+//        productRepository.findByField("cecha", "chujowy");
+        productRepository.findByField("cecha1","dupson");
         categoryFeatureService.getCategoryFeaturesForProduct(productRepository.getOne(1L));
         return null;
     }

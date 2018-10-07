@@ -2,6 +2,7 @@ package com.tinecommerce.core.catalog.model;
 
 
 import com.tinecommerce.core.AbstractNameableEntity;
+import com.tinecommerce.core.solr.IndexableEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ import java.util.stream.Stream;
         })
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Product extends AbstractNameableEntity {
 
     @Setter(AccessLevel.NONE)
