@@ -1,7 +1,9 @@
 package com.tinecommerce.core.solr.impl;
 
 import com.tinecommerce.core.AbstractEntity;
+import com.tinecommerce.core.catalog.model.Category;
 import com.tinecommerce.core.catalog.model.Product;
+import com.tinecommerce.core.catalog.repository.ProductFeatureRepository;
 import com.tinecommerce.core.catalog.repository.ProductRepository;
 import com.tinecommerce.core.extension.ExtensionUtil;
 import com.tinecommerce.core.solr.SolrIndexService;
@@ -14,30 +16,45 @@ import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
-public class SolrIndexServiceImpl implements SolrIndexService{
+public class SolrIndexServiceImpl implements SolrIndexService {
 
-    @Autowired
+    @Resource
     private ProductRepository productRepository;
 
-    @Autowired
+    @Resource
     private SearchFieldRepository searchFieldRepository;
 
+    @Resource
+    private ProductFeatureRepository productFeatureRepository;
+
     @Override
+    @Transactional
     public void rebuildIndex() throws IOException, SolrServerException {
         SolrClient client = new HttpSolrClient.Builder("http://localhost:8983/solr/tenecommerce").build();
         List<? extends Product> products = productRepository.findAllPolimorficEntities();
         List<SearchField> fields = searchFieldRepository.findAll();
         clearIndex();
-        for (Product product : products) {
-            SolrInputDocument doc = new SolrInputDocument();
-            Set<Class<? extends AbstractEntity>> classes = ExtensionUtil.getProductSubclasses();
+        indexProducts(products, fields, client);
+        client.commit();
+    }
+
+    protected void indexProducts(final List<? extends Product> products, final List<SearchField> fields,
+                                 final SolrClient client) throws IOException, SolrServerException {
+        for (final Product product : products) {
+            final SolrInputDocument doc = new SolrInputDocument();
+            final Set<Class<? extends AbstractEntity>> classes = ExtensionUtil.getProductSubclasses();
+            addProductFeatures(product, doc);
+            doc.addField("category",
+                    product.getCategories().stream().map(Category::getName).collect(Collectors.toList()));
             for (SearchField field : fields) {
                 for (Class<? extends AbstractEntity> cls : classes) {
                     try {
@@ -50,7 +67,12 @@ public class SolrIndexServiceImpl implements SolrIndexService{
             }
             client.add(doc);
         }
-        client.commit();
+    }
+
+    protected void addProductFeatures (final Product product, final SolrInputDocument inputDocument) {
+       productFeatureRepository.findAllByProductId(product.getId())
+               .forEach(productFeature ->
+                       inputDocument.addField(productFeature.getCategoryFeature().getName(), productFeature.getValue()));
     }
 
     private void clearIndex() throws IOException, SolrServerException {

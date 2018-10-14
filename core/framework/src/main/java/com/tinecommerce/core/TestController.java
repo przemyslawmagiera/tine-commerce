@@ -11,27 +11,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 
 @RestController
 public class TestController {
 
-    @Autowired
+    @Resource
     SolrIndexService solrIndexService;
 
-    @Autowired
+    @Resource
     SolrSearchServiceImpl solrSearchService;
 
-    @Autowired
+    @Resource
     CategoryRepository categoryRepository;
 
-    @Autowired
+    @Resource
     CategoryServiceImpl categoryService;
 
-    @Autowired
+    @Resource
     CategoryFeatureService categoryFeatureService;
 
-    @Autowired
+    @Resource
     ProductRepository productRepository;
 
     @GetMapping("/")

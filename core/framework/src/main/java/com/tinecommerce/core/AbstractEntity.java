@@ -12,6 +12,7 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -29,5 +30,5 @@ public abstract class AbstractEntity implements Serializable {
     private Long id;
 
     @Column(name = "CODE", length = 255, nullable = false, unique = true)
-    protected String code;
+    protected String code = UUID.randomUUID().toString();
 }

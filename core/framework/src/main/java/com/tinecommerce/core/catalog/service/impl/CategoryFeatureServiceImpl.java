@@ -8,9 +8,9 @@ import com.tinecommerce.core.catalog.repository.CategoryRepository;
 import com.tinecommerce.core.catalog.repository.ProductRepository;
 import com.tinecommerce.core.catalog.service.CategoryFeatureService;
 import com.tinecommerce.core.catalog.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.Collections;
@@ -20,13 +20,13 @@ import java.util.stream.Collectors;
 @Service
 public class CategoryFeatureServiceImpl implements CategoryFeatureService {
 
-    @Autowired
+    @Resource
     private CategoryRepository categoryRepository;
 
-    @Autowired
+    @Resource
     private CategoryService categoryService;
 
-    @Autowired
+    @Resource
     private ProductRepository productRepository;
 
     @Transactional
