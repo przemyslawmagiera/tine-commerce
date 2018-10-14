@@ -1,22 +1,22 @@
 package com.tinecommerce.core.cart;
 
+import com.tinecommerce.core.AbstractEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "Order_item")
 @NoArgsConstructor
 @Getter
 @Setter
-public class OrderItem {
+public class OrderItem extends AbstractEntity {
 
     @ManyToOne(targetEntity = Order.class, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
-    private Set<Order> orders;
+    private Order order;
 
     @Column(name = "quantity")
     private Long quantity;
