@@ -1,14 +1,12 @@
 \begin{thebibliography}{1}
 
+\bibitem{Solr}
+Apache solr technology.
+\newblock Web pages: \url{https://lucene.apache.org/solr/guide/}.
+
 \bibitem{Java}
 Java technology.
 \newblock Web pages: \url{http://www.oracle.com/technetwork/java/}.
-
-\bibitem{JCINodesChord}
-J.~Cichoń, M.~Klonowski, L.~Krzywiecki, B.~R{\'{o}}zanski, P.~Zielinski.
-\newblock Random subsets of the interval and {P2P} protocols.
-\newblock {\em {APPROX-RANDOM}}, wolumen 4627 serii {\em Lecture Notes in
-  Computer Science}, strony 409--421. Springer, 2007.
 
 \bibitem{HTML-CSS}
 B.~Frain.

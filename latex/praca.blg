@@ -3,46 +3,47 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: praca.aux
 The style file: plabbrv.bst
 Database file #1: literatura.bib
+Warning--to sort, need author or key in Solr
 Warning--to sort, need author or key in Java
 You've used 3 entries,
             2129 wiz_defined-function locations,
-            523 strings with 4193 characters,
-and the built_in function-call counts, 982 in all, are:
-= -- 97
-> -- 36
-< -- 2
-+ -- 15
-- -- 12
-* -- 60
-:= -- 147
-add.period$ -- 9
+            517 strings with 4024 characters,
+and the built_in function-call counts, 553 in all, are:
+= -- 49
+> -- 9
+< -- 0
++ -- 5
+- -- 2
+* -- 20
+:= -- 81
+add.period$ -- 7
 call.type$ -- 3
-change.case$ -- 14
+change.case$ -- 9
 chr.to.int$ -- 0
-cite$ -- 4
-duplicate$ -- 43
-empty$ -- 88
-format.name$ -- 12
-if$ -- 220
+cite$ -- 5
+duplicate$ -- 26
+empty$ -- 69
+format.name$ -- 2
+if$ -- 127
 int.to.chr$ -- 0
 int.to.str$ -- 3
-missing$ -- 3
-newline$ -- 17
-num.names$ -- 4
-pop$ -- 25
+missing$ -- 2
+newline$ -- 16
+num.names$ -- 2
+pop$ -- 24
 preamble$ -- 1
-purify$ -- 12
+purify$ -- 7
 quote$ -- 0
-skip$ -- 37
+skip$ -- 22
 stack$ -- 0
-substring$ -- 47
-swap$ -- 15
-text.length$ -- 2
+substring$ -- 15
+swap$ -- 3
+text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 10
-warning$ -- 1
-while$ -- 7
+warning$ -- 2
+while$ -- 2
 width$ -- 4
-write$ -- 32
-(There was 1 warning)
+write$ -- 26
+(There were 2 warnings)
