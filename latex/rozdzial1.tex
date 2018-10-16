@@ -3,14 +3,19 @@
 \label{rozdzial1}
 
 W tym rozdziale została przedstawiona analiza zagadnienia. Nakreślono problemy i omówiono proponowane przez system ich rozwiązania. Omówiono założenia funkcjonalne i niefunkcjonalne samego systemu jak i jego podsystemów, przedstawiono podobne rozwiązania informatyczne. Zawarty jest również słowniczek, potrzebny do pełnego zrozumienia zagadnienia.
-\newpage
+
 
 \section{Charakterystyka problemu}
 Aplikacje webowe, a w szczególności systemy e-commerce, są często wolne. Pisane przez niedoświadczonych deweloperów pod presją czasu nie zawsze wychodzą tak jak powinny. A jak powinny być napisane? W pierwszej kolejności muszą być dobrze przemyślane, a co za tym idzie ich architektura powinna być przygotowana na rozszerzenia i modyfikacje. Powiedzmy, że mamy sklep internetowy, na bazie którego chcielibyśmy stworzyć podobne rozwiązanie. Często jest to niemożliwe ze względu na budowę i obsługę komponentów. Dobrym przykładem na to jest indeksowanie produktów do mechanizmu wyszukującego.
 \begin{example}
 	W systemie istnieje klasa Product z zadeklarowanymi polami biznesowymi, powiedzmy że klient chce nowe pole myCustomField, oczywiście ma być ono wyszukiwalne. Rozszerzamy więc klasę Produkt do MyProdukt i dodajemy pole myCustomField. Mechanizm indeksacji nie ma możliwości wyciągnąć z Produktu pola dotyczącego klasy MyProdukt, ponieważ zaprzeczałoby to zasadom polimorfizmu.
 \end{example} 
-To tylko konkretny przykład, ale warto zwrócić uwage, że dotyczy on nie tylko produktów, a i również jakichkolwiek encji, którymi chcemy zarządzać w systemie. To pierwszy problem rozwiązań e-commerce, które nie są oparte o elastyczne frameworki. Kolejną rzeczą idąca za słabą architekturą są tak zwane bottlenecki, czyli wrażliwe punkty aplikacji, w których wzmożony ruch powoduje znaczące spowolnienie.
+To tylko konkretny przykład, ale warto zwrócić uwage, że dotyczy on nie tylko produktów, a i również jakichkolwiek encji, którymi chcemy zarządzać w systemie. To pierwszy problem rozwiązań e-commerce, które nie są oparte o elastyczne frameworki. 
+
+Kolejną rzeczą idąca za słabą architekturą są tak zwane bottlenecki\footnote{bottleneck - wspólny punkt dla aplikacji, przez muszą przejść użytkowicy korzystając z różnych funkcjonalności}, które blokują szybkie działanie aplikacji. Przykład z życia: 
+\begin{example}
+	Nasza platforma jest oparta o framework stworzony parę lat temu, ma architekturę monolityczną. Nasz sklep zyskał na popularności i coraz częściej zdarzają nam się awarię związane z ograniczoną wydajnością, najszybszą i naturalną reakcją jest dokupienie nowego serwera do obsługi większej ilości klientów, jednak wiąże się to z bardzo dużymi kosztami.
+\end{example} 
 
 Następny problem związany ze środowiskiem e-commerce to brak dobrych wyszukiwarek produktów na stronach. Często zdarza się, że wyszukiwarki przeszukują relacyjne bazy danych, zamiast korzystać z płaskich struktur jakie oferują nam rozwiązania typu noSQL. Do tego nie obsługują facetów \footnote{wyjaśnienie terminu dostępne w sekcji \textbf{Słowniczek}}, co sprawia trudności z wyszukaniem produktu i dopasowaniem go pod klienta, a przecież to jest główny biznes. Jasne i wiadome jest, że istnieją sklepy z dobrymi wyszukiwarkami, do tego mogące pochwalić się wysokim miernikiem TPS\footnote{\textit{TPS} -- transaction per second, ilość pełnych requestów wraz z odpowiedzią, jaką może obsłużyć serwer na sekundę.}. Jednakże są to rozwiązania bardzo drogie i niedostępne dla małych przedsiębiorstw, z drugiej strony implementowanie takich rzeczy na własną ręke jest również bardzo drogie, a do tego skomplikowane. W tym momencie z pomocą przychodzą właśnie frameworki, nie wszystkie jednak maja pełna obsługe mechanizmu indeksującego, a szczególnie nie w darmowych wersjach.
 
