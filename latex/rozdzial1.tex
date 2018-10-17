@@ -14,10 +14,28 @@ To tylko konkretny przykład, ale warto zwrócić uwage, że dotyczy on nie tylk
 
 Kolejną rzeczą idąca za słabą architekturą są tak zwane bottlenecki\footnote{bottleneck - wspólny punkt dla aplikacji, przez muszą przejść użytkowicy korzystając z różnych funkcjonalności}, które blokują szybkie działanie aplikacji. Przykład z życia: 
 \begin{example}
-	Nasza platforma jest oparta o framework stworzony parę lat temu, ma architekturę monolityczną. Nasz sklep zyskał na popularności i coraz częściej zdarzają nam się awarię związane z ograniczoną wydajnością, najszybszą i naturalną reakcją jest dokupienie nowego serwera do obsługi większej ilości klientów, jednak wiąże się to z bardzo dużymi kosztami.
+	Nasza platforma jest oparta o framework stworzony parę lat temu, do tego taki, który nie jest open-source, ma architekturę monolityczną. Nasz sklep zyskał na popularności i coraz częściej zdarzają nam się awarię związane z ograniczoną wydajnością, najszybszą i naturalną reakcją jest dokupienie nowego serwera do obsługi większej ilości klientów, jednak wiąże się to z bardzo dużymi kosztami.
 \end{example} 
+W tym przykładzie warto zwrócić uwagę na zamknięty charakter frameworku. Brak licencji open-source często skutkuje to tym, że projekt jest skazany na zamknięty cykl rozwoju (o ile w ogóle jest dalej rozwijany), ewentualne błędy nie mogą być naprawione \textit{od ręki}. Raz napisana platforma komercyjna nie będzie po 5 latach wcale aktualna. Inaczej sprawy się mają w przypadku open-source'wych frameworków, gdzie możliwość zmiany technologi, a aktualizacje są dostępne praktycznie zawsze. To dzięki zasadzie \textit{inversion of control}, kiedy to programista decyduje się na oddanie kontroli nad częścią swojej funkcjonalności w ręce używanego przez siebie frameworku, aktualizacja do nowszych wersji używanych technologii jest zwykle bezbolesna i opiera się głównie na zmianie wersji w pliku konfiguracyjnym zależności projektowe.
 
 Następny problem związany ze środowiskiem e-commerce to brak dobrych wyszukiwarek produktów na stronach. Często zdarza się, że wyszukiwarki przeszukują relacyjne bazy danych, zamiast korzystać z płaskich struktur jakie oferują nam rozwiązania typu noSQL. Do tego nie obsługują facetów \footnote{wyjaśnienie terminu dostępne w sekcji \textbf{Słowniczek}}, co sprawia trudności z wyszukaniem produktu i dopasowaniem go pod klienta, a przecież to jest główny biznes. Jasne i wiadome jest, że istnieją sklepy z dobrymi wyszukiwarkami, do tego mogące pochwalić się wysokim miernikiem TPS\footnote{\textit{TPS} -- transaction per second, ilość pełnych requestów wraz z odpowiedzią, jaką może obsłużyć serwer na sekundę.}. Jednakże są to rozwiązania bardzo drogie i niedostępne dla małych przedsiębiorstw, z drugiej strony implementowanie takich rzeczy na własną ręke jest również bardzo drogie, a do tego skomplikowane. W tym momencie z pomocą przychodzą właśnie frameworki, nie wszystkie jednak maja pełna obsługe mechanizmu indeksującego, a szczególnie nie w darmowych wersjach.
+
+Ostatnią, nie mniej jednak ważną rzeczą, która warta jest opisania to sposób, w jaki charakteryzuje się produkty\footnote{ lub cokolwiek innego podlegającego klasyfikacji} w sklepach internetowych. Produkty należy opisywać w konsekwentny i najbardziej jednoznaczny sposób, jednak nie da się tego osiągnąć bazując tylko na polach ewentualnej klasy Produkt, jest to wybitnie nieelastyczne, każda zmiana wymaga trwałej ingerencji w kod i ponowny release.
+
+Powyższe problemy niektórych systemów e-commerce można sprowadzić do następujących stwierdzeń:
+\begin{itemize}
+	\item architektura nieprzygotowana pod nagłe modyfikacje i rozszerzenia
+	\item najczęściej używane punkty aplikacji nie są odseparowane od reszty
+	\item brak dobrych wyszukiwarek i mechanizmów filtrujących
+	\item niekonkterny i mało abstrakcyjny sposób opisu encji biznesowych
+	\item użycie zamkniętych technologi, nie korzystanie z open source, brak zastosowania \textit{inversion of control}
+\end{itemize}
+
+\section{Proponowane rozwiązania}
+
+
+
+
 
 
 
