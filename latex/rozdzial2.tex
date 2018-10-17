@@ -16,8 +16,28 @@ Taka architektura jest zgodna z wzorcem projektowym MVC\footnote{Należy odnieś
 } 
 
 \section{Przypadki użycia i scenariusze}
+Jak zostało zdefiniowane w poprzednim punkcie, w pracy przewidziano 3 grupy użytkowników. W zamyśle framework jest narzędziem dla programisty, jednak w systemie został zaimplementowany szereg rozwiązań gotowych do wykorzystania dla końcowych użytkowników, dlatego diagramy przypadków użycia zostały podzielone na trzy klasy: 
+\begin{itemize}
+	\item przypadki użycia Programisty 
+	\item przypadki użycia Użytkownika Administracyjnego potencjalnego serwisu e-commerce, opartego na opisywanym Frameworku
+	\item przypadki użycia użytkownika końcowego, czyli Klienta
+\end{itemize}
 
-W tej sekcji należy przedstawić przypadki użycia oraz odpowiadające im scenariusze dla poszczególnych grup użytkowników \ldots.
+Na rysunku \ref{useCaseProgrammer} zostały przedstawione najważniejsze przypadki użycia frameworku. Programista ma swobodny dostęp do rozszerzania encji, w szczególności klasy Produkt, która ma wyjatkowo strategiczne znaczenie w systemach e-commerce. 
+
+\begin{figure}[h!]
+	\begin{center}
+		\includegraphics[width=1\textwidth]{ucdev.pdf}
+	\end{center}
+	\caption{{\color{black}Diagram przypadków użycia związany z Programistą.}} \label{useCaseProgrammer}
+\end{figure} 
+
+\begin{figure}[h!]
+	\begin{center}
+		\includegraphics[width=1\textwidth]{ucadmin.pdf}
+	\end{center}
+	\caption{{\color{black}Diagram przypadków użycia związany z Administratorem ewentualniego systemu.}} \label{useCaseProgrammer}
+\end{figure} 
 
 \section{Diagramy klas}
 
