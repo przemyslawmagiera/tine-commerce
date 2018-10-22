@@ -20,6 +20,11 @@ W tym przykładzie warto zwrócić uwagę na zamknięty charakter frameworku. Br
 
 Następny problem związany ze środowiskiem e-commerce to brak dobrych wyszukiwarek produktów na stronach. Często zdarza się, że wyszukiwarki przeszukują relacyjne bazy danych, zamiast korzystać z płaskich struktur jakie oferują nam rozwiązania typu noSQL. Do tego nie obsługują facetów \footnote{wyjaśnienie terminu dostępne w sekcji \textbf{Słowniczek}}, co sprawia trudności z wyszukaniem produktu i dopasowaniem go pod klienta, a przecież to jest główny biznes. Jasne i wiadome jest, że istnieją sklepy z dobrymi wyszukiwarkami, do tego mogące pochwalić się wysokim miernikiem TPS\footnote{\textit{TPS} -- transaction per second, ilość pełnych requestów wraz z odpowiedzią, jaką może obsłużyć serwer na sekundę.}. Jednakże są to rozwiązania bardzo drogie i niedostępne dla małych przedsiębiorstw, z drugiej strony implementowanie takich rzeczy na własną ręke jest również bardzo drogie, a do tego skomplikowane. W tym momencie z pomocą przychodzą właśnie frameworki, nie wszystkie jednak maja pełna obsługe mechanizmu indeksującego, a szczególnie nie w darmowych wersjach.
 
+Istotną sprawą w opisywanych systemach jest archiwizacja produktu, bądź jej zupełny brak. Problem został opisany na poniższym przykładzie:
+\begin{example}
+	Klient zakupił produkt A o atrybutach (a, b, c, d) w sierpniu. W październiku manager sklepu zmienił atrybuty produktu A na (e, f, g), co wpłynęło również na cenę. W listopadzie klient zdecydował się na reklamację produktu. Obsługa sklepu otrzymała zgłoszenie, ma id produktu, jednak niewiele to pomoże, gdyż atrybuty i cena uległy zmianie. 
+\end{example}
+
 Ostatnią, nie mniej jednak ważną rzeczą, która warta jest opisania to sposób, w jaki charakteryzuje się produkty\footnote{ lub cokolwiek innego podlegającego klasyfikacji} w sklepach internetowych. Produkty należy opisywać w konsekwentny i najbardziej jednoznaczny sposób, jednak nie da się tego osiągnąć bazując tylko na polach ewentualnej klasy Produkt, jest to wybitnie nieelastyczne, każda zmiana wymaga trwałej ingerencji w kod i ponowny release.
 
 Powyższe problemy niektórych systemów e-commerce można sprowadzić do następujących stwierdzeń:
@@ -29,13 +34,17 @@ Powyższe problemy niektórych systemów e-commerce można sprowadzić do nastę
 	\item brak dobrych wyszukiwarek i mechanizmów filtrujących
 	\item niekonkterny i mało abstrakcyjny sposób opisu encji biznesowych
 	\item użycie zamkniętych technologi, nie korzystanie z open source, brak zastosowania \textit{inversion of control}
+	\item brak archiwizacji produktów
 \end{itemize}
 
 \section{Proponowane rozwiązania}
+W wstępie określono listę wymagań funkcjonalnych. W podrozdziale \textbf{Charakterystyka problemu} nakreślono najważniejsze problemy sklepów internetowych i frameworków e-commerce. Rysunek \ref{wymagania} ilustruje pokrycie znalezionych problemów wymaganiami funkcjonalnymi opisywanego frameworka.
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=1\textwidth]{wymagania.jpg}
+	\end{center}
+	\caption{{\color{dgray}Połączenie wymagań funkcjonalnych ze znalezionymi problemami.}} \label{wymagania}
+\end{figure} 
 
 
-
-
-
-
-
+ Z rysunku \ref{wymagania} wynika, że \textit{bez pokrycia} zostają dwa wymagania, nie oznacza to jednak, że są to niepotrzebne funkcjonalności. Są jednak powszechnie spotykane w frameworkach e-commerce, można nazwać je standardem. Jednak co mniej oczywiste system uprawnień został oparty na strukturze drzewiastej, uprawnienia są dziedziczone pomiędzy użytkownikami finalnego systemu opartego o framework.

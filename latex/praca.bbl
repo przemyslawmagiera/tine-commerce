@@ -13,4 +13,10 @@ B.~Frain.
 \newblock {\em Responsive Web Design with HTML5 and CSS3}.
 \newblock Packt Publishing, 2012.
 
+\bibitem{oracle}
+G.~McCluskey.
+\newblock Using java reflection.
+\newblock Web pages:
+  \url{https://www.oracle.com/technetwork/articles/java/javareflection-1536171.html}.
+
 \end{thebibliography}

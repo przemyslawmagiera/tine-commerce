@@ -3,12 +3,12 @@
   <element>
     <id>UMLActor</id>
     <coordinates>
-      <x>680</x>
+      <x>700</x>
       <y>470</y>
-      <w>100</w>
+      <w>60</w>
       <h>100</h>
     </coordinates>
-    <panel_attributes>Programista</panel_attributes>
+    <panel_attributes>Klient</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -19,8 +19,8 @@
       <w>150</w>
       <h>60</h>
     </coordinates>
-    <panel_attributes>Rozszerzenie 
-klasy Product</panel_attributes>
+    <panel_attributes>Dodanie produktu
+do koszyka</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -42,9 +42,8 @@ klasy Product</panel_attributes>
       <w>150</w>
       <h>60</h>
     </coordinates>
-    <panel_attributes>Indeksacja 
-własnych 
-pól</panel_attributes>
+    <panel_attributes>Złożenie 
+zamówienia</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -77,9 +76,8 @@ pól</panel_attributes>
       <w>150</w>
       <h>60</h>
     </coordinates>
-    <panel_attributes>Dodanie 
-własnych 
-encji </panel_attributes>
+    <panel_attributes>Dokonanie
+płatności</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -101,8 +99,7 @@ encji </panel_attributes>
       <w>150</w>
       <h>60</h>
     </coordinates>
-    <panel_attributes>Zarządzanie
-encjami</panel_attributes>
+    <panel_attributes>Reklamacja</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -113,8 +110,7 @@ encjami</panel_attributes>
       <w>150</w>
       <h>60</h>
     </coordinates>
-    <panel_attributes>Uruchomienie 
-instancji Solr</panel_attributes>
+    <panel_attributes>Logowanie</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -147,8 +143,9 @@ instancji Solr</panel_attributes>
       <w>150</w>
       <h>60</h>
     </coordinates>
-    <panel_attributes>Nadpisanie
-serwisów</panel_attributes>
+    <panel_attributes>Filtrowanie
+wyników
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -170,9 +167,8 @@ serwisów</panel_attributes>
       <w>150</w>
       <h>70</h>
     </coordinates>
-    <panel_attributes>Konfiguracja
-mechanizmu
-wyszukiwania</panel_attributes>
+    <panel_attributes>Wyszukiwanie 
+produktu</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>

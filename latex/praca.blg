@@ -5,45 +5,45 @@ The style file: plabbrv.bst
 Database file #1: literatura.bib
 Warning--to sort, need author or key in Solr
 Warning--to sort, need author or key in Java
-You've used 3 entries,
+You've used 4 entries,
             2129 wiz_defined-function locations,
-            517 strings with 4024 characters,
-and the built_in function-call counts, 553 in all, are:
-= -- 49
-> -- 9
+            521 strings with 4158 characters,
+and the built_in function-call counts, 757 in all, are:
+= -- 68
+> -- 16
 < -- 0
-+ -- 5
-- -- 2
-* -- 20
-:= -- 81
-add.period$ -- 7
-call.type$ -- 3
-change.case$ -- 9
++ -- 8
+- -- 4
+* -- 25
+:= -- 115
+add.period$ -- 10
+call.type$ -- 4
+change.case$ -- 13
 chr.to.int$ -- 0
-cite$ -- 5
-duplicate$ -- 26
-empty$ -- 69
-format.name$ -- 2
-if$ -- 127
+cite$ -- 6
+duplicate$ -- 33
+empty$ -- 91
+format.name$ -- 4
+if$ -- 172
 int.to.chr$ -- 0
-int.to.str$ -- 3
+int.to.str$ -- 4
 missing$ -- 2
-newline$ -- 16
-num.names$ -- 2
-pop$ -- 24
+newline$ -- 21
+num.names$ -- 4
+pop$ -- 32
 preamble$ -- 1
-purify$ -- 7
+purify$ -- 10
 quote$ -- 0
-skip$ -- 22
+skip$ -- 30
 stack$ -- 0
-substring$ -- 15
-swap$ -- 3
+substring$ -- 20
+swap$ -- 4
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 10
+type$ -- 14
 warning$ -- 2
-while$ -- 2
-width$ -- 4
-write$ -- 26
+while$ -- 4
+width$ -- 5
+write$ -- 35
 (There were 2 warnings)

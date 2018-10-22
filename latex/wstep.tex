@@ -5,7 +5,7 @@ Celem niniejszej pracy dyplomowej jest zaprojektowanie i zaimplementowanie frame
 
 Często dewelopment aplikacji idzie w parze z presją czasu, przez co zapomina  się o jakości kodu i rozwiązaniach, które poprawiłyby wydajność i ograniczyły konieczność skalowania. Z zamkniętymi oczami podąża się za schematami i szablonami, aby dostarczyć rozwiązanie jak najszybciej, a nie jak najlepiej. Dlatego właśnie założeniem projektu w ramach pracy jest zaprojektowanie i implementacja frameworku e-commerce spełniającego następujące założenia funkcjonalne:
 \begin{itemize}
-  	\item wykorzystanie najnowszych technologii,
+  	\item wykorzystanie najnowszych technologii oraz IoC
 	\item podłączony zewnętrzny serwer Apache Solr, służący do bardzo szybkiej obsługi zapytań związanych z katalogiem produktowym,
 	\item prosty i efektywny system klasyfikacyjny dla produktów,
 	\item reużywalny i rozszerzalny panel administracyjny 
@@ -15,6 +15,7 @@ Często dewelopment aplikacji idzie w parze z presją czasu, przez co zapomina  
 	\item relacyjna i nierelacyjna baza danych,
 	\item zaiplementowana obsługa procesu zamówienia,
 	\item inicjalizer projektów, pozwalający szybko stworzyć przykładowe rozwiązanie e-commerce.
+	\item mechanizm wersjonowania produktu
 \end{itemize}
 
 Praca składa się z czterech rozdziałów. W rozdziale pierwszym omówiono strukturę przedsiębior-
@@ -47,5 +48,14 @@ diagramy . . . . Zawarto w niej w pseudokod algorytmów generowania oraz omówio
 		Searchers are presented with the indexed terms, along with numerical counts of how many matching documents were found were each term. Faceting makes it easy for users to explore search results, narrowing in on exactly the results they are looking for.
 	}\cite{Solr}
 \end{quote}
+
+\noindent
+\textit{release} -- nieskopoziomowe udogodnienie w języku Java, pozwalające na operacje i wyświetlanie właściwości klasy Javowej.
+\begin{quote} \textit{
+		Reflection is a feature in the Java programming language. It allows an executing Java program to examine or "introspect" upon itself, and manipulate internal properties of the program. For example, it's possible for a Java class to obtain the names of all its members and display them.
+	}\cite{oracle}
+\end{quote}
+
+
 
 

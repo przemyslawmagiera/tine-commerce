@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="13.3">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>387</x>
+      <y>774</y>
+      <w>198</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>wykorzystanie najnowszych 
+technologii oraz IoC
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>864</x>
+      <y>144</y>
+      <w>216</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>najczęściej używane 
+punkty aplikacji nie są 
+odseparowane od reszty
+bg=red
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>864</x>
+      <y>576</y>
+      <w>216</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>architektura nieprzygotowana 
+pod nagłe modyfikacje 
+i rozszerzenia
+bg=red
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>864</x>
+      <y>306</y>
+      <w>216</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>brak dobrych wyszukiwarek 
+i mechanizmów filtrujących
+bg=red
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>864</x>
+      <y>666</y>
+      <w>216</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>niekonkterny i mało 
+abstrakcyjny sposób 
+opisu encji biznesowych
+bg=red
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>864</x>
+      <y>756</y>
+      <w>216</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>użycie zamkniętych technologi, 
+nie korzystanie z open source, 
+brak zastosowania 
+inversion of control
+bg=red
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>864</x>
+      <y>459</y>
+      <w>216</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>brak archiwizacji 
+produktów
+bg=red
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>387</x>
+      <y>153</y>
+      <w>198</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>podłączony zewnętrzny 
+serwer Apache Solr
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>387</x>
+      <y>387</y>
+      <w>198</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>prosty i efektywny system 
+klasyfikacyjny dla produktów
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>387</x>
+      <y>675</y>
+      <w>198</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>reużywalny i rozszerzalny 
+panel administracyjny 
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>459</x>
+      <y>900</y>
+      <w>198</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>zaawansowana obsługa
+uprawnień dla panelu 
+administracyjnego,
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>387</x>
+      <y>576</y>
+      <w>198</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>elastyczny model, 
+pozwalający na rozszerzanie 
+klas
+bg=green</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>387</x>
+      <y>297</y>
+      <w>198</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>łatwy w skonfigurowaniu i 
+wydajny mechanizm 
+wyszukiwania
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>387</x>
+      <y>225</y>
+      <w>198</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>relacyjna i nierelacyjna 
+baza danych
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>387</x>
+      <y>459</y>
+      <w>198</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>mechanizm wersjonowania 
+produktu
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>612</x>
+      <y>162</y>
+      <w>234</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>240.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>612</x>
+      <y>315</y>
+      <w>234</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>240.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>612</x>
+      <y>468</y>
+      <w>234</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>240.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>612</x>
+      <y>594</y>
+      <w>234</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>240.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>621</x>
+      <y>594</y>
+      <w>225</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>230.0;100.0;110.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>621</x>
+      <y>234</y>
+      <w>225</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>230.0;80.0;110.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>612</x>
+      <y>684</y>
+      <w>234</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>240.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>621</x>
+      <y>612</y>
+      <w>225</w>
+      <h>99</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>230.0;10.0;110.0;90.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>621</x>
+      <y>333</y>
+      <w>225</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>230.0;10.0;110.0;80.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>774</x>
+      <y>909</y>
+      <w>198</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>zaiplementowana obsługa 
+procesu zamówienia
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>612</x>
+      <y>783</y>
+      <w>234</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>240.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
