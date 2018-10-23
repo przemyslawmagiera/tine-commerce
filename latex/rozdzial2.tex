@@ -45,18 +45,26 @@ Diagram na rysunku \ref{useCaseCustomer} dotyczy przypadków użycia elementów 
 	\caption{{\color{black}Diagram przypadków użycia związany z Administratorem ewentualniego systemu.}} \label{useCaseCustomer}
 \end{figure}
 
-\section{Diagramy klas}
-
-W tej sekcji należy przedstawić diagramy klas dla odpowiednich elementów systemu zidentyfikowane na podstawie wcześniejszych rozważań
+Diagramy typu \textit{use-case} ściśle wiążą się z wymaganiami funkcjonalnymi systemu. Jest wiadome, że można je również sklasyfikować pod względem aktorów występujących w systemie, dlatego też powiązania przypadków użycia z wymaganiami funkcjonalnymi zostały umieszczone na diagramie z rysunku \ref{wymtoUC}. Na diagram należy patrzeć poziomo, po zapoznaniu się z legendą. Wymagania są w nieprzypadkowej kolejności, są ustawione od lewej do prawej. Im bardziej na prawo, tym wymaganie jest bardziej biznesowe, im bardziej na lewo -- dotyczy rdzeniowych elementów platformy. Warto zauważyć zależność, że im dalej patrzymy na diagram, tym więcej niebieskich i żółtych \textit{use case'ów} -- tych zarezerowowanych dla Administracji i Klientów rozwiązania e-commerce. Natomiast im bardziej na lewo tym więcej czerwonego, czyli przypadków przemyślanych dla Programisty.
+\begin{figure}
+	\begin{center}
+		\includegraphics[angle=270,scale=0.4]{wymToUC.png}
+	\end{center}
+	\caption{{\color{black}Diagram przypadków użycia związany z wymaganiami funkcjonalnymi}} \label{wymtoUC}
+\end{figure}
 
 \section{Diagramy aktywności}
 
-W tej sekcji należy przedstawić diagramy aktywności dla elementów systemu i odpowiednich procesów wynikające z wcześniejszej analizy.  
+W tej sekcji zostały przedstawione diagramy aktywności dla elementów systemu. Aby zachować spójność w rozważaniach podzielono je na trzy grupy: 
+\begin{itemize}
+	\item diagramy dotyczące budowania rozwiązań e-commerce za pomocą platformy
+	\item diagramy dotyczące zarządzania rozwiązaniami e-commerce
+	\item diagramy dotyczące przebiegu funkcjinalności biznesowych związanych z kientem końcowym
+\end{itemize}  
+Jak można zauważyć, te trzy grupy korespondują z aktorami opisywanego rozwiązania, zdefiniowanymi na początku rozdziału. Punkt pierwszy dotyczy Programisty, drugi Administratora, a ostatni Klienta końcowego.
 
-{\color{dgray}
-W niniejszym rozdziale przedstawiono diagramy aktywności \ldots. Diagram na rysunku~\ref{czynnosci_GD} przedstawia \ldots.
-} 
-
+\subsection{Diagramy dotyczące dewelopmentu aplikacji}
+Niniejsze diagramy będą opisywały procesy związane z budowaniem rozwiązań opartych na podstawie opisywanego frameworku. 
 \begin{figure}[h!]
 \begin{center}
 \includegraphics[width=0.5\textwidth]{aktyw.pdf}
@@ -71,6 +79,10 @@ W tej sekcji należy przedstawić diagramy sekwencji dla obiektów systemu ziden
 \section{Diagramy stanów}
 
 W tej sekcji należy przedstawić diagramy stanów w których może znaleźć się system. Diagramy te są szczególnie istotne przy projektowaniu systemów czasu rzeczywistego. 
+
+\section{Diagramy klas}
+
+W tej sekcji należy przedstawić diagramy klas dla odpowiednich elementów systemu zidentyfikowane na podstawie wcześniejszych rozważań
 
 \section{Projekt bazy danych}
 
