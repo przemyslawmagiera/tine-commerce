@@ -1,7 +1,7 @@
+
 spring:
   application:
     name: tinecommerce-core-platform
-
   liquibase.change-log: classpath:sql/db-changelog.xml
   datasource:
     url: jdbc:postgresql://localhost:5432/tinecommerce
@@ -11,3 +11,5 @@ spring:
     hibernate.ddl-auto: update
     open-in-view: false
     properties.hibernate.jdbc.lob.non_contextual_creation: true
+server:
+  port: 8081

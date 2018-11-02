@@ -1,6 +1,7 @@
 package com.tinecommerce.core.catalog.model;
 
 import com.tinecommerce.core.AbstractNameableEntity;
+import com.tinecommerce.core.AdminVisible;
 import com.tinecommerce.core.catalog.enumeration.CategoryFeatureType;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ public class CategoryFeature extends AbstractNameableEntity
 
    @Enumerated(EnumType.STRING)
    @Column(name = "TYPE", length = 64, nullable = false)
+   @AdminVisible
    private CategoryFeatureType type;
 
    @OneToMany(targetEntity = CategoryFeatureAssignment.class, mappedBy = "categoryFeature", cascade = CascadeType.ALL,

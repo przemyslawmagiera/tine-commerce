@@ -1,6 +1,7 @@
 package com.tinecommerce.core.customer.model;
 
 import com.tinecommerce.core.AbstractEntity;
+import com.tinecommerce.core.AdminVisible;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,18 +23,21 @@ public class Customer extends AbstractEntity {
     @NotBlank
     @Size(max = 255)
     @Column(name = "name", nullable = false, length = 255)
+    @AdminVisible
     private String name;
 
     @NotBlank
     @Email
     @Size(max = 254)
     @Column(name = "email", nullable = false, length = 255, unique = true)
+    @AdminVisible
     private String email;
 
     @NotBlank
     @Email
     @Size(max = 254)
     @Column(name = "password", nullable = false, length = 255)
+    @AdminVisible(tableVisible = false)
     private String password;
 
     @ManyToMany(mappedBy = "customers", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)

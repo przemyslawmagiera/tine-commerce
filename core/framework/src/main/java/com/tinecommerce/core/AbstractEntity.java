@@ -27,8 +27,10 @@ public abstract class AbstractEntity implements Serializable {
     @Id
     @GeneratedValue(generator = "generator")
     @GenericGenerator(name = "generator", strategy = "increment")
+    @AdminVisible
     private Long id;
 
     @Column(name = "CODE", length = 255, nullable = false, unique = true)
+    @AdminVisible
     protected String code = UUID.randomUUID().toString();
 }

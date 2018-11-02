@@ -26,10 +26,12 @@ public abstract class AbstractNameableEntity extends AbstractEntity implements S
     @NotBlank
     @Size(max = 255)
     @Column(name = "name", nullable = false)
+    @AdminVisible
     private String name;
 
     @NotBlank
     @Size(max = 255)
     @Column(name = "description", nullable = false)
+    @AdminVisible
     private String description;
 }

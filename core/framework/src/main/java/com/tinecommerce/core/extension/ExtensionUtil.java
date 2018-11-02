@@ -6,10 +6,9 @@ import com.tinecommerce.core.catalog.model.Product;
 import org.apache.solr.common.SolrInputDocument;
 import org.reflections.Reflections;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.lang.reflect.Field;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ExtensionUtil {
     public static Class<? extends Product> getCeilingProductClass() {
@@ -33,5 +32,31 @@ public class ExtensionUtil {
         Set<Class<? extends AbstractEntity>> allClasses = new HashSet<>(classes);
         allClasses.add(AbstractNameableEntity.class);
         return allClasses;
+    }
+
+    public static Set<Class<?>> getSubclassesOf(final String className) throws ClassNotFoundException {
+        Reflections reflections = new Reflections("");
+        Class<?> aClass = Class.forName(className);
+        Set<Class<?>> classes = new HashSet<>();
+        if(AbstractNameableEntity.class.isAssignableFrom(aClass))
+        {
+            classes.add(AbstractNameableEntity.class);
+        }
+        if(AbstractEntity.class.isAssignableFrom(aClass))
+        {
+            classes.add(AbstractEntity.class);
+        }
+        classes.addAll((Set<Class<?>>) reflections.getSubTypesOf(aClass));
+        classes.add(aClass);
+        return classes;
+    }
+
+    public static Set<Field> getPolymorphicFielsdOf(final String className) throws ClassNotFoundException {
+        Set<Class<?>> classes = getSubclassesOf(className);
+        return classes.stream()
+                .map(Class::getDeclaredFields)
+                .map(Arrays::asList)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toSet());
     }
 }

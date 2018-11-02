@@ -1,7 +1,12 @@
-
 spring:
   application:
-    name: tinecommerce-core-platform
+    name: tinecommerce-admin
+  thymeleaf:
+    cache: false
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
   liquibase.change-log: classpath:sql/db-changelog.xml
   datasource:
     url: jdbc:postgresql://localhost:5432/tinecommerce
@@ -11,5 +16,3 @@ spring:
     hibernate.ddl-auto: update
     open-in-view: false
     properties.hibernate.jdbc.lob.non_contextual_creation: true
-server:
-  port: 8081
