@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface AdminVisible {
     public boolean tableVisible() default true;
+    public int order() default 1000;
 }

@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -26,12 +27,12 @@ public abstract class AbstractNameableEntity extends AbstractEntity implements S
     @NotBlank
     @Size(max = 255)
     @Column(name = "name", nullable = false)
-    @AdminVisible
+    @AdminVisible(order = 300)
     private String name;
 
-    @NotBlank
+    @NotNull
     @Size(max = 255)
     @Column(name = "description", nullable = false)
-    @AdminVisible
+    @AdminVisible(order = 400)
     private String description;
 }

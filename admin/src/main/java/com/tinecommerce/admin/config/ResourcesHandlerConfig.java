@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 @Configuration
-public class KurwaChujCyckiGowno extends WebMvcConfigurerAdapter {
+public class ResourcesHandlerConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         if (!registry.hasMappingForPattern("/assets/**")) {

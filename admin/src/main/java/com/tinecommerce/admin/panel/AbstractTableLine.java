@@ -10,5 +10,5 @@ import java.util.List;
 @Getter
 @Setter
 public class AbstractTableLine {
-    private List<String> values = new ArrayList<>();
+    private List<Object> values = new ArrayList<>();
 }

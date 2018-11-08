@@ -6,10 +6,10 @@ import com.tinecommerce.core.catalog.service.CategoryFeatureService;
 import com.tinecommerce.core.catalog.service.impl.CategoryServiceImpl;
 import com.tinecommerce.core.solr.SolrIndexService;
 import com.tinecommerce.core.solr.SolrSearchServiceImpl;
+import com.tinecommerce.core.solr.dto.SearchResultDTO;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -35,12 +35,10 @@ public class TestController {
     @Resource
     ProductRepository productRepository;
 
-    @GetMapping("/")
-    public String getResults() throws IOException, SolrServerException {
+    @GetMapping("/search")
+    @ResponseBody
+    public SearchResultDTO getResults(@RequestParam String query) throws IOException, SolrServerException {
 //        solrIndexService.buildIndex();
-//        productRepository.findByField("cecha", "chujowy");
-        productRepository.findByField("cecha1","dupson");
-        categoryFeatureService.getCategoryFeaturesForProduct(productRepository.getOne(1L));
-        return null;
+        return  solrSearchService.doSearch(query, "price_d asc");
     }
 }

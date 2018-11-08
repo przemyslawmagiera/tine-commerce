@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Table(name = "search_field")
 @Getter
 @Setter
-public class SearchField extends AbstractEntity {
+public class SearchField extends AbstractEntity implements Facetable {
 
     @Column(name = "field_name")
     private String name;
@@ -22,5 +22,4 @@ public class SearchField extends AbstractEntity {
 
     @Column(name = "is_facet")
     private Boolean isFacet;
-
 }

@@ -723,12 +723,12 @@
              specified here are used regardless of what values may be specified
              in either the query, the "defaults", or the "appends" params.
 
-             In this example, the facet.field and facet.query params would
+             In this example, the isFacet.field and isFacet.query params would
              be fixed, limiting the facets clients can use.  Faceting is
              not turned on by default - but if the client does specify
-             facet=true in the request, these are the only facets they
+             isFacet=true in the request, these are the only facets they
              will be able to see counts for; regardless of what other
-             facet.field or facet.query params they may specify.
+             isFacet.field or isFacet.query params they may specify.
 
              NOTE: there is *absolutely* nothing a client can do to prevent these
              "invariants" values from being used, so don't use this mechanism
@@ -736,10 +736,10 @@
           -->
         <!--
            <lst name="invariants">
-             <str name="facet.field">cat</str>
-             <str name="facet.field">manu_exact</str>
-             <str name="facet.query">price:[* TO 500]</str>
-             <str name="facet.query">price:[500 TO *]</str>
+             <str name="isFacet.field">cat</str>
+             <str name="isFacet.field">manu_exact</str>
+             <str name="isFacet.query">price:[* TO 500]</str>
+             <str name="isFacet.query">price:[500 TO *]</str>
            </lst>
           -->
         <!-- If the default list of SearchComponents is not desired, that
@@ -808,7 +808,7 @@
          By default, the following components are available:
 
          <searchComponent name="query"     class="solr.QueryComponent" />
-         <searchComponent name="facet"     class="solr.FacetComponent" />
+         <searchComponent name="isFacet"     class="solr.FacetComponent" />
          <searchComponent name="mlt"       class="solr.MoreLikeThisComponent" />
          <searchComponent name="highlight" class="solr.HighlightComponent" />
          <searchComponent name="stats"     class="solr.StatsComponent" />
@@ -818,7 +818,7 @@
 
          <arr name="components">
            <str>query</str>
-           <str>facet</str>
+           <str>isFacet</str>
            <str>mlt</str>
            <str>highlight</str>
            <str>stats</str>
@@ -1311,6 +1311,7 @@
         <int name="xsltCacheLifetimeSeconds">5</int>
     </queryResponseWriter>
 
+    <str name="df">all</str>
     <!-- Query Parsers
 
          https://lucene.apache.org/solr/guide/query-syntax-and-parsing.html

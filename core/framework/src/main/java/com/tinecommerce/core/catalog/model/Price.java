@@ -1,6 +1,7 @@
 package com.tinecommerce.core.catalog.model;
 
 import com.tinecommerce.core.AbstractEntity;
+import com.tinecommerce.core.AdminVisible;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -27,8 +28,10 @@ import java.util.Currency;
 public class Price extends AbstractEntity {
 
     @Column(name = "currency", nullable = false)
+    @AdminVisible
     private Currency currency;
 
     @Column(name = "amount", nullable = false)
+    @AdminVisible
     private BigDecimal amount;
 }

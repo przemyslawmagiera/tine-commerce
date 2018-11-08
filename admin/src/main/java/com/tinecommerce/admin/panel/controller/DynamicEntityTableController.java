@@ -19,10 +19,7 @@ import sun.reflect.Reflection;
 
 import java.awt.geom.Area;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -42,10 +39,11 @@ public class DynamicEntityTableController {
         String className = adminMenuItemRepository.findByCode(entityCode)
                 .map(AdminMenuItem::getClassName)
                 .orElse("");
-        Set<Field> headers = ExtensionUtil.getPolymorphicFielsdOf(className)
+        List<Field> headers = ExtensionUtil.getPolymorphicFielsdOf(className)
                 .stream()
                 .filter(field -> field.isAnnotationPresent(AdminVisible.class) && field.getAnnotation(AdminVisible.class).tableVisible())
-                .collect(Collectors.toSet());
+                .sorted(Comparator.comparingInt(field -> field.getAnnotation(AdminVisible.class).order()))
+                .collect(Collectors.toList());
         List<? extends AbstractEntity> entities = dynamicEntityDao.findAllPolimorficEntities(className);
         List<AbstractTableLine> abstractTableLines = new ArrayList<>();
         for (AbstractEntity abstractEntity : entities) {
@@ -55,7 +53,7 @@ public class DynamicEntityTableController {
                     try {
                         Field classField = cls.getDeclaredField(field.getName());
                         classField.setAccessible(true);
-                        abstractTableLine.getValues().add((String) classField.get(abstractEntity));
+                        abstractTableLine.getValues().add(classField.get(abstractEntity));
                     } catch (NoSuchFieldException | IllegalAccessException ignored) {
                     }
                 }
@@ -64,6 +62,7 @@ public class DynamicEntityTableController {
         }
         model.addAttribute("headers", headers.stream().map(Field::getName).collect(Collectors.toList()));
         model.addAttribute("abstractTableLines", abstractTableLines);
+        model.addAttribute("entityName", "Table of " + entityCode);
         return "tables";
     }
 }

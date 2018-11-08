@@ -2,6 +2,7 @@ package com.tinecommerce.core.catalog.model;
 
 
 import com.tinecommerce.core.AbstractNameableEntity;
+import com.tinecommerce.core.AdminVisible;
 import lombok.*;
 
 import javax.persistence.*;
@@ -37,6 +38,10 @@ public class Product extends AbstractNameableEntity {
     @ManyToMany(mappedBy = Category.FIELD_PRODUCTS, cascade = CascadeType.ALL)
     private Set<Category> categories = new HashSet<>();
 
+    @Column
+    @AdminVisible
+    private String myCustomField;
+
     public Set<Category> getCategories() {
         return Collections.unmodifiableSet(categories);
     }
@@ -52,7 +57,7 @@ public class Product extends AbstractNameableEntity {
         });
     }
 
-    public Set<Category> getPrices() {
-        return Collections.unmodifiableSet(categories);
+    public Set<Price> getPrices() {
+        return Collections.unmodifiableSet(prices);
     }
 }

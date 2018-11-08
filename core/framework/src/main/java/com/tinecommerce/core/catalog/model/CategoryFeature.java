@@ -3,6 +3,7 @@ package com.tinecommerce.core.catalog.model;
 import com.tinecommerce.core.AbstractNameableEntity;
 import com.tinecommerce.core.AdminVisible;
 import com.tinecommerce.core.catalog.enumeration.CategoryFeatureType;
+import com.tinecommerce.core.solr.model.Facetable;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +14,7 @@ import java.util.Set;
 @Table(name = "Category_feature")
 @Getter
 @Setter
-public class CategoryFeature extends AbstractNameableEntity
+public class CategoryFeature extends AbstractNameableEntity implements Facetable
 {
 
    @Enumerated(EnumType.STRING)
@@ -33,5 +34,5 @@ public class CategoryFeature extends AbstractNameableEntity
    private Boolean searchable;
 
    @Column(name = "facet", nullable = false)
-   private Boolean facet;
+   private Boolean isFacet;
 }
