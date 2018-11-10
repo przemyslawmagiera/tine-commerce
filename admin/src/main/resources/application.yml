@@ -16,3 +16,5 @@ spring:
     hibernate.ddl-auto: update
     open-in-view: false
     properties.hibernate.jdbc.lob.non_contextual_creation: true
+server:
+  port: 9000

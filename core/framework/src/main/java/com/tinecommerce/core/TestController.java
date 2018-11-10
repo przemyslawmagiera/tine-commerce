@@ -35,10 +35,4 @@ public class TestController {
     @Resource
     ProductRepository productRepository;
 
-    @GetMapping("/search")
-    @ResponseBody
-    public SearchResultDTO getResults(@RequestParam String query) throws IOException, SolrServerException {
-//        solrIndexService.buildIndex();
-        return  solrSearchService.doSearch(query, "price_d asc");
-    }
 }
