@@ -16,18 +16,18 @@ import java.util.Currency;
 @Table(name = "Price",
         indexes = {
 //                @Index(name = "idx_environment_name", columnList = "name"),
-//                @Index( name = "idx_environment_project_id", columnList = "project_id"),
+//                @Index(name = "idx_environment_project_id", columnList = "project_id"),
 //                @Index(name = "idx_environment_project_version", columnList = "project_version")
         },
         uniqueConstraints = {
-//                @Unique  mConstraint(columnNames = {"name", "project_version", "project_id"})
+//                @UniqueConstraint(columnNames = {"name", "project_version", "project_id"})
         })
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class Price extends AbstractEntity {
 
-    @Column(name = "currency", nullable = false )
+    @Column(name = "currency", nullable = false)
     @AdminVisible
     private Currency currency;
 
