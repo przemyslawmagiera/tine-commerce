@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <schema name="example" version="1.5">
-    <fields>
+        <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
         <field name="_version_" type="long" indexed="true" stored="true"/>
-
         <dynamicField name="*_searchable" type="text_general" indexed="true" stored="false" />
         <dynamicField name="*_i" type="int" indexed="true" stored="false" />
         <dynamicField name="*_is" type="int" indexed="true" stored="false" multiValued="true" />
@@ -32,11 +31,11 @@
             the coordinate. -->
         <dynamicField name="*_coordinate" type="tdouble" indexed="true" stored="false"/>
         <dynamicField name="*_c"  type="coordinate" indexed="true" stored="false"/>
-    </fields>
 
-    <uniqueKey>id</uniqueKey>
+    <uniqueKey>uniqueKey</uniqueKey>
+
     <solrQueryParser defaultOperator="OR"/>
-
+    <uniqueKey>id</uniqueKey>
     <types>
         <!-- The StrField type is not analyzed, but indexed/stored verbatim. -->
         <fieldType name="string" class="solr.StrField" sortMissingLast="true" >

@@ -42,7 +42,7 @@ public class SolrIndexServiceImpl implements SolrIndexService {
     @Override
     @Transactional
     public void rebuildIndex() throws IOException, SolrServerException {
-        SolrClient client = new HttpSolrClient.Builder("http://localhost:8983/solr/tenecommerce").build();
+        SolrClient client = new HttpSolrClient.Builder("http://localhost:8983/solr/tinecommerce").build();
         List<? extends Product> products = productRepository.findAllPolimorficEntities();
         List<SearchField> fields = searchFieldRepository.findAll();
         clearIndex();
@@ -83,7 +83,7 @@ public class SolrIndexServiceImpl implements SolrIndexService {
     }
 
     private void clearIndex() throws IOException, SolrServerException {
-        SolrClient client = new HttpSolrClient.Builder("http://localhost:8983/solr/tenecommerce").build();
+        SolrClient client = new HttpSolrClient.Builder("http://localhost:8983/solr/tinecommerce").build();
         client.deleteByQuery("*");
     }
 }

@@ -8,10 +8,8 @@ import java.util.stream.Collectors;
 
 import com.tinecommerce.core.catalog.model.CategoryFeature;
 import com.tinecommerce.core.catalog.repository.CategoryFeatureRepository;
-import com.tinecommerce.core.solr.dto.FacetContainer;
-import com.tinecommerce.core.solr.dto.FacetDTO;
-import com.tinecommerce.core.solr.dto.ProductDTO;
-import com.tinecommerce.core.solr.dto.SearchResultDTO;
+import com.tinecommerce.core.catalog.repository.PriceRepository;
+import com.tinecommerce.core.solr.dto.*;
 import com.tinecommerce.core.solr.model.Facetable;
 import com.tinecommerce.core.solr.model.SearchField;
 import com.tinecommerce.core.solr.repository.SearchFieldRepository;
@@ -20,6 +18,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.response.RangeFacet;
 import org.apache.solr.common.SolrDocumentList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,13 +35,15 @@ public class SolrSearchServiceImpl {
     @Autowired
     protected CategoryFeatureRepository categoryFeatureRepository;
 
+    @Autowired
+    protected PriceRepository priceRepository;
+
     public SearchResultDTO doSearch(final String textQuery, final String sortExpression) throws IOException, SolrServerException {
-        SolrClient client = new HttpSolrClient.Builder("http://localhost:8983/solr/tenecommerce").build();
+        SolrClient client = new HttpSolrClient.Builder("http://localhost:8983/solr/tinecommerce").build();
 
         Set<SearchField> searchFields = searchFieldRepository.findAllBySearchable(true);
         Set<String> searchableCodes = searchFields.stream().map(SearchField::getName).collect(Collectors.toSet());
         searchableCodes.addAll(categoryFeatureRepository.findAll().stream().map(CategoryFeature::getCode).collect(Collectors.toSet()));
-        searchableCodes.add("price_d");
         String queryString =
                 searchableCodes.stream()
                 .collect(Collectors.joining(":" + "\"" + textQuery + "\" OR "));
@@ -54,6 +55,11 @@ public class SolrSearchServiceImpl {
         query.set("defType", "edismax");
 
         query.setParam("sort", sortExpression);
+
+        query.add("facet.range", "price_d");
+        query.add("facet.range.start", "50");
+        query.add("facet.range.end", "1000");
+        query.add("facet.range.gap", "50");
 
         query.setFacet(true);
         Set<String> facetFields = searchFieldRepository.findAllByIsFacet(true).stream().map(SearchField::getName).collect(Collectors.toSet());
@@ -80,6 +86,13 @@ public class SolrSearchServiceImpl {
             document.getFieldNames().forEach(fieldName -> productDTO.getAttributes().put(fieldName, document.getFieldValue(fieldName)));
             searchResult.getProductDTOS().add(productDTO);
         });
+        queryResponse.getFacetRanges().forEach(range ->{
+            range.getCounts().stream().filter(count -> ((RangeFacet.Count) count).getCount() > 0).forEach(count->{
+                RangeFacet.Count rangeFacetCount = (RangeFacet.Count) count;
+                searchResult.getPriceRanges().add(new PriceRange(rangeFacetCount.getValue(), rangeFacetCount.getCount()));
+            });
+        });
+
         return searchResult;
-     }
+    }
 }

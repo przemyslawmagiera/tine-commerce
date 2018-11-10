@@ -11,4 +11,5 @@ import java.util.List;
 public class SearchResultDTO {
     private List<ProductDTO> productDTOS = new ArrayList<>();
     private List<FacetContainer> facetContainers = new ArrayList<>();
+    private List<PriceRange> priceRanges = new ArrayList<>();
 }
