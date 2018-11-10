@@ -9,5 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PriceRange {
     String to;
+    String from;
     Integer count;
 }

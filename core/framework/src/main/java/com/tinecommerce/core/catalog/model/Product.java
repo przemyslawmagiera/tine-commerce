@@ -38,10 +38,6 @@ public class Product extends AbstractNameableEntity {
     @ManyToMany(mappedBy = Category.FIELD_PRODUCTS, cascade = CascadeType.ALL)
     private Set<Category> categories = new HashSet<>();
 
-    @Column
-    @AdminVisible
-    private String myCustomField;
-
     public Set<Category> getCategories() {
         return Collections.unmodifiableSet(categories);
     }

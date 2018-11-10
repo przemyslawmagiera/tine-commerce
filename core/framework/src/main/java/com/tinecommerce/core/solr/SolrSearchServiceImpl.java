@@ -1,9 +1,7 @@
 package com.tinecommerce.core.solr;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.tinecommerce.core.catalog.model.CategoryFeature;
@@ -38,18 +36,22 @@ public class SolrSearchServiceImpl {
     @Autowired
     protected PriceRepository priceRepository;
 
-    public SearchResultDTO doSearch(final String textQuery, final String sortExpression) throws IOException, SolrServerException {
+    public SearchResultDTO doSearch(Map<String,String> filterParams) throws IOException, SolrServerException {
         SolrClient client = new HttpSolrClient.Builder("http://localhost:8983/solr/tinecommerce").build();
-
+        String textQuery = filterParams.remove("query");
+        String sortExpression = filterParams.remove("sort");
+        String priceFilter = filterParams.remove("priceFilter");
         Set<SearchField> searchFields = searchFieldRepository.findAllBySearchable(true);
         Set<String> searchableCodes = searchFields.stream().map(SearchField::getName).collect(Collectors.toSet());
         searchableCodes.addAll(categoryFeatureRepository.findAll().stream().map(CategoryFeature::getCode).collect(Collectors.toSet()));
         String queryString =
                 searchableCodes.stream()
-                .collect(Collectors.joining(":" + "\"" + textQuery + "\" OR "));
+                .collect(Collectors.joining(":" + textQuery + " OR "));
         queryString = queryString + ":" + textQuery;
         SolrQuery query = new SolrQuery();
         query.setQuery(queryString);
+        searchableCodes.add("price_d");
+        searchableCodes.add("description");
         query.setFields(searchableCodes.toArray(new String[0]));
         query.setStart(0);
         query.set("defType", "edismax");
@@ -60,6 +62,15 @@ public class SolrSearchServiceImpl {
         query.add("facet.range.start", "50");
         query.add("facet.range.end", "1000");
         query.add("facet.range.gap", "50");
+
+        List<String> filterList = new ArrayList<>();
+        filterParams.forEach((key, value) -> {
+            filterList.add(key + ":" + value);
+        });
+        if(priceFilter != null) {
+            filterList.add("price_d:{" + priceFilter + "}");
+        }
+        query.addFilterQuery(String.join(" AND ", filterList));
 
         query.setFacet(true);
         Set<String> facetFields = searchFieldRepository.findAllByIsFacet(true).stream().map(SearchField::getName).collect(Collectors.toSet());
@@ -77,7 +88,7 @@ public class SolrSearchServiceImpl {
                 .forEach(facetField -> {
             FacetContainer facetContainer = new FacetContainer();
             facetContainer.setCode(facetField.getName());
-            facetField.getValues()
+            facetField.getValues().stream().filter(value -> value.getCount() > 0)
                     .forEach(value -> facetContainer.getFacetDTOS().add(new FacetDTO(value.getName(), value.getCount())));
             searchResult.getFacetContainers().add(facetContainer);
         });
@@ -89,7 +100,8 @@ public class SolrSearchServiceImpl {
         queryResponse.getFacetRanges().forEach(range ->{
             range.getCounts().stream().filter(count -> ((RangeFacet.Count) count).getCount() > 0).forEach(count->{
                 RangeFacet.Count rangeFacetCount = (RangeFacet.Count) count;
-                searchResult.getPriceRanges().add(new PriceRange(rangeFacetCount.getValue(), rangeFacetCount.getCount()));
+                final Double to = Double.parseDouble(rangeFacetCount.getValue()) + 50;
+                searchResult.getPriceRanges().add(new PriceRange(Double.toString(to), rangeFacetCount.getValue(), rangeFacetCount.getCount()));
             });
         });
 
