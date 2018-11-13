@@ -44,4 +44,18 @@ public class DynamicEntityDao {
         c.select(root);
         return entityManager.createQuery(c).getResultList();
     }
+
+    public AbstractEntity findAllPolimorficEntityWithId(String className, Long id) throws ClassNotFoundException {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery c = criteriaBuilder.createQuery(getCeilingClass(className));
+        Root root = c.from(getCeilingClass(className));
+        c.select(root);
+        c.where(criteriaBuilder.equal(root.get(AbstractEntity.FIELD_ID), id));
+        return (AbstractEntity) entityManager.createQuery(c).getSingleResult();
+    }
+
+    @Transactional
+    public void save(AbstractEntity abstractEntity) {
+        entityManager.persist(abstractEntity);
+    }
 }

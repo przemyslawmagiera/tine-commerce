@@ -31,8 +31,10 @@ public class CategoryFeature extends AbstractNameableEntity implements Facetable
    private Set<CategoryFeatureValue> categoryFeatureValues;
 
    @Column(name = "searchable", nullable = false)
+   @AdminVisible
    private Boolean searchable;
 
    @Column(name = "facet", nullable = false)
+   @AdminVisible
    private Boolean isFacet;
 }

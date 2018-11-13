@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class AdminCategoryController {
-    @GetMapping("/entities/category")
-    public String get() {
-        return "register";
-    }
+//    @GetMapping("/entities/category")
+//    public String get() {
+//        return "register";
+//    }
 
 }

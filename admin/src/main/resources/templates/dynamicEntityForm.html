@@ -35,33 +35,14 @@
       <div id="content-wrapper">
 
         <div class="container-fluid">
-          <!-- DataTables Example -->
-          <div class="card mb-3">
-            <div class="card-header" th:text="${'Table of ' + entityName}">
-              <i class="fas fa-table"></i>
-              </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th th:each="header : ${headers}" th:text="${header}"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr th:each="atl : ${abstractTableLines}">
-                      <td th:each="atlV,iter : ${atl.values}">
-                        <a th:if="${iter.index == 0}" th:href="@{'/entities/' + ${entityName} + '/' + ${atlV} + '/edit'}" th:text="${atlV.toString()}"></a>
-                        <p th:unless="${iter.index == 0}" th:text="${atlV.toString()}"></p>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <h5 th:text="${'Details of ' + dynamicForm.entityClass}"></h5>
+          <form th:action="@{'/entities/' + ${entityName} + '/' + ${id} + '/edit'}" method="post">
+            <div class="form-group" th:each="dynamicField : ${dynamicForm.dynamicFormFields}">
+              <label for="exampleInputEmail1" th:text="${dynamicField.name}"></label>
+              <input th:name="${dynamicField.name}" th:type="${dynamicField.type}" th:value="${dynamicField.value}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
             </div>
-          </div>
-
-        </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
         <!-- /.container-fluid -->
 
         <!-- Sticky Footer -->

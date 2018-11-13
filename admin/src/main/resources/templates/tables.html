@@ -35,10 +35,9 @@
       <div id="content-wrapper">
 
         <div class="container-fluid">
-
           <!-- DataTables Example -->
           <div class="card mb-3">
-            <div class="card-header" th:text="${entityName}">
+            <div class="card-header" th:text="${'Table of ' + entityName}">
               <i class="fas fa-table"></i>
               </div>
             <div class="card-body">
@@ -50,11 +49,11 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr th:each="item : ${items}">
-                      <td th:each="field : ${item.fields}" th:text="${field}"></td>
-                    </tr>
                     <tr th:each="atl : ${abstractTableLines}">
-                      <td th:each="atl : ${atl.values}" th:text="${atl.toString()}"></td>
+                      <td th:each="atlV,iter : ${atl.values}">
+                        <a th:if="${iter.index == 0}" th:href="@{'/entities/' + ${entityName} + '/' + ${atlV} + '/edit'}" th:text="${atlV.toString()}"></a>
+                        <p th:unless="${iter.index == 0}" th:text="${atlV.toString()}"></p>
+                      </td>
                     </tr>
                   </tbody>
                 </table>

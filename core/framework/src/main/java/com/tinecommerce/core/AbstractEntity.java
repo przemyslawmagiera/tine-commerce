@@ -23,6 +23,7 @@ public abstract class AbstractEntity implements Serializable {
     public static final String FIELD_CODE = "code";
 
     private static final long serialVersionUID = -2968157318009412565L;
+    public static  final String FIELD_ID = "id";
 
     @Id
     @GeneratedValue(generator = "generator")
