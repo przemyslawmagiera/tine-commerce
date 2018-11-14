@@ -36,13 +36,24 @@
 
         <div class="container-fluid">
           <h5 th:text="${'Details of ' + dynamicForm.entityClass}"></h5>
-          <form th:action="@{'/entities/' + ${entityName} + '/' + ${id} + '/edit'}" method="post">
+          <form th:if="${id}" th:action="@{'/entities/' + ${entityName} + '/' + ${id} + '/edit'}" method="post">
             <div class="form-group" th:each="dynamicField : ${dynamicForm.dynamicFormFields}">
               <label for="exampleInputEmail1" th:text="${dynamicField.name}"></label>
               <input th:name="${dynamicField.name}" th:type="${dynamicField.type}" th:value="${dynamicField.value}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
+          <form th:if="${id}" th:action="@{'/entities/' + ${entityName} + '/' + ${id} + '/delete'}" method="post">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+          <form th:unless="${id}" th:action="@{'/entities/' + ${entityName} + '/add'}" method="post">
+            <div class="form-group" th:each="dynamicField : ${dynamicForm.dynamicFormFields}">
+              <label for="exampleInputEmail1" th:text="${dynamicField.name}"></label>
+              <input th:name="${dynamicField.name}" th:type="${dynamicField.type}" th:value="${dynamicField.value}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+
         <!-- /.container-fluid -->
 
         <!-- Sticky Footer -->

@@ -58,4 +58,9 @@ public class DynamicEntityDao {
     public void save(AbstractEntity abstractEntity) {
         entityManager.persist(abstractEntity);
     }
+
+    @Transactional
+    public void delete(AbstractEntity abstractEntity) {
+        entityManager.remove(abstractEntity);
+    }
 }
