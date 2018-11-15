@@ -24,18 +24,17 @@ import java.util.stream.Stream;
         uniqueConstraints = {
 //                @UniqueConstraint(columnNames = {"name", "project_version", "project_id"})
         })
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Product extends AbstractNameableEntity {
 
     @Setter(AccessLevel.NONE)
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
+    @AdminVisible(tableVisible = false, className = "com.tinecommerce.core.catalog.model.Price")
     private Set<Price> prices;
 
     @Setter(AccessLevel.NONE)
-    @ManyToMany(mappedBy = Category.FIELD_PRODUCTS, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = Category.FIELD_PRODUCTS, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Category> categories = new HashSet<>();
 
     public Set<Category> getCategories() {

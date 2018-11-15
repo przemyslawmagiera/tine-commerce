@@ -4,9 +4,7 @@ import com.tinecommerce.core.AbstractEntity;
 import com.tinecommerce.core.AdminVisible;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Currency;
 
@@ -26,6 +24,10 @@ import java.util.Currency;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Price extends AbstractEntity {
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     @Column(name = "currency", nullable = false)
     @AdminVisible

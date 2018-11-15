@@ -1,6 +1,7 @@
 package com.tinecommerce.core.catalog.model;
 
 import com.tinecommerce.core.AbstractNameableEntity;
+import com.tinecommerce.core.AdminVisible;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,6 +36,7 @@ public class Category extends AbstractNameableEntity {
     private Set<Category> parentCategories = new HashSet<>();
 
     @OneToMany(targetEntity = CategoryFeatureAssignment.class, mappedBy = "category", cascade = CascadeType.ALL)
+    @AdminVisible(tableVisible = false, className = "com.tinecommerce.core.catalog.model.CategoryFeatureAssignment")
     private List<CategoryFeatureAssignment> categoryFeatureAssignments = new ArrayList<>();
 
     public List<CategoryFeatureAssignment> getCategoryFeatureAssignments() {

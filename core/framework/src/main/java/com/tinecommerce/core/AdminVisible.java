@@ -10,4 +10,5 @@ import java.lang.annotation.Target;
 public @interface AdminVisible {
     public boolean tableVisible() default true;
     public int order() default 1000;
+    public String className() default "";
 }

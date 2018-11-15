@@ -1,5 +1,6 @@
 package com.tinecommerce.admin.panel.controller;
 
+import com.tinecommerce.admin.form.DynamicEntityTable;
 import com.tinecommerce.admin.form.DynamicForm;
 import com.tinecommerce.admin.form.DynamicFormField;
 import com.tinecommerce.admin.panel.AbstractTableLine;
@@ -20,6 +21,10 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import sun.reflect.Reflection;
 
+import javax.persistence.EntityManager;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.awt.geom.Area;
 import java.lang.reflect.Constructor;
@@ -40,17 +45,35 @@ public class DynamicEntityController {
     private DynamicEntityDao dynamicEntityDao;
 
     @GetMapping("/entities/{entityCode}")
+    @Transactional
     public String getDynamicEntityList(final Model model, @PathVariable(name = "entityCode") String entityCode) throws ClassNotFoundException {
         model.addAttribute("menuItems", adminMenuGroupRepository.findAll());
         String className = adminMenuItemRepository.findByCode(entityCode)
                 .map(AdminMenuItem::getClassName)
                 .orElse("");
-        List<Field> headers = ExtensionUtil.getPolymorphicFielsdOf(className)
+        List<? extends AbstractEntity> entities = dynamicEntityDao.findAllPolimorficEntities(className);
+        DynamicEntityTable entityTable = buildDynamicTable(className, entities);
+        model.addAttribute("headers", entityTable.getHeaders());
+        model.addAttribute("abstractTableLines", entityTable.getTableLines());
+        model.addAttribute("entityName", entityCode);
+        return "tables";
+    }
+
+    private DynamicEntityTable buildDynamicTable(String className, List<? extends AbstractEntity> entities) throws ClassNotFoundException {
+        List<Field> headers = findDynamicHeaders(className);
+        List<AbstractTableLine> abstractTableLines = buildAbstractTableLines(entities, className, headers);
+        return new DynamicEntityTable(className, headers.stream().map(Field::getName).collect(Collectors.toList()), abstractTableLines);
+    }
+
+    private List<Field> findDynamicHeaders(String className) throws ClassNotFoundException {
+        return ExtensionUtil.getPolymorphicFielsdOf(className)
                 .stream()
                 .filter(field -> field.isAnnotationPresent(AdminVisible.class) && field.getAnnotation(AdminVisible.class).tableVisible())
                 .sorted(Comparator.comparingInt(field -> field.getAnnotation(AdminVisible.class).order()))
                 .collect(Collectors.toList());
-        List<? extends AbstractEntity> entities = dynamicEntityDao.findAllPolimorficEntities(className);
+    }
+
+    private List<AbstractTableLine> buildAbstractTableLines(List<? extends AbstractEntity> entities, String className, List<Field> headers) throws ClassNotFoundException {
         List<AbstractTableLine> abstractTableLines = new ArrayList<>();
         for (AbstractEntity abstractEntity : entities) {
             AbstractTableLine abstractTableLine = new AbstractTableLine();
@@ -66,11 +89,11 @@ public class DynamicEntityController {
             }
             abstractTableLines.add(abstractTableLine);
         }
-        model.addAttribute("headers", headers.stream().map(Field::getName).collect(Collectors.toList()));
-        model.addAttribute("abstractTableLines", abstractTableLines);
-        model.addAttribute("entityName", entityCode);
-        return "tables";
+        return abstractTableLines;
     }
+
+    @PersistenceContext
+    protected EntityManager entityManager;
 
     @GetMapping("/entities/{entityCode}/{id}/edit")
     @Transactional
@@ -79,6 +102,7 @@ public class DynamicEntityController {
         model.addAttribute("menuItems", adminMenuGroupRepository.findAll());
         model.addAttribute("entityName", entityCode);
         model.addAttribute("id", id);
+        List<DynamicEntityTable> relationalEntities = new ArrayList<>();
         String className = adminMenuItemRepository.findByCode(entityCode)
                 .map(AdminMenuItem::getClassName)
                 .orElse("");
@@ -88,24 +112,33 @@ public class DynamicEntityController {
                 .sorted(Comparator.comparingInt(field -> field.getAnnotation(AdminVisible.class).order()))
                 .collect(Collectors.toList());
         AbstractEntity entity = dynamicEntityDao.findAllPolimorficEntityWithId(className, id);
-            DynamicForm dynamicForm = new DynamicForm();
-            dynamicForm.setEntityClass(entityCode);
-            for (Field field : fields) {
-                for (Class<?> cls : ExtensionUtil.getSubclassesOf(className)) {
-                    try {
-                        Field classField = cls.getDeclaredField(field.getName());
-                        classField.setAccessible(true);
-                        String fieldType = "text";
-                        if(classField.getType().getSimpleName().equals("Boolean"))
-                        {
-                            fieldType = "checkbox";
-                        }
-                        dynamicForm.getDynamicFormFields().add(new DynamicFormField(fieldType, field.getName(), classField.get(entity)));
-
-                    } catch (NoSuchFieldException | IllegalAccessException ignored) {
+        DynamicForm dynamicForm = new DynamicForm();
+        dynamicForm.setEntityClass(entityCode);
+        for (Field field : fields) {
+            for (Class<?> cls : ExtensionUtil.getSubclassesOf(className)) {
+                try {
+                    Field classField = cls.getDeclaredField(field.getName());
+                    classField.setAccessible(true);
+                    String fieldType = "text";
+                    if (classField.getType().getSimpleName().equals("Boolean")) {
+                        fieldType = "checkbox";
                     }
+                    if (Collection.class.isAssignableFrom(classField.getType()) && classField.getAnnotation(OneToMany.class) != null) {
+                        String foreignKey = field.getAnnotation(OneToMany.class).mappedBy();
+                        String relationalClassName = field.getAnnotation(AdminVisible.class).className();
+                        List<AbstractEntity> lazyCollection = dynamicEntityDao.findAllPolimorficEntitiesWithForeignKey(relationalClassName, foreignKey, entity.getId());
+                        DynamicEntityTable entityTable = buildDynamicTable(relationalClassName, lazyCollection);
+                        entityTable.setName(field.getName());
+                        relationalEntities.add(entityTable);
+                    } else {
+                        dynamicForm.getDynamicFormFields().add(new DynamicFormField(fieldType, field.getName(), classField.get(entity)));
+                    }
+
+                } catch (NoSuchFieldException | IllegalAccessException ignored) {
                 }
             }
+        }
+        model.addAttribute("relationalEntities", relationalEntities);
         model.addAttribute("dynamicForm", dynamicForm);
         return "dynamicEntityForm";
     }
@@ -131,10 +164,10 @@ public class DynamicEntityController {
                     Field classField = cls.getDeclaredField(field.getName());
                     classField.setAccessible(true);
                     String fieldType = "text";
-                    if(classField.getType().getSimpleName().equals("Boolean")) {
+                    if (classField.getType().getSimpleName().equals("Boolean")) {
                         fieldType = "checkbox";
                     }
-                    if(!field.getName().equals(AbstractEntity.FIELD_ID)) {
+                    if (!field.getName().equals(AbstractEntity.FIELD_ID)) {
                         dynamicForm.getDynamicFormFields().add(new DynamicFormField(fieldType, field.getName(), null));
                     }
 
@@ -164,12 +197,10 @@ public class DynamicEntityController {
                 try {
                     Field classField = cls.getDeclaredField(field.getName());
                     classField.setAccessible(true);
-                    if(classField.getType().getSimpleName().equals("Boolean"))
-                    {
+                    if (classField.getType().getSimpleName().equals("Boolean")) {
                         classField.setBoolean(entity, Boolean.parseBoolean(params.get(field.getName())));
                     }
-                    if(classField.getType().getSimpleName().equals("String"))
-                    {
+                    if (classField.getType().getSimpleName().equals("String")) {
                         classField.set(entity, params.get(field.getName()));
                     }
                 } catch (NoSuchFieldException | IllegalAccessException ignored) {
@@ -199,12 +230,10 @@ public class DynamicEntityController {
                 try {
                     Field classField = cls.getDeclaredField(field.getName());
                     classField.setAccessible(true);
-                    if(classField.getType().getSimpleName().equals("Boolean"))
-                    {
+                    if (classField.getType().getSimpleName().equals("Boolean")) {
                         classField.setBoolean(entity, Boolean.parseBoolean(params.get(field.getName())));
                     }
-                    if(classField.getType().getSimpleName().equals("String"))
-                    {
+                    if (classField.getType().getSimpleName().equals("String")) {
                         classField.set(entity, params.get(field.getName()));
                     }
                 } catch (NoSuchFieldException | IllegalAccessException ignored) {
@@ -218,7 +247,7 @@ public class DynamicEntityController {
     @RequestMapping(value = "/entities/{entityCode}/{id}/delete", method = RequestMethod.POST)
     @Transactional
     public String deleteEntity(final Model model, @PathVariable(name = "entityCode") String entityCode,
-                             @PathVariable(name = "id") Long id) throws ClassNotFoundException {
+                               @PathVariable(name = "id") Long id) throws ClassNotFoundException {
         String className = adminMenuItemRepository.findByCode(entityCode)
                 .map(AdminMenuItem::getClassName)
                 .orElse("");
@@ -226,4 +255,6 @@ public class DynamicEntityController {
         dynamicEntityDao.delete(entity);
         return "redirect:/entities/" + entityCode;
     }
+
+
 }
