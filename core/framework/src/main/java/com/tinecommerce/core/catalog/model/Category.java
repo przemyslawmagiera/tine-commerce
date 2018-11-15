@@ -21,18 +21,21 @@ public class Category extends AbstractNameableEntity {
     @JoinTable(name="product_category",
             joinColumns= @JoinColumn(name="category_id"),
             inverseJoinColumns=@JoinColumn(name="product_id"))
+    @AdminVisible(tableVisible = false, className = "com.tinecommerce.core.catalog.model.Product", mappedBy = "categories")
     private Set<Product> products = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name="category_category",
             joinColumns= @JoinColumn(name="parent_category_id"),
             inverseJoinColumns=@JoinColumn(name="child_category_id"))
+    @AdminVisible(tableVisible = false, className = "com.tinecommerce.core.catalog.model.Category", mappedBy = "parentCategories")
     private Set<Category> childCategories = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name="category_category",
             joinColumns= @JoinColumn(name="child_category_id"),
             inverseJoinColumns=@JoinColumn(name="parent_category_id"))
+    @AdminVisible(tableVisible = false, className = "com.tinecommerce.core.catalog.model.Category", mappedBy = "childCategories")
     private Set<Category> parentCategories = new HashSet<>();
 
     @OneToMany(targetEntity = CategoryFeatureAssignment.class, mappedBy = "category", cascade = CascadeType.ALL)

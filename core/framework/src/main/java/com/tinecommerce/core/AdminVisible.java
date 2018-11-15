@@ -10,5 +10,7 @@ import java.lang.annotation.Target;
 public @interface AdminVisible {
     public boolean tableVisible() default true;
     public int order() default 1000;
+    //for relations:
     public String className() default "";
+    public String mappedBy() default "";
 }

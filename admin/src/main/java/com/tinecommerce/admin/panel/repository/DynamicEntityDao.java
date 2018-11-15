@@ -2,9 +2,12 @@ package com.tinecommerce.admin.panel.repository;
 
 import com.tinecommerce.core.AbstractEntity;
 import com.tinecommerce.core.catalog.model.Product;
+import com.tinecommerce.core.catalog.repository.CategoryRepository;
+import com.tinecommerce.core.catalog.repository.ProductRepository;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.reflections.Reflections;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -54,12 +57,24 @@ public class DynamicEntityDao {
         return (AbstractEntity) entityManager.createQuery(c).getSingleResult();
     }
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     public List<AbstractEntity> findAllPolimorficEntitiesWithForeignKey(String className, String foreignKeyField, Long foreignKey) throws ClassNotFoundException {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery c = criteriaBuilder.createQuery(getCeilingClass(className));
         Root root = c.from(getCeilingClass(className));
         c.select(root);
         c.where(criteriaBuilder.equal(root.get(foreignKeyField).get(AbstractEntity.FIELD_ID), foreignKey));
+        return (List<AbstractEntity>) entityManager.createQuery(c).getResultList();
+    }
+
+    public List<AbstractEntity> findAllPolimorficEntitiesWithManyToManyRelation(String className, String manyToManyField, Long foreignKey) throws ClassNotFoundException {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery c = criteriaBuilder.createQuery(getCeilingClass(className));
+        Root root = c.from(getCeilingClass(className));
+        c.select(root);
+        c.where(root.join(manyToManyField).get(AbstractEntity.FIELD_ID).in(foreignKey));
         return (List<AbstractEntity>) entityManager.createQuery(c).getResultList();
     }
 

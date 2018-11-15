@@ -24,10 +24,12 @@ public class CategoryFeature extends AbstractNameableEntity implements Facetable
 
    @OneToMany(targetEntity = CategoryFeatureAssignment.class, mappedBy = "categoryFeature", cascade = CascadeType.ALL,
            orphanRemoval = true)
+   @AdminVisible(tableVisible = false, className = "com.tinecommerce.core.catalog.model.CategoryFeatureAssignment")
    private Set<CategoryFeatureAssignment> categoryFeatureAssignments;
 
    @OneToMany(targetEntity = CategoryFeatureValue.class, mappedBy = "categoryFeature", fetch = FetchType.LAZY,
            cascade = CascadeType.ALL, orphanRemoval = true)
+   @AdminVisible(tableVisible = false, className = "com.tinecommerce.core.catalog.model.CategoryFeatureValue")
    private Set<CategoryFeatureValue> categoryFeatureValues;
 
    @Column(name = "searchable", nullable = false)

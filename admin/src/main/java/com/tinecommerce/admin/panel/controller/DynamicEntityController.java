@@ -21,10 +21,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import sun.reflect.Reflection;
 
-import javax.persistence.EntityManager;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.PersistenceContext;
+import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.awt.geom.Area;
 import java.lang.reflect.Constructor;
@@ -127,6 +124,16 @@ public class DynamicEntityController {
                         String foreignKey = field.getAnnotation(OneToMany.class).mappedBy();
                         String relationalClassName = field.getAnnotation(AdminVisible.class).className();
                         List<AbstractEntity> lazyCollection = dynamicEntityDao.findAllPolimorficEntitiesWithForeignKey(relationalClassName, foreignKey, entity.getId());
+                        DynamicEntityTable entityTable = buildDynamicTable(relationalClassName, lazyCollection);
+                        entityTable.setName(field.getName());
+                        relationalEntities.add(entityTable);
+                    } else if (Collection.class.isAssignableFrom(classField.getType()) && classField.getAnnotation(ManyToMany.class) != null) {
+                        String foreignKey = field.getAnnotation(ManyToMany.class).mappedBy();
+                        if(foreignKey.equals("")) {
+                            foreignKey = field.getAnnotation(AdminVisible.class).mappedBy();
+                        }
+                        String relationalClassName = field.getAnnotation(AdminVisible.class).className();
+                        List<AbstractEntity> lazyCollection = dynamicEntityDao.findAllPolimorficEntitiesWithManyToManyRelation(relationalClassName, foreignKey, entity.getId());
                         DynamicEntityTable entityTable = buildDynamicTable(relationalClassName, lazyCollection);
                         entityTable.setName(field.getName());
                         relationalEntities.add(entityTable);
