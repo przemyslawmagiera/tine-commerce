@@ -59,7 +59,7 @@ public class DynamicEntityController {
     private DynamicEntityTable buildDynamicTable(String className, List<? extends AbstractEntity> entities) throws ClassNotFoundException {
         List<Field> headers = findDynamicHeaders(className);
         List<AbstractTableLine> abstractTableLines = buildAbstractTableLines(entities, className, headers);
-        return new DynamicEntityTable(className, headers.stream().map(Field::getName).collect(Collectors.toList()), abstractTableLines);
+        return new DynamicEntityTable(className, "",  headers.stream().map(Field::getName).collect(Collectors.toList()), abstractTableLines);
     }
 
     private List<Field> findDynamicHeaders(String className) throws ClassNotFoundException {
@@ -88,9 +88,6 @@ public class DynamicEntityController {
         }
         return abstractTableLines;
     }
-
-    @PersistenceContext
-    protected EntityManager entityManager;
 
     @GetMapping("/entities/{entityCode}/{id}/edit")
     @Transactional
@@ -126,6 +123,8 @@ public class DynamicEntityController {
                         List<AbstractEntity> lazyCollection = dynamicEntityDao.findAllPolimorficEntitiesWithForeignKey(relationalClassName, foreignKey, entity.getId());
                         DynamicEntityTable entityTable = buildDynamicTable(relationalClassName, lazyCollection);
                         entityTable.setName(field.getName());
+                        adminMenuItemRepository.findByClassName(relationalClassName).ifPresent(name ->
+                                entityTable.setCode(name.getCode()));
                         relationalEntities.add(entityTable);
                     } else if (Collection.class.isAssignableFrom(classField.getType()) && classField.getAnnotation(ManyToMany.class) != null) {
                         String foreignKey = field.getAnnotation(ManyToMany.class).mappedBy();
@@ -136,6 +135,8 @@ public class DynamicEntityController {
                         List<AbstractEntity> lazyCollection = dynamicEntityDao.findAllPolimorficEntitiesWithManyToManyRelation(relationalClassName, foreignKey, entity.getId());
                         DynamicEntityTable entityTable = buildDynamicTable(relationalClassName, lazyCollection);
                         entityTable.setName(field.getName());
+                        adminMenuItemRepository.findByClassName(relationalClassName).ifPresent(name ->
+                                entityTable.setCode(name.getCode()));
                         relationalEntities.add(entityTable);
                     } else {
                         dynamicForm.getDynamicFormFields().add(new DynamicFormField(fieldType, field.getName(), classField.get(entity)));
@@ -160,7 +161,7 @@ public class DynamicEntityController {
                 .orElse("");
         List<Field> fields = ExtensionUtil.getPolymorphicFielsdOf(className)
                 .stream()
-                .filter(field -> field.isAnnotationPresent(AdminVisible.class))
+                .filter(field -> field.isAnnotationPresent(AdminVisible.class) && field.getAnnotation(AdminVisible.class).tableVisible())
                 .sorted(Comparator.comparingInt(field -> field.getAnnotation(AdminVisible.class).order()))
                 .collect(Collectors.toList());
         DynamicForm dynamicForm = new DynamicForm();

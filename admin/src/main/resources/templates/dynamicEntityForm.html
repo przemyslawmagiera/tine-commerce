@@ -63,9 +63,9 @@
             </div>
             <div class="container">
                 <h3 th:text="${'Relations of ' + dynamicForm.entityClass}"></h3>
-                <div th:each="relation : ${relationalEntities}" class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-responsive-sm" id="dataTable">
+                <div th:each="relation : ${relationalEntities}">
+                    <div>
+                        <table class="table table-responsive-sm">
                             <thead>
                             <h5 th:text="${relation.name}"></h5>
                             <tr>
@@ -76,7 +76,7 @@
                             <tr th:each="atl : ${relation.tableLines}">
                                 <td th:each="atlV,iter : ${atl.values}">
                                     <a th:if="${iter.index == 0}"
-                                       th:href="@{'/entities/' + ${entityName} + '/' + ${atlV} + '/edit'}"
+                                       th:href="@{'/entities/' + ${relation.code} + '/' + ${atlV} + '/edit'}"
                                        th:text="${atlV.toString()}"></a>
                                     <p th:unless="${iter.index == 0}" th:text="${atlV.toString()}"></p>
                                 </td>

@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class DynamicEntityTable {
     private String name;
+    private String code;
     private List<String> headers;
     private List<AbstractTableLine> tableLines;
 }

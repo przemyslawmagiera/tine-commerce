@@ -36,7 +36,11 @@
 
         <div class="container-fluid">
           <!-- DataTables Example -->
+          <form th:action="@{'/entities/' +  ${entityName}+ '/add'}" method="get">
+            <button type="submit" class="btn btn-info">ADD</button>
+          </form>
           <div class="card mb-3">
+
             <div class="card-header" th:text="${'Table of ' + entityName}">
               <i class="fas fa-table"></i>
               </div>

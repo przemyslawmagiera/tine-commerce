@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface AdminMenuItemRepository extends JpaRepository<AdminMenuItem, Long> {
     Optional<AdminMenuItem> findByCode(String code);
+    Optional<AdminMenuItem> findByClassName(String className);
 }
