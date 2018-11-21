@@ -37,8 +37,23 @@ Powyższe problemy niektórych systemów e-commerce można sprowadzić do nastę
 	\item brak archiwizacji produktów
 \end{itemize}
 
-\section{Proponowane rozwiązania}
-W wstępie określono listę wymagań funkcjonalnych. W podrozdziale \textbf{Charakterystyka problemu} nakreślono najważniejsze problemy sklepów internetowych i frameworków e-commerce. Rysunek \ref{wymagania} ilustruje pokrycie znalezionych problemów wymaganiami funkcjonalnymi opisywanego frameworka.
+\section{Proponowane rozwiązania - wymagania funkcjonalne}
+Jasno zdefiniowane problemy same nasuwają pewne rozwiązania, dlatego określono listę następujących wymagań funkcjonalnych:
+\begin{itemize}
+	\item wykorzystanie najnowszych technologii oraz IoC
+	\item podłączony zewnętrzny serwer Apache Solr, służący do bardzo szybkiej obsługi zapytań związanych z katalogiem produktowym,
+	\item prosty i efektywny system klasyfikacyjny dla produktów,
+	\item reużywalny i rozszerzalny panel administracyjny 
+	\item zaawansowana obsługą uprawnień dla panelu administracyjnego,
+	\item elastyczny model, pozwalający na rozszerzanie klas bez konieczności ingerowania w strukture systemu
+	\item łatwy w skonfigurowaniu i wydajny mechanizm wyszukiwania,
+	\item relacyjna i nierelacyjna baza danych,
+	\item zaiplementowana obsługa procesu zamówienia,
+	\item inicjalizer projektów, pozwalający szybko stworzyć przykładowe rozwiązanie e-commerce.
+	\item mechanizm wersjonowania produktu
+\end{itemize} 
+
+W podrozdziale \textbf{Charakterystyka problemu} nakreślono najważniejsze problemy sklepów internetowych i frameworków e-commerce. Rysunek \ref{wymagania} ilustruje pokrycie znalezionych problemów wymaganiami funkcjonalnymi opisywanego frameworka.
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=1\textwidth]{wymagania.jpg}

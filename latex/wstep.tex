@@ -1,22 +1,8 @@
 \chapter{Wstęp}
 \thispagestyle{chapterBeginStyle}
-Celem niniejszej pracy dyplomowej jest zaprojektowanie i zaimplementowanie frameworku służącego do usprawnienia implementacji systemów e-commerce. Istnieje wiele rozwiązań tego typu, jednak bardzo duża część z nich nie oferuje satysfakcjonujących parametrów wydajnościowych, przez co platformy oparte o takie frameworki są czesto bardzo powolne, do tego rozwijane od wielu lat wykorzystują stare rozwiązania i technologie. Prowadzi to często do niepotrzebnego skalowania pionowego aplikacji, czyli zwiększania mocy obliczeniowej. Proces ten wiąże się z bardzo dużymi kosztami, szczególnie w przypadku platform handlowych typu B2B. Zdecydowanie lepszym wyjściem okazuje się w takim przypadku jeden z dzisiejszych trendów budowania aplikacji, czyli skalowanie poziome, polegające na dzieleniu aplikacji według zastosowania poszczególnych komponentów, umieszczając niezależne jej części na serwerach dziedzinowych (architektura mikroserwisowa). Taka architektura pozwala na skalowanie tylko konkretnych, najbardziej narażonych na wzmożony ruch, elementów infrastruktury, co skutkuje bardzo dużą oszczędnością w stosunku do aplikacji monolitycznych. Budowa mikroserwisowa nie jest jednak cudownym środkiem na każdego rodzaju problemy dzisiejszych aplikacji internetowych, wiąże się z nim bowiem wiele problemów, jak chociażby integracja i synchronizacja między komponentami lub konieczność administracji bardzo złożonego środowiska. Właśnie ze względu na to ostatnie widzimy dziś tak wiele ofert pracy na stanowisko DevOps (development and operations). 
+Celem niniejszej pracy dyplomowej jest zaprojektowanie i zaimplementowanie frameworku służącego do usprawnienia implementacji systemów e-commerce. Istnieje wiele rozwiązań tego typu, jednak bardzo duża część z nich nie oferuje satysfakcjonujących parametrów wydajnościowych, przez co platformy oparte o takie frameworki są czesto bardzo powolne, do tego rozwijane od wielu lat wykorzystują stare rozwiązania i technologie. Prowadzi to często do niepotrzebnego skalowania pionowego aplikacji, czyli zwiększania mocy obliczeniowej. Proces ten wiąże się z bardzo dużymi kosztami, szczególnie w przypadku platform handlowych typu B2B. Zdecydowanie lepszym wyjściem okazuje się w takim przypadku jeden z dzisiejszych trendów budowania aplikacji, czyli skalowanie poziome, polegające na dzieleniu aplikacji według zastosowania poszczególnych komponentów, umieszczając niezależne jej części na serwerach dziedzinowych (architektura mikroserwisowa). Taka architektura pozwala na skalowanie tylko konkretnych, najbardziej narażonych na wzmożony ruch, elementów infrastruktury, co skutkuje bardzo dużą oszczędnością w stosunku do aplikacji monolitycznych. Budowa mikroserwisowa nie jest jednak cudownym środkiem na każdego rodzaju problemy dzisiejszych aplikacji internetowych, wiąże się z nim bowiem wiele problemów, jak chociażby integracja i synchronizacja między komponentami lub konieczność administracji bardzo złożonego środowiska. Właśnie ze względu na to ostatnie widzimy dziś tak wiele ofert pracy na stanowisko DevOps (development and operations). Wydaje się dlatego, że architektura monolityczna z oddzieleniem warstwy katalogowej (tej najbardziej obciążonej) jest optymalnym rozwiązaniem problemu implementacji sklepów internetowych.
 \newline
-
 Często dewelopment aplikacji idzie w parze z presją czasu, przez co zapomina  się o jakości kodu i rozwiązaniach, które poprawiłyby wydajność i ograniczyły konieczność skalowania. Z zamkniętymi oczami podąża się za schematami i szablonami, aby dostarczyć rozwiązanie jak najszybciej, a nie jak najlepiej. Dlatego właśnie założeniem projektu w ramach pracy jest zaprojektowanie i implementacja frameworku e-commerce spełniającego następujące założenia funkcjonalne:
-\begin{itemize}
-  	\item wykorzystanie najnowszych technologii oraz IoC
-	\item podłączony zewnętrzny serwer Apache Solr, służący do bardzo szybkiej obsługi zapytań związanych z katalogiem produktowym,
-	\item prosty i efektywny system klasyfikacyjny dla produktów,
-	\item reużywalny i rozszerzalny panel administracyjny 
-	\item zaawansowana obsługą uprawnień dla panelu administracyjnego,
-	\item elastyczny model, pozwalający na rozszerzanie klas bez konieczności ingerowania w strukture systemu
-	\item łatwy w skonfigurowaniu i wydajny mechanizm wyszukiwania,
-	\item relacyjna i nierelacyjna baza danych,
-	\item zaiplementowana obsługa procesu zamówienia,
-	\item inicjalizer projektów, pozwalający szybko stworzyć przykładowe rozwiązanie e-commerce.
-	\item mechanizm wersjonowania produktu
-\end{itemize}
 
 Praca składa się z czterech rozdziałów. W rozdziale pierwszym omówiono strukturę przedsiębior-
 stwa . . . , scharakteryzowano grupy użytkowników oraz przedstawiono procedury związane z obie-
@@ -25,7 +11,7 @@ udostępniania informacji . . . , w ramach . . . .
 W rozdziale drugim przedstawiono szczegółowy projekt systemy w notacji UML. Wykorzystano
 diagramy . . . . Zawarto w niej w pseudokod algorytmów generowania oraz omówiono jego właściwo-
 ści. . . 
-
+\newpage
 \section{Słowniczek}
 \noindent
 \textit{indeksacja} -- proces synchronizacji pomiędzy relacyjną bazą danych, a szybką bazą noSQL, używany w systemie do encji najbardziej narzuconych na duże wykorzystanie. W skrócie: 
