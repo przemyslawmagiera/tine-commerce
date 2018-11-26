@@ -115,6 +115,14 @@ Pierwszym krokiem jest znalezienie wszystkich produktów, co nie jest również 
 	\caption{{\color{black}Diagram przykładowy skąd mogą pochodzić cechy produktu}} \label{cechyProd}
 \end{figure}
 
+\subsection{Konstrukcja zapytania dynamicznego Apache Solr}
+Na diagramach use case zostały opisane możliwości konfiguracji mechanizmu wyszukującego. Zdefiniowane wymagania zostały zrealizowane za pomocą konstrukcji dynamicznego zapytania. W prostych słowach chodzi tu o kwerendę zwracającą produkty przy wyszukiwaniu. Wykres na rysunku \ref{konsDynZapy} przedstawia algorytm tworzący te zapytania. Pierwszy etap widoczny na rysunku nasuwa podejrzenie, że w bazie danych musi istnieć tabela z wylistowanymi polami, które będą wyszukiwalne w sklepie, jest to jak najbardziej trafne przypuszczenie. Dodatkowo w tabeli zostały umieszczone dodatkowe ustawienia dla pól wyszukiwania, aby mechanizm mógł być w pełni konfigurowalny. 
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.5]{konsDynZapy.png}
+	\end{center}
+	\caption{{\color{black}Diagram przedstawiający algorytm kostrukcji dynamicznego zapytania Apache Solr}} \label{konsDynZapy}
+\end{figure}
 \subsection{Konstrukcja dynamicznej tabeli encyjnej}
 Dynamiczna tabela encyjna opisana w poprzednim podrozdziale, jest wbrew pozorom zadaniem analogicznym do wyciągania cech z produktu. Ułatwieniem jest to, że w tabeli nie uwzględnia się atrybutów z systemu klasyfikacyjnego, gdyż dotyczy on tylko produktów, niestety utrudnieniem jest to, że nie jest wiadome jakie klasy dokładnie powinny być wyświetlone w tabelach. Jedyne co jest dane to tabela konfiguracyjna z kodami klas, które mają zostać wyświetlone w panelu administracyjnym. Proces został opisany na diagramie z rysunku \ref{konsTabEnc} 
 
@@ -127,73 +135,169 @@ Najpierw szukane są encje z rodzaju podanego we wspomnianej tablei, następnie 
 \end{figure}
 
 \newpage
-\subsection{Konstrukcja dynamicznego formularze encyjnego}
-Odbywa się to na bardzo podobnej zasadzie, jak konstrukcja tabeli. Jednak poza polami prostymi zaadnotowanymi jako widzialne w panelu administracyjnym, problem stanowią relacje, które trzeba wyświetlić. Aby zachować rozszerzalność platformie zastosowane zostały tu mechanizmy z dwóch poprzednich przykładów.   
+\subsection{Konstrukcja dynamicznego formularza encyjnego} \label{s_konDynForm}
+Odbywa się to na bardzo podobnej zasadzie, jak konstrukcja tabeli. Jednak poza polami prostymi zaadnotowanymi jako widzialne w panelu administracyjnym, problem stanowią relacje, które trzeba wyświetlić. Aby zachować rozszerzalność platformie zastosowane zostały tu mechanizmy z dwóch poprzednich przykładów. Po znalezieniu listy pól danej klasy, następuje tu jeszcze sklasyfikowanie ich względem tego, czy są to relacje czy nie. Wiadome jest, że relacji nie można przedstawić w postaci pola tekstowego, dlatego potrzebujemy wtedy ręcznie doczytać kolekcję w relacji z encją, której detale są wyświetlane. Wszystkie kolekcje są w systemie kolekcjami leniwymi (ze względu na performance), dlatego przy manipulacji encją jej duże elementy takie jak kolekcje są doczytywane dopiero w moemencie ich użycia(ponieważ wymagają joinów, a wiadome jest że join to iloczyn kartezjański, oczywiście odpowiednio napisany nie będzie dokładnie tym samym jednak to i tak duże obciążenie). W zwykłej sytuacji framework Hibernate doczytałby sam tę kolekcję, jednak przy tak dużej ogólności rozwiązania nie jest to możliwe, gdyż na poziomie dynamicznego formularza mówimy o \texttt{AbstractEntity}\footnote{AbstractEntity - klasa w systemie reprezentująca najbardziej podstawową encję, jej cechy to id oraz kod}, o której właściwie w ogóle nie ma informacji, więc Hibernate nie jest \textit{świadomy} manipulacji i nie doczyta jej kolekcji nawet będąc w sesji. To przysporzyło wiele kłopotów, jednak problem został rozwiązany ręcznym doczytaniem kolekcji za pomocą Criteria API\footnote{Criteria API - API do komunikacji z bazą danych, zgodne se standardem JPA, używane do bardziej zaawansowanych i niestandardowych operacji}. Schemat algorytmu rozwiązującego problem został umieszczony na rysunku \ref{konsFormEnc}.
 
-\newpage
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.5]{konsFormEnc.png}
+	\end{center}
+	\caption{{\color{black}Diagram aktywności opisujący algorytm wyszukujący cechy encji uwzględnianych w tabeli.}} \label{konsFormEnc}
+\end{figure}
+
+\subsection{Podsumowanie diagramów aktywności}
+Diagramy aktywności i zaprezentowane rozwiązania w nich pokrywają pewne przypadki użycia, w tej sekcji zostanie podkreślone jak przedstawione algorytmy spełniają zdefiniowane use case'y.
+
+Patrząc na sekcję \textbf{Wyszukiwanie cech produktu} i \textbf{Konstrukcja zapytania dynamicznego Apache Solr} zostały zrealizowane następujące przypadki użycia:
+\begin{itemize}
+	\item Programisty: 
+	\subitem Rozszerzenie klasy produkt
+	\subitem Konfiguracja mechanizmu wyszukiwania
+	\subitem Indeksacja własnych pól
+	\item Administratora:
+	\subitem Konfiguracja mechanizmu wyszukiwania
+	\subitem Dodanie atrybutów do produktu
+	\subitem Zmiana właściwości produktu
+	\item Klienta sklepu
+	\subitem Wyszukiwanie produktu
+	\subitem Firtrowanie wyników
+\end{itemize}
+
+Sekcja \textbf{Konstrukcja dynamiczniej tabeli encyjnej} i \textbf{Konstrukcja dynamicznego formularza encyjnego} pokryły następujące przypadki użycia:
+\begin{itemize}
+	\item Programisty: 
+	\subitem Konfiguracja panelu administracyjnego
+	\subitem Dodanie własnych encji
+	\subitem Zarządzanie encjami
+	\item Administratora:
+	\subitem Zmiana właściwości kategorii
+	\subitem Zarządzanie użytkownikami 
+	\subitem Zarządzanie zamówieniami
+	\subitem Zarządzanie uprawnieniami
+\end{itemize}
+
+W podrozdziale opisującym przypadki użycia opisano również przypadki w sekcjach o dynamicznym formularzu, tabeli i manipulacji produktem, oczywiste jest, że wspomniane użycia bezpośrednio wiążą się z opisanymi komponentami.
+
+Realizacja przypadków użycia, których nie mogły pokryć algorytmy opisane w niniejszym podrozdziale ze względu na swoje biznesowe pochodzenie, zostaną opisane na diagramach sekwencji. 
+
 \section{Diagramy sekwencji}
 
-W tej sekcji zostały przedstawione diagramy sekwencji dla elementów systemu. Aby zachować spójność w rozważaniach można podzielić je na trzy grupy: 
-\begin{itemize}
-	\item diagramy dotyczące budowania rozwiązań e-commerce za pomocą platformy
-	\item diagramy dotyczące zarządzania rozwiązaniami e-commerce
-	\item diagramy dotyczące przebiegu funkcjinalności biznesowych związanych z kientem końcowym
-\end{itemize}  
-Jak można zauważyć, te trzy grupy korespondują z aktorami opisywanego rozwiązania, zdefiniowanymi na początku rozdziału. Punkt pierwszy dotyczy Programisty, drugi Administratora, a ostatni Klienta końcowego. 
+W tej sekcji zostały przedstawione diagramy sekwencji dla poszczególnych elementów systemu, mają one razem z diagramami aktywności zrealizować wszystkie przypadki użycia. Diakramy sekwencji dobrze oddają sens funkcjonalności biznesowych i właśnie ich dotyczy ta sekcja. 
+
+\subsection{Zmiana właściwości dowolnej encji}
+W każdym systemie bazodanowym, konieczna jest manipulacja encjami. We wcześniejszych rozdziałach zostało wprowadzone pojęcie dynamicznych tabel i formularzy edycyjnych. Z punktu widzenia bazy danych, nie ma dużego znaczenia jaka encja jest edytowana, zarówno Produkt jak i Kategoria to jedynie zbiór krotek w tabeli relacyjnej, dlatego właśnie zdecydowano się na generyczny mechanizm modyfikacji encji. W prostych słowach, w systemie nie ma osobnych formularzy edycyjnych dla poszczególnych encji, są one generowane na podstawie kodu Javowego. 
+
+Funkcjonalność zmiany właściwości dowolnej encji zostanie omówiona na przykładzie zmiany nazwy produktu, ale jak już wyżej wspomniałem, ten sam mechanizm działa w dowolnej encji, która może być modyfikowana przez framework. Po zalogowaniu się i wyświetleniu menu, administrator wybiera dowolny produkt, po czym zmienia dane pole w formularzu edycji i następnie zapisuje produkt. Diagram \ref{zmianaWlEncji} przedstawia cały proces. Najważniejsze etapy to 5 oraz od 8 do 13, to one odpowiedzialne są za elastyczność systemu - każda encja jest modyfikowana w ten sam sposób - generycznie, przez refleksję. W tym miejscu widać główny cel i zamysł pracy: system jest siadomy tego jaki obiekt edytuje, dlatego może mieć dostęp do jego właściwości (9. findPolimorficFieldsOf) - metoda ta zwraca wszystkie możliwe pola dla danego obiektu, właśnie dlatego, gdy programista nadpisze jakąś klasę, która jest używana w systemie, nic się nie stanie gdyż framework będzie w stanie wyciągnąć z obiektu każde nowe pole. Mechanizm ten zastosowany jest również we wszystkich kluczowych funkcjonalnościach, co skutkuje bardzo elastycznym modelem.
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.4]{zmianaWlEncji.png}
+	\end{center}
+	\caption{{\color{black}Diagram sekwencji opisujący opiisujący zmianę właściwości dowolnej encji na przykładzie produktu.}} \label{zmianaWlEncji}
+\end{figure}
+
+\subsection{Modyfikacja dowolnej relacji encji}
+Dynamiczny formularz encyjny omówiony na diagramach aktywności zawiera również pola relacyjne, rysunek \ref{zmianaWRel} przedstawia diakram sekwencji zmiany w relacji dowolnej encji na przykładzie dodania dziecka do kategorii. Okazuje się być dużym problemem dla frameworka, gdyż modyfikowany jest obiekt pewnej klasy i tylko na tej podstawie potrzeba określić jakie ma relacje i co więcej, wyciągnąć je z bazy danych. Problem został rozwiązany poprzez wprowadzenie do systemu dodatkowych parametrów adnotacji \texttt{@AdminVisible} takich jak nazwa klasy \texttt{className} i mapowanie relacji \texttt{mappedBy} - punkt 5 na rysunku \ref{zmianaWRel}, następnie dla wszystkich encji relacyjnych zostaje zbudowana dynamiczna tabela - tylko że wewnątrz formularza edycyjnego (pkt. 6 do 8). Następnie po kliknięciu \textit{add} przy tabelce z relacją, pobierana jest lista możliwych do przypisania encji i w przypadku kliknięcia na dany rekord, zostaje on wprowadzony w relację z edytowaną encją. Kolejne punkty odpowiadają za elastyczność rozwiązania, czyli ponownie (jaj w poprzednich funkcjonalnościach), dla każdej znalezionej encji należy znaleźć klasę sufitową i to na jej podstawie wyciągać pola i tworzyć powiązania. Całość jest przedstawiona w formie pól tekstowych, checkboxów i tabelek z relacjami.
+ \begin{figure}
+ 	\begin{center}
+ 		\includegraphics[scale=0.4]{zmianaWRel.png}
+ 	\end{center}
+ 	\caption{{\color{black}Diagram sekwencji opisujący opiisujący zmianę właściwości dowolnej encji na przykładzie produktu.}} \label{zmianaWRel}
+ \end{figure}
+
+\subsection{Dodanie dowolnej encji na przykładzie atrybutu klasyfikacyjnego}
+Ta ważna część frameworku zostanie przedstawiona na podstawie dodawania facetu - czyli atrybutu, po którym można filtrować produkt. Tak jak w powyższych sekcjach, nie ma dużego znaczenia jaką encję dodajemy - generyczny formularz i mechanizm uzupełniania pól w obiekcie danej klasy jest taki sam dla wszystkich encji w systemie. Dzięki diagramowi sekwecji z rysunku \ref{dodanieFacetu} można zobaczyć jak dodać atrybut do produktu, który będzie wyszukiwalny, a zarazem zobaczyć jak w systemie persystowane są nowe obiekty. Tym razem refleksja została użyta do przepisania wartości z formularza do obiektu (punkty 8 do 12) oraz do znalezienia najwyższej w hierarchii klasy modyfikowanej encji (pkt 5). 
+
+Jak zostało już wspomniane, każdy atrybut może mieć wartości, które powinien przyjmować, np. \textit{rodzaj podszewki: skórzana/gumowa/materiałowa}. Dlatego do atrybutu klasyfikacyjnego możliwe jest zdefiniowane jego przyjmowanych wartości, dzieje się to w dokładnie ten sam sposób, jak na rysunku \ref{dodanieFacetu}, jedynie encja z \texttt{CategoryFeature} (atrybut klasyfikacyjny) zmienia się na \texttt{CategoryFeatureValue}. Po dodaniu możliwych wartości dla stworzonego atrybutu, należy je do niego przypisać w sposób opisany w sekcji \textbf{Modyfikacja dowolnej relacji encji} na diagramie z rysunku \ref{zmianaWRel} oraz dodać atrybut z możliwymi wartościami do relacji kategorii (w formularzu edycji dla kategorii rys. \ref{zmianaWlEncji} i \ref{zmianaWRel}). Atrybut zostanie uwzględniony w wynikach wyszukiwania opisanych w podrozdziale \textbf{Wyszukiwanie prduktu}. Aby rozjaśnić rozważania, został przytoczony przykład \ref{przyklAtrubyt}.
+\begin{example} 
+	Załóżmy, że w mamy kategorię obuwie, chcielibyśmy aby każdy produkt w wynikach wyszukiwania w sklepie był możliwy do odfiltrowania na podstawie rodzaju podszewki. W tym celu dodajemy atrybut klasyfikacyjny Podszewka z zaznaczeniem, że ma być to facet (filtr). Dodajemy 3 wartości: skórzana/gumowa/materiałowa. Przypisujemy możliwe wartości do atrybutu, sam atrybut do kategorii obuwie, od tej pory w formularzu edycyjnym produktu, który znajdzie się w kategorii obuwie, znajdziemy pole rodzaj podszewki. Co więcej gdy więcej niż jeden znaleziony przy wyszukiwaniu w sklepie produkt będzie miał zdefiniowany dla siebie ten atrybut, to pojawi się on (atrybut) jako przycisk do odfiltrowania.  
+	\label{przyklAtrubyt}
+\end{example}
+ 
+  \begin{figure}
+ 	\begin{center}
+ 		\includegraphics[scale=0.4]{dodanieFacetu.png}
+ 	\end{center}
+ 	\caption{{\color{black}Diagram sekwencji opisujący dodanie dowolnej encji na przykładzie atrybutu klasyfikacyjnego.}} \label{dodanieFacetu}
+ \end{figure}
+
+\subsection{Wyszukiwanie produktu}
+Proces wyszukiwania produktu został ujęty na diagramie z rysunku \ref{wyszukiwanieProdSekw}. Aby przedstawić to jak najbardziej obrazowo, w procesie uczestniczą trzy komponenty: frameworkowy kontroler wyszukiwania, serwer Solr, który przechowuje produkty w płaskiej strukturze i baza danych relacyjna, która przechowuje pola i włąsciwości produktu podlegające mechnizmowi wyszukiwania. Na początku z bazy danych wciągane są właściwości i wszystkie zmienne, więc to czy dane pole ma być wyszukiwalne tekstowo, czy ma być filtrem (facetem). Następnie budowana jest dynamiczna kwerenda i wysyłana na serwer Apache Solr, który zwraca wyniki przetwarzane w punktach 10 do 12. Budowane są wtedy reprezentacje filtrów jak i samych wyników wyszukiwania, czyli produktów. 
+
+Wart zauważenia jest region wykresu w ramce \textit{cached}, otóż jednym z postulatów frameworku było nie korzystanie z bazy danych relacyjnej przy wyszukiwaniu w katalogu produktowym (najbardziej obciążony fragment systemu), dlatego właściwości potrzebne do stworzenia kwerendy są pobierane raz, a później trzymane w pamięci cache (jest to mechanizm domyślnie dostarczany przez Hibernate, nie wymagał on implementacji). 
+  \begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.4]{wyszukanieProdSekw.png}
+	\end{center}
+	\caption{{\color{black}Diagram sekwencji opisujący proces wyszukiwania produktu.}} \label{wyszukiwanieProdSekw}
+\end{figure}
 
 
-W tej sekcji należy przedstawić diagramy sekwencji dla obiektów systemu zidentyfikowanych na podstawie wcześniejszych rozważań. Należy wykorzystać nazewnictwo wprowadzone w poprzednich rozdziałach, w szczególności odpowiadające definicjom wprowadzonych klas.
 
-\section{Diagramy stanów}
+\subsection{Proces zakupowy}
+Proces zakupowy jest standardowym mechanizmem konicznym do przeprowadzenia transakcji, nie wymaga on szczególnej optymalizacji, ze względu na to, że nie jest to obciążona część platformy. Klient po wyszukaniu produktu może się zalogować i umieścić go w koszyku, a następnie zamówić produkty dodane do koszyka. Szczególnym rozwiązaniem dla frameworka jest stworzenie kopii produktu w tym momencie, aby klient w razie reklamacji miał się do czego odwołać, gdyż parametry produktu są bardzo dynamiczne i często się zmieniają, więc coś sprzedane 2 tygodnie wcześniej może być niemożliwe do odnalezienia po pewnym czasie. Funkcjonalność ta jest jedną z prostszych i nie wymaga dalszego opisu. Całość została umieszczona na diagramie z rysunku \ref{procZakup}
+\begin{figure}
+	\begin{center}
+	%	\includegraphics[scale=0.4]{procZakup.png}
+	\end{center}
+	\caption{{\color{black}Diagram sekwencji opisujący proces zakupowy.}} \label{procZakup}
+\end{figure}
 
-W tej sekcji należy przedstawić diagramy stanów w których może znaleźć się system. Diagramy te są szczególnie istotne przy projektowaniu systemów czasu rzeczywistego. 
+\subsection{Proces reklamacji}
+Proces reklamacji, ujęty na diagramie \ref{procRek} podobnie jak proces zakupowy, jest przykładowym procesem, który został zaimplementowany za pomocą modelu frameworka, oczywiście jest jego częścią, jednak nie wnosi dużej wartości do samej pracy. Został on zaimplementowany z powodu wspomnianego w rozdziale \textbf{Wymagania funkcjonalne}, we frameworkach e-commerce rzadko spotyka się takie funkcjonalności \textit{out of the box} dlatego jest to coś dodatkowego - rozszerzenie platformy.
+\begin{figure}
+	\begin{center}
+	%	\includegraphics[scale=0.4]{procRek.png}
+	\end{center}
+	\caption{{\color{black}Diagram sekwencji opisujący proces zakupowy.}} \label{procRek}
+\end{figure}
 
+\newpage
 \section{Diagramy klas}
 
-W tej sekcji należy przedstawić diagramy klas dla odpowiednich elementów systemu zidentyfikowane na podstawie wcześniejszych rozważań
+Na podstawie wcześniejszych rozważań możliwe jest zdefiniowanie następujących części frameworku: 
+\begin{itemize}
+	\item system klasyfikacyjny i katalog produktowy
+	\subitem model
+	\subitem warstwa serwisowa systemu klasyfikacyjnego
+	\item proces zamówienia i wersjonowania produktu
+	\item dynamiczna obsługa modelu w panelu administracyjnym
+	\subitem formularz encyjny
+	\subitem tabela encyjna
+	\subitem menu w panelu administracyjnym
+	\item mechanizm indeksacji i wyszukiwania produktów
+\end{itemize}
+Diagramy klas zostaną podzielone ze względu na pochodzenie funkcjonalności zdefiniowane wyżej. 
+
+\subsection{System klasyfikacyjny i katalog produktowy}
+
+\subsubsection{Model systemu klasyfikacyjnego}
+opis
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.5,angle=270]{klasy_model_sysKlas.png}
+	\end{center}
+	\caption{{\color{black}Diagram klas systemu klasyfikacyjnego - model}} \label{klasy_model_sysKlas}
+\end{figure}
+
+\subsubsection{Warstwa serwisowa systemu klasyfikacyjnego}
+opis
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.4,angle=270]{klasy_serwisy_sysKlas.png}
+	\end{center}
+	\caption{{\color{black}Diagram klas systemu klasyfikacyjnego - serwisy}} \label{klasy_serwisy_sysKlas}
+\end{figure}
+
+\subsubsection{Warstwa fasadowa systemu klasyfikacyjnego}
+opis
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.4,angle=270]{klasy_kontrolery_sysKlas.png}
+	\end{center}
+	\caption{{\color{black}Diagram klas systemu klasyfikacyjnego - fasada}} \label{klasy_kontrolery_sysKlas}
+\end{figure}
 
 \section{Projekt bazy danych}
 
 W tej sekcji należy przedstawić projekt bazy danych. Należy omówić wycinek rzeczywistości i odpowiadające mu zidentyfikowane elementy systemu, których wartości będą podlegać utrwalaniu. Należy przedyskutować wybór typów danych dla atrybutów poszczególnych obiektów. Należy uzasadnić wybór platformy DBMS. Dla relacyjnych baz danych należy przedyskutować jej normalizację.
-
-\section{Opis protokołów}
-
-W tej sekcji należy omówić protokoły wykorzystywane przez komponenty systemu. Omówić formaty komunikatów i zilustrować je przykładami. 
-
-\section{Opis algorytmów}
-
-W tej sekcji należy wymienić i przedyskutować algorytmy wykorzystywane w systemie. Algorytmy należy przedstawić w pseudokodzie (wykorzystać pakiet \texttt{algorithm2e}). Omówienia poszczególnych kroków algorytmów powinny zawierać odwołania do odpowiednich linii pseudokodu. Dla zaproponowanych autorskich algorytmów należy przeprowadzić analizę ich złożoności czasowej i pamięciowej. 
-
-{\color{dgray}
-Algorytm bąblowania jest przedstawiony w Pseudokodzie~\ref{alg:mine}.
-}
-
-{\small
-\begin{pseudokod}[H]
-%\SetAlTitleFnt{small}
-\SetArgSty{normalfont}
-\SetKwFunction{Process}{Process}
-\SetKwFunction{Calculate}{Calculate}
-\KwIn{Zbiór bąbli $B$}
-\KwOut{Wyporność $W$}
-\ForEach{$b \in B$}{
-\Process{$b$}\;
-\For{$i \leftarrow 1$ \KwTo $|B|$}{
-\If{\Calculate{EW($i$,$b$)} $\le$ 0}{
-$b \leftarrow 2*b$\;
-}
-}
-}
-\While{$B \neq \emptyset$}{
-\For{$j \leftarrow 1$ \KwTo $|B|$}{
-\If{\Calculate{FT($j$,$\hat{b}$)} $\le 0$}{
-$w \leftarrow 2*\hat{b}$\;
-$W \leftarrow W \cup \{w\}$\;
-$B \leftarrow B \setminus \{b\}$\;
-}
-}
-}
-\caption{Wyporność przez bąblowanie}\label{alg:mine}
-\end{pseudokod}
-}
 

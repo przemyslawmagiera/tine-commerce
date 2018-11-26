@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="13.3">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>90</x>
+      <y>252</y>
+      <w>459</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>com.tinecommerce.admin.panel.controller::AdminCategoryController
+--
+~addCategoryRelation()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>801</x>
+      <y>270</y>
+      <w>522</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+com.tinecommerce.core.catalog.service::CategoryService
+--
+--
+~getAllChildCategories(Category category): List&lt;Category&gt;
+~getAllParentCategories(Category category): List&lt;Category&gt;
+~canAddChildToCategory(Category category, Category child): Boolean
+~addChildToCategory(Category category, Category child): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>261</y>
+      <w>279</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.&gt;&gt;
+walidacja</panel_attributes>
+    <additional_attributes>290.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>288</y>
+      <w>279</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.&gt;&gt;
+dodanie/usunięcie kategorii 
+z drzewa </panel_attributes>
+    <additional_attributes>290.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>90</x>
+      <y>351</y>
+      <w>459</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>com.tinecommerce.admin.panel.controller::AdminProductController
+--
+~getFieldsFromClassificationSystem()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>477</x>
+      <y>351</y>
+      <w>261</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.&gt;&gt;
+pobieranie 
+atrybutów z systemu klasyfikacyjnego
+do dynamicznego 
+formularza</panel_attributes>
+    <additional_attributes>200.0;120.0;80.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>450</x>
+      <y>459</y>
+      <w>522</w>
+      <h>81</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+com.tinecommerce.core.catalog.service::CategoryFeatureService
+--
+--
+~getCategoryFeaturesForProduct(Product product): List&lt;CategoryFeature&gt;
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>747</x>
+      <y>387</y>
+      <w>315</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.&gt;&gt;
+Pobieranie przodków 
+kategorii </panel_attributes>
+    <additional_attributes>10.0;80.0;330.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>72</x>
+      <y>216</y>
+      <w>1269</w>
+      <h>351</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+</diagram>
