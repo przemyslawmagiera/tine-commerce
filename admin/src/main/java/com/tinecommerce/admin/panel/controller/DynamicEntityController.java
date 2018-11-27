@@ -185,6 +185,18 @@ public class DynamicEntityController {
             relationField.setAccessible(true);
             relationField.set(entity, targetEntity);
             entityManager.persist(entity);
+        } else
+        {
+            Field relationField = ExtensionUtil.findFieldInPolimorficClass(toManyClass, foreignKeyName);
+            Field relationField2 = ExtensionUtil.findFieldInPolimorficClass(oneToClass, relationField.getAnnotation(AdminVisible.class).mappedBy());
+            relationField.setAccessible(true);
+            relationField2.setAccessible(true);
+            PersistentSet list = (PersistentSet) relationField.get(entity);
+            PersistentSet list2 = (PersistentSet) relationField2.get(targetEntity);
+            list.add(targetEntity);
+            list2.add(entity);
+            relationField.set(entity, list);
+            relationField2.set(targetEntity, list2);
         }
         return "redirect:/entities/" + entityCode + "/" + id + "/edit";
     }
@@ -214,12 +226,12 @@ public class DynamicEntityController {
             Field relationField2 = ExtensionUtil.findFieldInPolimorficClass(oneToClass, relationField.getAnnotation(AdminVisible.class).mappedBy());
             relationField.setAccessible(true);
             relationField2.setAccessible(true);
-            PersistentSet list = (PersistentSet) relationField.get(parent);
-            PersistentSet list2 = (PersistentSet) relationField.get(entity);
-            list.remove(entity);
-            list2.remove(parent);
-            relationField.set(entity, list2);
-            relationField.set(parent, list);
+            PersistentSet list = (PersistentSet) relationField.get(entity);
+            PersistentSet list2 = (PersistentSet) relationField2.get(parent);
+            list.remove(parent);
+            list2.remove(entity);
+            relationField.set(entity, list);
+            relationField2.set(parent, list2);
         }
         return "redirect:/entities/" + entityCode + "/" + id + "/edit";
     }

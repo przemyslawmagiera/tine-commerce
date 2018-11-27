@@ -278,13 +278,13 @@ readers do not read off random characters that represent icons */
   content: "\f102"; }
 
 .fa-angle-down:before {
-  content: "\f107"; }
+  content: ""; }
 
 .fa-angle-left:before {
   content: "\f104"; }
 
 .fa-angle-right:before {
-  content: "\f105"; }
+  content: ""; }
 
 .fa-angle-up:before {
   content: "\f106"; }
@@ -1442,7 +1442,7 @@ readers do not read off random characters that represent icons */
   content: "\f417"; }
 
 .fa-folder:before {
-  content: "\f07b"; }
+  content: ""; }
 
 .fa-folder-minus:before {
   content: "\f65d"; }

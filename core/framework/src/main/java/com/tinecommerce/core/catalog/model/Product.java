@@ -34,7 +34,8 @@ public class Product extends AbstractNameableEntity {
     private Set<Price> prices;
 
     @Setter(AccessLevel.NONE)
-    @ManyToMany(mappedBy = Category.FIELD_PRODUCTS, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = Category.FIELD_PRODUCTS, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @AdminVisible(tableVisible = false, className = "com.tinecommerce.core.catalog.model.Category", mappedBy = "products")
     private Set<Category> categories = new HashSet<>();
 
     public Set<Category> getCategories() {
