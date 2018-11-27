@@ -59,4 +59,21 @@ public class ExtensionUtil {
                 .flatMap(Collection::stream)
                 .collect(Collectors.toSet());
     }
+
+    public static Field findFieldInPolimorficClass(final String className, final String fieldName) throws ClassNotFoundException {
+        Set<Field> fields = getPolymorphicFielsdOf(className);
+        for (Field field : fields) {
+            for (Class<?> cls : ExtensionUtil.getSubclassesOf(className)) {
+                try {
+                    Field classField = cls.getDeclaredField(field.getName());
+                    if (classField.getName().equals(fieldName))
+                    {
+                        return classField;
+                    }
+                } catch (NoSuchFieldException nsfe) {
+                }
+            }
+        }
+        return null;
+    }
 }

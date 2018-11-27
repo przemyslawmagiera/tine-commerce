@@ -14,14 +14,14 @@ import javax.persistence.*;
 @Setter
 public class OrderItem extends AbstractEntity {
 
-    @ManyToOne(targetEntity = Order.class, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Order.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     private Order order;
 
     @Column(name = "quantity")
     private Long quantity;
 
-    @ManyToOne(targetEntity = ArchivalProduct.class, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = ArchivalProduct.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "archival_product_id")
     private ArchivalProduct archivalProduct;
 }

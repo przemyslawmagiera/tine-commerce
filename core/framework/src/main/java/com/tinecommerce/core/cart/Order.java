@@ -20,7 +20,7 @@ import java.util.Set;
 @Setter
 public class Order extends AbstractEntity {
 
-    @ManyToOne(targetEntity = Customer.class, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Customer.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 

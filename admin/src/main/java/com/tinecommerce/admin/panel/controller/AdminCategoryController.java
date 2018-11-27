@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AdminCategoryController {
 //    @GetMapping("/entities/category")
 //    public String get() {
-//        return "register";
+//        return "reg¬≠≠¬≠ister";
 //    }
 
 }

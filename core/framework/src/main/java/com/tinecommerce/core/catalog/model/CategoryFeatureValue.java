@@ -13,12 +13,13 @@ import javax.persistence.*;
 @Setter
 public class CategoryFeatureValue extends AbstractEntity
 {
-   @Column(name = "VALUE", nullable = false)
+   @Column(name = "VALUE")
    @AdminVisible
    protected String value;
 
-   @ManyToOne(targetEntity = CategoryFeature.class, optional = false, cascade = CascadeType.ALL)
+   @ManyToOne(targetEntity = CategoryFeature.class, optional = true, cascade = CascadeType.ALL)
    @JoinColumn(name = "category_feature_id")
+   @AdminVisible
    protected CategoryFeature categoryFeature;
 
 }

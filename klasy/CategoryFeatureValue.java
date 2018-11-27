@@ -17,7 +17,7 @@ public class CategoryFeatureValue extends AbstractEntity
    @AdminVisible
    protected String value;
 
-   @ManyToOne(targetEntity = CategoryFeature.class, optional = false, cascade = CascadeType.ALL)
+   @ManyToOne(targetEntity = CategoryFeature.class, cascade = CascadeType.ALL)
    @JoinColumn(name = "category_feature_id")
    protected CategoryFeature categoryFeature;
 

@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 @Table(name = "Category")
 @EqualsAndHashCode(exclude = {"products", "parentCategories", "childCategories"}, callSuper = true)
 @NoArgsConstructor
-@ToString(exclude = {"products", "childCategories"})
 public class Category extends AbstractNameableEntity {
 
     public static final String FIELD_PRODUCTS = "products";
@@ -71,5 +70,10 @@ public class Category extends AbstractNameableEntity {
             product.getCategories().add(this);
             this.products.add(product);
         });
+    }
+
+    @Override
+    public String toString() {
+        return this.getName() + "- code:" + this.getCode();
     }
 }

@@ -18,7 +18,7 @@ public class CategoryFeature extends AbstractNameableEntity implements Facetable
 {
 
    @Enumerated(EnumType.STRING)
-   @Column(name = "TYPE", length = 64, nullable = false)
+   @Column(name = "TYPE", length = 64)
    @AdminVisible
    private CategoryFeatureType type;
 
@@ -32,11 +32,16 @@ public class CategoryFeature extends AbstractNameableEntity implements Facetable
    @AdminVisible(tableVisible = false, className = "com.tinecommerce.core.catalog.model.CategoryFeatureValue")
    private Set<CategoryFeatureValue> categoryFeatureValues;
 
-   @Column(name = "searchable", nullable = false)
+   @Column(name = "searchable")
    @AdminVisible
    private Boolean searchable;
 
-   @Column(name = "facet", nullable = false)
+   @Column(name = "facet")
    @AdminVisible
    private Boolean isFacet;
+
+   @Override
+   public String toString() {
+      return this.getName() + " - " + this.code;
+   }
 }

@@ -42,8 +42,11 @@
                 <form th:if="${id}" th:action="@{'/entities/' + ${entityName} + '/' + ${id} + '/edit'}" method="post">
                     <div class="form-group" th:each="dynamicField : ${dynamicForm.dynamicFormFields}">
                         <label for="exampleInputEmail1" th:text="${dynamicField.name}"></label>
-                        <input th:name="${dynamicField.name}" th:type="${dynamicField.type}"
+                        <input th:unless="${dynamicField.type=='checkbox'}" th:name="${dynamicField.name}" th:type="${dynamicField.type}"
                                th:value="${dynamicField.value}" class="form-control" id="exampleInputEmail1"
+                               aria-describedby="emailHelp">
+                        <input th:if="${dynamicField.type=='checkbox'}" th:name="${dynamicField.name}" type="checkbox"
+                               class="form-control"
                                aria-describedby="emailHelp">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -64,21 +67,57 @@
             <div class="container">
                 <h3 th:text="${'Relations of ' + dynamicForm.entityClass}"></h3>
                 <div th:each="relation : ${relationalEntities}">
+                    <div th:id="${relation.entityTable.name}" class="modal fade" role="dialog">
+                        <div class="modal-dialog modal-lg">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Choose entity to add</p>
+                                    <table th:with="table=${@dynamicEntityController.buildTableFromClassName(relation.relationClass)}">
+                                        <tr th:each="atl : ${table.tableLines}">
+                                            <th th:each="atlV,iter : ${atl.values}">
+                                                <a  th:if="${iter.index == 0}" th:href="@{'/entities/' + ${entityCode} + '/' + ${id} + '/addRelation/' +
+                                                            ${relation.relationClass} + '/' + ${atl.values.get(0)} + '/'
+                                                            + ${relation.foreignKeyName} + '/' + ${relation.type}}" th:text="${atlV.toString() + ';'}"></a>
+                                                <p th:unless="${iter.index == 0}" th:text="${atlV.toString() + ';'}"></p>
+                                            </th>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
                     <div>
                         <table class="table table-responsive-sm">
                             <thead>
-                            <h5 th:text="${relation.name}"></h5>
+                            <h5 th:text="${relation.entityTable.name}"></h5>
+                            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" th:data-target="${'#' + relation.entityTable.name}">Add</button>
+
                             <tr>
-                                <th scope="col" th:each="header : ${relation.headers}" th:text="${header}"></th>
+                                <th scope="col" th:each="header : ${relation.entityTable.headers}" th:text="${header}"></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="atl : ${relation.tableLines}">
+                            <tr th:each="atl : ${relation.entityTable.tableLines}">
                                 <td th:each="atlV,iter : ${atl.values}">
                                     <a th:if="${iter.index == 0}"
-                                       th:href="@{'/entities/' + ${relation.code} + '/' + ${atlV} + '/edit'}"
+                                       th:href="@{'/entities/' + ${relation.entityTable.code} + '/' + ${atlV} + '/edit'}"
                                        th:text="${atlV.toString()}"></a>
                                     <p th:unless="${iter.index == 0}" th:text="${atlV.toString()}"></p>
+                                </td>
+                                <td>
+                                    <a th:href="@{'/entities/' + ${entityCode} + '/' + ${id} + '/removeRelation/' +
+                                                    ${relation.relationClass} + '/' + ${atl.values.get(0)} + '/'
+                                                    + ${relation.foreignKeyName} + '/' + ${relation.type}}">X</a>
                                 </td>
                             </tr>
                             </tbody>

@@ -16,7 +16,7 @@ public class AdminMenuItem extends AdminMenu {
     @Column(name = "FRIENDLY_NAME", nullable = false)
     private String friendlyName;
 
-    @ManyToOne(targetEntity = AdminMenuGroup.class, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = AdminMenuGroup.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "group_id")
     private AdminMenuGroup adminMenuGroup;
 }

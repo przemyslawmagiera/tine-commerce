@@ -4,4 +4,5 @@
 (-1003, 'categoryFeature', 'CategoryFeature',10, 'com.tinecommerce.core.catalog.model.CategoryFeature', 'Category Features', -1001),
 (-1004, 'job', 'tba',10, 'tba', 'Jobs', -1002),
 (-1005, 'customer', 'Customer',10, 'com.tinecommerce.core.customer.model.Customer', 'Customers', -1003),
-(-1006, 'order', 'Order',10, 'com.tinecommerce.core.cart.Order', 'Orders', -1004)
+(-1006, 'order', 'Order',10, 'com.tinecommerce.core.cart.Order', 'Orders', -1004),
+(-1007, 'categoryFeatureAssignment', 'CategoryFeatureAssignment',10, 'com.tinecommerce.core.catalog.model.CategoryFeatureAssignment', 'Feature Assignments', -1001);

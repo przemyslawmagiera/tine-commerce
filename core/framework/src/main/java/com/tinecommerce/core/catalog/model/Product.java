@@ -55,4 +55,9 @@ public class Product extends AbstractNameableEntity {
     public Set<Price> getPrices() {
         return Collections.unmodifiableSet(prices);
     }
+
+    @Override
+    public String toString() {
+        return this.getName() + " - " + this.getCode();
+    }
 }

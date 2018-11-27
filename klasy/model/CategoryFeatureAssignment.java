@@ -14,11 +14,11 @@ import javax.persistence.*;
 public class CategoryFeatureAssignment extends AbstractEntity
 {
 
-   @ManyToOne(targetEntity = CategoryFeature.class, optional = false, cascade = CascadeType.ALL)
+   @ManyToOne(targetEntity = CategoryFeature.class, cascade = CascadeType.ALL)
    @JoinColumn(name = "category_feature_id")
    private CategoryFeature categoryFeature;
 
-   @ManyToOne(targetEntity = Category.class, optional = false, cascade = CascadeType.REFRESH)
+   @ManyToOne(targetEntity = Category.class, cascade = CascadeType.REFRESH)
    @JoinColumn(name = "category_id")
    private Category category;
 }

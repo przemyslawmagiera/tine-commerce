@@ -22,21 +22,21 @@ import static java.util.Collections.unmodifiableSet;
 public class Customer extends AbstractEntity {
     @NotBlank
     @Size(max = 255)
-    @Column(name = "name", nullable = false, length = 255)
+    @Column(name = "name", length = 255)
     @AdminVisible
     private String name;
 
     @NotBlank
     @Email
     @Size(max = 254)
-    @Column(name = "email", nullable = false, length = 255, unique = true)
+    @Column(name = "email", length = 255, unique = true)
     @AdminVisible
     private String email;
 
     @NotBlank
     @Email
     @Size(max = 254)
-    @Column(name = "password", nullable = false, length = 255)
+    @Column(name = "password", length = 255)
     @AdminVisible(tableVisible = false)
     private String password;
 

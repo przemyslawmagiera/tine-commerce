@@ -3,6 +3,7 @@ package com.tinecommerce.admin.panel.controller;
 import com.tinecommerce.admin.form.DynamicEntityTable;
 import com.tinecommerce.admin.form.DynamicForm;
 import com.tinecommerce.admin.form.DynamicFormField;
+import com.tinecommerce.admin.form.RelationMetadata;
 import com.tinecommerce.admin.panel.AbstractTableLine;
 import com.tinecommerce.admin.panel.model.AdminMenuItem;
 import com.tinecommerce.admin.panel.repository.AdminMenuGroupRepository;
@@ -13,6 +14,7 @@ import com.tinecommerce.core.AdminVisible;
 import com.tinecommerce.core.catalog.repository.ProductRepository;
 import com.tinecommerce.core.extension.ExtensionUtil;
 import com.tinecommerce.core.solr.model.SearchField;
+import org.hibernate.collection.internal.PersistentSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -56,6 +58,12 @@ public class DynamicEntityController {
         return "tables";
     }
 
+    public DynamicEntityTable buildTableFromClassName(String className) throws ClassNotFoundException {
+        List<? extends AbstractEntity> entities = dynamicEntityDao.findAllPolimorficEntities(className);
+        DynamicEntityTable entityTable = buildDynamicTable(className, entities);
+        return entityTable;
+    }
+
     private DynamicEntityTable buildDynamicTable(String className, List<? extends AbstractEntity> entities) throws ClassNotFoundException {
         List<Field> headers = findDynamicHeaders(className);
         List<AbstractTableLine> abstractTableLines = buildAbstractTableLines(entities, className, headers);
@@ -79,7 +87,11 @@ public class DynamicEntityController {
                     try {
                         Field classField = cls.getDeclaredField(field.getName());
                         classField.setAccessible(true);
-                        abstractTableLine.getValues().add(classField.get(abstractEntity));
+                        if(classField.get(abstractEntity) == null){
+                            abstractTableLine.getValues().add("");
+                        } else {
+                            abstractTableLine.getValues().add(classField.get(abstractEntity));
+                        }
                     } catch (NoSuchFieldException | IllegalAccessException ignored) {
                     }
                 }
@@ -96,7 +108,7 @@ public class DynamicEntityController {
         model.addAttribute("menuItems", adminMenuGroupRepository.findAll());
         model.addAttribute("entityName", entityCode);
         model.addAttribute("id", id);
-        List<DynamicEntityTable> relationalEntities = new ArrayList<>();
+        List<RelationMetadata> relationalEntities = new ArrayList<>();
         String className = adminMenuItemRepository.findByCode(entityCode)
                 .map(AdminMenuItem::getClassName)
                 .orElse("");
@@ -118,26 +130,28 @@ public class DynamicEntityController {
                         fieldType = "checkbox";
                     }
                     if (Collection.class.isAssignableFrom(classField.getType()) && classField.getAnnotation(OneToMany.class) != null) {
-                        String foreignKey = field.getAnnotation(OneToMany.class).mappedBy();
+                        String foreignKeyName = field.getAnnotation(OneToMany.class).mappedBy();
                         String relationalClassName = field.getAnnotation(AdminVisible.class).className();
-                        List<AbstractEntity> lazyCollection = dynamicEntityDao.findAllPolimorficEntitiesWithForeignKey(relationalClassName, foreignKey, entity.getId());
+                        List<AbstractEntity> lazyCollection = dynamicEntityDao.findAllPolimorficEntitiesWithForeignKey(relationalClassName, foreignKeyName, entity.getId());
+                        List<AbstractEntity> possibleEntities = dynamicEntityDao.findAllPolimorficEntities(relationalClassName);
+
                         DynamicEntityTable entityTable = buildDynamicTable(relationalClassName, lazyCollection);
                         entityTable.setName(field.getName());
                         adminMenuItemRepository.findByClassName(relationalClassName).ifPresent(name ->
                                 entityTable.setCode(name.getCode()));
-                        relationalEntities.add(entityTable);
+                        relationalEntities.add(new RelationMetadata(foreignKeyName, relationalClassName, "o2m", entityTable));
                     } else if (Collection.class.isAssignableFrom(classField.getType()) && classField.getAnnotation(ManyToMany.class) != null) {
-                        String foreignKey = field.getAnnotation(ManyToMany.class).mappedBy();
-                        if(foreignKey.equals("")) {
-                            foreignKey = field.getAnnotation(AdminVisible.class).mappedBy();
+                        String foreignKeyName = field.getAnnotation(ManyToMany.class).mappedBy();
+                        if(foreignKeyName.equals("")) {
+                            foreignKeyName = field.getAnnotation(AdminVisible.class).mappedBy();
                         }
                         String relationalClassName = field.getAnnotation(AdminVisible.class).className();
-                        List<AbstractEntity> lazyCollection = dynamicEntityDao.findAllPolimorficEntitiesWithManyToManyRelation(relationalClassName, foreignKey, entity.getId());
+                        List<AbstractEntity> lazyCollection = dynamicEntityDao.findAllPolimorficEntitiesWithManyToManyRelation(relationalClassName, foreignKeyName, entity.getId());
                         DynamicEntityTable entityTable = buildDynamicTable(relationalClassName, lazyCollection);
                         entityTable.setName(field.getName());
                         adminMenuItemRepository.findByClassName(relationalClassName).ifPresent(name ->
                                 entityTable.setCode(name.getCode()));
-                        relationalEntities.add(entityTable);
+                        relationalEntities.add(new RelationMetadata(foreignKeyName,relationalClassName, "m2m", entityTable));
                     } else {
                         dynamicForm.getDynamicFormFields().add(new DynamicFormField(fieldType, field.getName(), classField.get(entity)));
                     }
@@ -149,6 +163,65 @@ public class DynamicEntityController {
         model.addAttribute("relationalEntities", relationalEntities);
         model.addAttribute("dynamicForm", dynamicForm);
         return "dynamicEntityForm";
+    }
+
+    @PersistenceContext
+    EntityManager entityManager;
+
+    @GetMapping("/entities/{entityCode}/{id}/addRelation/{toManyClass}/{secondId}/{foreignKeyName}/{relationType}")
+    @Transactional
+    public String addRelation(final Model model, @PathVariable(name = "entityCode") String entityCode,
+                                       @PathVariable(name = "id") Long id, @PathVariable(name = "secondId") Long secondId,
+                              @PathVariable(name = "toManyClass") String toManyClass, @PathVariable(name = "relationType") String relationType,
+                              @PathVariable(name = "foreignKeyName") String foreignKeyName) throws ClassNotFoundException, IllegalAccessException {
+        String oneToClass = adminMenuItemRepository.findByCode(entityCode)
+                .map(AdminMenuItem::getClassName)
+                .orElse("");
+        AbstractEntity entity = dynamicEntityDao.findAllPolimorficEntityWithId(toManyClass, secondId);
+        AbstractEntity targetEntity = dynamicEntityDao.findAllPolimorficEntityWithId(oneToClass, id);
+        if(relationType.equals("o2m"))
+        {
+            Field relationField = ExtensionUtil.findFieldInPolimorficClass(toManyClass, foreignKeyName);
+            relationField.setAccessible(true);
+            relationField.set(entity, targetEntity);
+            entityManager.persist(entity);
+        }
+        return "redirect:/entities/" + entityCode + "/" + id + "/edit";
+    }
+
+    @GetMapping("/entities/{entityCode}/{id}/removeRelation/{toManyClass}/{secondId}/{foreignKeyName}/{relationType}")
+    @Transactional
+    public String removeRelation(final Model model, @PathVariable(name = "entityCode") String entityCode,
+                              @PathVariable(name = "id") Long id, @PathVariable(name = "secondId") Long secondId,
+                              @PathVariable(name = "toManyClass") String toManyClass, @PathVariable(name = "relationType") String relationType,
+                              @PathVariable(name = "foreignKeyName") String foreignKeyName) throws ClassNotFoundException, IllegalAccessException {
+
+        String oneToClass = adminMenuItemRepository.findByCode(entityCode)
+                .map(AdminMenuItem::getClassName)
+                .orElse("");
+        AbstractEntity entity = dynamicEntityDao.findAllPolimorficEntityWithId(toManyClass, secondId);
+        AbstractEntity parent = dynamicEntityDao.findAllPolimorficEntityWithId(oneToClass, id);
+        if(relationType.equals("o2m"))
+        {
+            Field relationField = ExtensionUtil.findFieldInPolimorficClass(toManyClass, foreignKeyName);
+            relationField.setAccessible(true);
+            relationField.set(entity, null);
+            entityManager.persist(entity);
+        }
+        else
+        {
+            Field relationField = ExtensionUtil.findFieldInPolimorficClass(toManyClass, foreignKeyName);
+            Field relationField2 = ExtensionUtil.findFieldInPolimorficClass(oneToClass, relationField.getAnnotation(AdminVisible.class).mappedBy());
+            relationField.setAccessible(true);
+            relationField2.setAccessible(true);
+            PersistentSet list = (PersistentSet) relationField.get(parent);
+            PersistentSet list2 = (PersistentSet) relationField.get(entity);
+            list.remove(entity);
+            list2.remove(parent);
+            relationField.set(entity, list2);
+            relationField.set(parent, list);
+        }
+        return "redirect:/entities/" + entityCode + "/" + id + "/edit";
     }
 
     @GetMapping("/entities/{entityCode}/add")
@@ -206,7 +279,7 @@ public class DynamicEntityController {
                     Field classField = cls.getDeclaredField(field.getName());
                     classField.setAccessible(true);
                     if (classField.getType().getSimpleName().equals("Boolean")) {
-                        classField.setBoolean(entity, Boolean.parseBoolean(params.get(field.getName())));
+                        classField.set(entity, "on".equals(params.get(field.getName())));
                     }
                     if (classField.getType().getSimpleName().equals("String")) {
                         classField.set(entity, params.get(field.getName()));
@@ -239,7 +312,7 @@ public class DynamicEntityController {
                     Field classField = cls.getDeclaredField(field.getName());
                     classField.setAccessible(true);
                     if (classField.getType().getSimpleName().equals("Boolean")) {
-                        classField.setBoolean(entity, Boolean.parseBoolean(params.get(field.getName())));
+                        classField.set(entity, params.get(field.getName()).equals("on"));
                     }
                     if (classField.getType().getSimpleName().equals("String")) {
                         classField.set(entity, params.get(field.getName()));

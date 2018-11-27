@@ -26,12 +26,12 @@ public class Address extends AbstractEntity {
 
     @NotBlank
     @Size(max = 255)
-    @Column(name = "street", nullable = false, length = 255)
+    @Column(name = "street", length = 255)
     private String street;
 
     @NotBlank
     @Size(max = 15)
-    @Column(name = "number", nullable = false, length = 15)
+    @Column(name = "number", length = 15)
     private String number;
 
     @Size(max = 15)
@@ -40,12 +40,12 @@ public class Address extends AbstractEntity {
 
     @NotBlank
     @Size(max = 255)
-    @Column(name = "code", nullable = false, length = 255)
+    @Column(name = "code", length = 255)
     private String code;
 
     @NotBlank
     @Size(max = 255)
-    @Column(name = "city", nullable = false, length = 255)
+    @Column(name = "city", length = 255)
     private String city;
 
     @Setter(AccessLevel.NONE)

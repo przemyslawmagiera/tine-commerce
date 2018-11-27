@@ -29,11 +29,11 @@ public class Price extends AbstractEntity {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @Column(name = "currency", nullable = false)
+    @Column(name = "currency")
     @AdminVisible
     private Currency currency;
 
-    @Column(name = "amount", nullable = false)
+    @Column(name = "amount")
     @AdminVisible
     private BigDecimal amount;
 }

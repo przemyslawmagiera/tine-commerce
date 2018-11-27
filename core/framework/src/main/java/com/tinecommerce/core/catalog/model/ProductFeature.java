@@ -12,11 +12,11 @@ import javax.persistence.*;
 @Table(name = "product_feature")
 public class ProductFeature extends AbstractEntity {
 
-    @ManyToOne(targetEntity = Product.class, optional = false)
+    @ManyToOne(targetEntity = Product.class)
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne(targetEntity = CategoryFeature.class, optional = false)
+    @ManyToOne(targetEntity = CategoryFeature.class)
     @JoinColumn(name = "category_feature_id")
     private CategoryFeature categoryFeature;
 

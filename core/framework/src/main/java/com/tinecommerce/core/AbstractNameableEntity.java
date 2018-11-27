@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @MappedSuperclass
-@ToString
+@ToString(of = {"name"})
 @EqualsAndHashCode(callSuper = true)
 public abstract class AbstractNameableEntity extends AbstractEntity implements Serializable {
 

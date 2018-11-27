@@ -40,7 +40,7 @@ public class DynamicEntityDao {
     }
 
     @Transactional
-    public List<? extends AbstractEntity> findAllPolimorficEntities(String entityClass) throws ClassNotFoundException {
+    public List<AbstractEntity> findAllPolimorficEntities(String entityClass) throws ClassNotFoundException {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery c = criteriaBuilder.createQuery(getCeilingClass(entityClass));
         Root root = c.from(getCeilingClass(entityClass));
