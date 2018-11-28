@@ -1,0 +1,331 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Plik ten należy, co najmniej dwukrotnie, przetworzyć przy użyciu komendy 'pdflatex'
+%
+% Stanisław Polak, 25-01-2017
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Włączenie, domyślnego, trybu "beamer" 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[polish,xcolor=table,9pt,aspectratio=1610,hyperref={pdfpagemode=FullScreen}]{beamer} 
+% Opcje:
+% 	[polish]                            włączenie polonizacji
+% 	[xcolor=table]                      włączenie możliwości kolorowania tabel - ładowanie pakietu ,,colortbl''
+% 	[ascpectratio=1610]                 slajdy w proporcji 16:10, domyślnie 4:3
+% 	[9pt]                              	podstawowy font ma mieć rozmiar '9pt', domyślna wartość to '11pt'. Dostępne wartości: 8pt, 9pt, 10pt, 11pt, 12pt, 14pt, 17pt, 20pt
+% 	[hyperref={pdfpagemode=FullScreen}]	przeglądarka PDF ma automatycznie wyświetlać prezentację w trybie 'pełny ekran'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Jeżeli chcesz otrzymać prezentacje w postaci materiałów drukowanych (dla słuchaczy),
+% to należy zakomentować linię 8:  '\documentclass[...]{beamer}', 
+% a odkomentować linię  23:'\documentclass[handout,...]{beamer}'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Włączenie trybu "handout" %%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%\documentclass[handout,polish,xcolor=table,9pt,aspectratio=1610]{beamer} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}
+\usepackage{polski}   %włączenie obsługi polskich liter
+\usepackage{babel}    %aby zadziałała polonizacja 'beamera'
+\usepackage{graphicx} %włączenie obsługi grafiki
+\DeclareGraphicsRule{.pdftex}{pdf}{*}{}
+\AtBeginPart{\frame{\partpage}} %Na początku każdej z części prezentacji, wyświetlaj jej tytuł
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Komendy, które mają być wykonywane w trybie 'beamer'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mode<beamer>{ 
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %'CambridgeUS' jest przykładowym stylem (wystrojem) - inne style można obejrzeć na stronie 
+  % http://gknor.keep.pl/beamer/beamer_motywy.html
+  % Zastosowany wystrój ma wpływ na wygląd struktury slajdu (nagłówki, stopki, rodzaje obramowania, itp.) jak i jego kolorystyki
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  % Na stronie https://github.com/polaksta/beamer-AGH można znaleźć styl AGH
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\usetheme{CambridgeUS} %Określanie stylu (wystroju) prezentacji
+	\usecolortheme{orchid} %Określanie schematu kolorów - zmiana kolorystyki slajdu
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Komendy, które mają być wykonywane w trybie 'handout'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mode<handout>{
+  \usepackage{pgfpages}
+  \pgfpagesuselayout{4 on 1}[a4paper,border shrink=5mm,landscape] %Wynikowy dokument PDF będzie zawierał cztery slajdy na jednej stronie kartki formatu A4
+  \usetheme{boxes} %Określanie stylu (motywu) prezentacji
+  \addheadbox{structure}{\quad\insertsubsection\hfill\insertsection\hfill\inserttitle\qquad} %Określanie zawartości nagłówka kartki
+  \addfootbox{structure}{\quad\insertauthor\hfill\insertframenumber\hfill\insertsubtitle\qquad} %Określanie zawartości stopki kartki
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Określamy tytuł, autora, afiliację  oraz datę prezentacji
+% UWAGA, poniższe komendy tylko definiują treść slajdu tytułowego
+% Jeżeli chcemy umieścić te informacje na slajdzie należy
+% w ciele dokumentu umieścić komendę '\maketitle' lub '\frame{\titlepage}'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{Framework e-commerce}
+\subtitle{Elastyczny szablon sklepu internetowego}
+\author{Przemysław Magiera}
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Slajd ze stroną tytułową %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Komenda \tilepage tworzy stronę tytułową na podstawie \title, \author, \institute oraz \date zawartych w preambule (patrz wyżej)
+\frame{\titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Slajd z planem prezentacji %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%i
+%Prezentację można, opcjonalnie, podzielić na części
+%Przy pomocy rozkazu \part rozpoczynamy nową część. 
+%Poszczególne części są od siebie niezależne
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%i
+\part{Zdefiniowane problemy} %Tytuł części
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%i
+\begin{frame}{Plan prezentacji}
+% Komenda \tableofcontents tworzy, w obrebie danej części, plan prezentacji, na podstawie treści rozkazów
+% tworzenia rozdziałów i podrozdziałów czyli rozkazów \section oraz \subsection.
+% Jeśli w prezentacji nie używamy ani \section ani  \subsection, to  plan prezentacji należy utworzyć ręcznie 
+\tableofcontents
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Tytuł rozdziału %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Zdefiniowane problemy}
+% Jeśli tytuł rozdziału jest długi i jego nazwa nie będzie się się mieścić 
+% w panelu górnym slajdu, należy użyć tego rozkazu w następującej postaci:
+%
+% \section[krótka nazwa rozdziału]{długa nazwa rozdziału}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Tytuł podrozdziału %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Problemy - zagadnienie 1}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Slajd  %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Architektura sklepów internetowych}{Co można powiedzieć o archotekturze i rozszerzalności sklepów internetowych?}
+\begin{itemize}
+\item<1-> sklepwy nieoparte o frameworki są trudne w utrzymaniu %Umieść ten podpunkt w warstwie 1 i kolejnych
+\item<2-> dodawanie nowych funkcjonalności jest bardzo kosztowne  %Umieść ten podpunkt w warstwie 2
+\item<2-> każda nowa funkcjonalność wymaga implementacji interfejsu do administracji i zarządzania
+\end{itemize}
+\end{frame}
+
+\subsection{Problemy - zagadnienie 2}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Slajd  %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Wydajność i skalowalność}{Jaka jest wydajność sklepów internetowych?}
+	\begin{itemize}
+		\item<1-> często klasyczne sklepy wymagają skalowania pionowego, które jest bardzo drogie
+		\item<2-> frameworki nie oferują mechanizmów szybkiego dostępu do najbardziej kluczowych danych - katalog produktowy %Umieść ten podpunkt w warstwie 2
+		\item<3-> najbardziej obciążone punkty aplikacji nie są odseparowane od reszty 
+	\end{itemize}
+\end{frame}
+
+\subsection{Problemy - zagadnienie 3}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Slajd  %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Katalog produktowy}{Czy katalogi produktowe są zawsze proste i spełniają swoje zadanie?}
+	\begin{itemize}
+		\item<1-> główne zadanie katalogu produktowego to zapewnienie łatwego i szybkiego sposobu na dotarcie do interesującej informacji
+		\item<2-> brak możliwości konfiguracji i modyfikacji wyszukiwarki %Umieść ten podpunkt w warstwie 2
+		\item<3-> trudność w dotarciu do informacji
+	\end{itemize}
+\end{frame}
+
+\subsection{Problemy - zagadnienie 4}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Slajd  %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Stosowane technologie}{Czy frameworki są na tyle elastyczne aby nie zostać \textit{w tyle}?}
+	\begin{itemize}
+		\item<1-> stosowanie zamkniętych komercyjnych technologii 
+		\item<2-> programiści nie widzą źródeł i nie mają wpływu na rdzeniowe elementy platformy, na której programują 
+		\item<3-> w przypadku błędów, nadpisanie komponentow platformy jest bardzo trudne lub nawet niemożliwe
+	\end{itemize}
+\end{frame}
+
+\part{Zastosowane rozwiązania problemów}
+
+\section{Zastosowane rozwiązania problemów}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Slajd  %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Dynamiczny panel administracyjny}
+
+\begin{frame}{Dynamiczny panel administracyjny}{Zarządzanie funkcjonalnościami out-of-the-box}
+	\begin{itemize}
+		\item<1-> generowana tabelka dla każdej encji danego rodzaju np. kategorii 
+		\item<2-> generowany formularz edycji dowolnej encji
+		\item<3-> generowany mechanizm zarządzania relacjami dowolnej klasy np. dzieci kategorii
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}{Zarządzanie nadpisanymi klasami przez panel}{Zarządzanie funkcjonalnościami, które mogą zostać dopisane do platformy}
+	\begin{itemize}
+		\begin{exampleblock}{Przykład}
+			Programista decyduje się na 
+		\end{exampleblock}
+		\item<1-> platforma będzie świadoma tego, że 
+		\item<2-> generowany formularz edycji dowolnej encji
+		\item<3-> generowany mechanizm zarządzania relacjami dowolnej klasy np. dzieci kategorii
+	\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Slajd  %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Dynamiczny panel administracyjny}{Panel administracyjny, który umożliwi zarządzanie wszystkimi encjami w systemie}
+\begin{exampleblock}{Przykład}
+przykład 1
+\end{exampleblock}
+%%%%%%%%%%%%%%%%%%%
+\begin{definition}
+Dystrybucją \LaTeX a nazywamy \ldots
+\end{definition}
+%%%%%%%%%%%%%%%%%%%
+\begin{theorem}[Pitagorasa]
+$a^2+b^2=c^2$
+\end{theorem}
+%%%%%%%%%%%%%%%%%%%
+\pause %To, co poniżej ma być umieszczone w kolejnej warstwie oraz wszystkich następnych
+\begin{proof}
+Treść dowodu
+\end{proof}
+%Jeśli rysunek1.pdf jest wielostronicowym rysunkiem (np. utworzonym za pomocą programu 'Ipe'), parametr 'page=nr' powoduje wyświetlenie strony o podanym numerze
+%\includegraphics<1>[page=1,scale=0.5,angle=-90]{rysunek1.pdf}
+%\includegraphics<2>[page=2,scale=0.5,angle=-90]{rysunek1.pdf}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Tytuł podrozdziału %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Zagadnienie 1.2}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Slajd  %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Tytuł slajdu 3}
+treść slajdu 3
+%\scalebox{0.5}{ \input{rysunek2.pdftex_t} }  
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Slajd  %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Tekst w wielu kolumnach}
+% Otoczenie 'columns' pozwala na składanie tekstu w wielu kolumnach.
+% Poszczególne kolumny definiuje się za pomocą komendy 'column'
+\begin{columns}
+%Utwórz kolumnę o rozmiarze: 60% szerokości tekstu 
+\column{0.6\textwidth}
+\begin{description}
+\item[Pojęcie 1] \pauza wyjaśnienie pojęcia 1
+\item[Pojęcie 2] \pauza wyjaśnienie pojęcia 2
+\end{description}
+
+%Utwórz kolumnę o rozmiarze: 40% szerokości tekstu 
+\column{0.4\textwidth}
+\structure{Treść prawej kolumny}
+\begin{enumerate}
+\item pozycja 1
+\item pozycja 2
+\end{enumerate}
+\end{columns}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Tytuł rozdziału %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Zagadnienie 2}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Slajd  %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Tytuł slajdu 5}
+%Określamy kolor wierszy parzystych i nieparzystych tabeli w oparciu o aktualną kolorystykę bloku
+\rowcolors{2}{block title.bg}{block body.bg}
+\begin{table}
+\begin{tabular}{|r|p{4cm}|l|}\hline
+\textbf{Kol$_{1}$} &\textbf{Kol$_{2}$} &\textbf{Kol$_{3}$}\\
+\hline
+\hline
+& & \\
+& & \\
+& & \\
+& & \\
+& & \\
+& & \\
+\hline
+\end{tabular}
+\end{table}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Slajd  %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+\part{Literatura}
+% Aby tytuł rozdziału, tu  'Literatura', nie pojawił się na slajdzie z planem prezentacji, 
+% należy użyć rozkazu \section* (gwiazdka po słowie 'section') 
+\section*{Literatura}
+\begin{frame}[allowframebreaks]{Literatura}
+%Parametr 'allowframebreaks' oznacza, że jeżeli treść nie mieści się na jednym slajdzie, to LaTeX powinien utworzyć dodatkowe slajdy
+\begin{thebibliography}{}
+% Komenda  '\setbeamertemplate{bibliography item}[article]' oznacza, że poszczególne pozycje są artykułami i~w~związku z~tym każda z~pozycji będzie poprzedzona ikoną artykułu
+% Domyślnie, poszczególne pozycje są poprzedzone ikoną artykułu, dlatego tego rozkazu nie musimy tu umieszczać
+% \setbeamertemplate{bibliography item}[article]
+    \bibitem{poz1}
+      Imię i~nazwisko autora 
+      \newblock
+      Tytuł artykułu 
+      \newblock 
+      pozostałe informacje (nazwa czasopisma, numer, \ldots) 
+      \newblock
+      informacje dodatkowe (adres strony WWW, \ldots)
+    \bibitem{poz2}
+      Imię i~nazwisko autora 
+      \newblock 
+      Tytuł artykułu 
+      \newblock
+      pozostałe informacje (nazwa czasopisma, numer, \ldots)
+      \newblock informacje dodatkowe (adres strony WWW, \ldots)
+    
+  %Komenda '\setbeamertemplate{bibliography item}[book] oznacza, że poszczególne pozycje są książkami i~w~związku z~tym każda z~pozycji będzie poprzedzona ikoną książki
+  \setbeamertemplate{bibliography item}[book]
+    \bibitem{poz3} 
+      Imię i~nazwisko autora
+      \newblock
+      Tytuł książki
+      \newblock
+      pozostałe informacje (rok wydania, wydawca, \ldots)
+      \newblock informacje dodatkowe (adres strony WWW, \ldots)
+    \bibitem{poz4} 
+      Imię i~nazwisko autora
+      \newblock 
+      Tytuł książki
+      \newblock
+      pozostałe informacje (rok wydania, wydawca, \ldots)
+      \newblock informacje dodatkowe (adres strony WWW, \ldots)
+    
+  \setbeamertemplate{bibliography item}[online]
+    \bibitem{poz5}
+      Wujek Google
+      \newblock
+      \url{http://www.google.pl/}
+\end{thebibliography}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Jeśli literaturę mamy w pliku 'literatura.bib' i chcemy używać Bibtex-a,
+% należy odkomentować poniższe linie oraz usunąć całe 'thebibliography'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\bibliography{literatura}
+%\bibliographystyle{plplain}
+%\nocite{poz1}
+%\nocite{poz2}
+\end{frame}
+\end{document}
