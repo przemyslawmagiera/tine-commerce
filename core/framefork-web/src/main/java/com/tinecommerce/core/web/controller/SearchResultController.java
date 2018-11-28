@@ -26,7 +26,7 @@ public class SearchResultController {
     public String getResults(final Model model, @RequestParam String query, @RequestParam(required = false) String sort,
                              @RequestParam(required = false) String priceFilter, @RequestParam Map<String,String> filterParams)
             throws IOException, SolrServerException {
-        solrIndexService.rebuildIndex();
+        //solrIndexService.rebuildIndex();
         SearchResultDTO searchResultDTO = solrSearchService.doSearch(filterParams);
         model.addAttribute("searchResult", searchResultDTO);
         return "index";

@@ -163,67 +163,6 @@ public class DynamicEntityController {
         return "dynamicEntityForm";
     }
 
-    @GetMapping("/entities/product/{id}/edit")
-    @Transactional
-    public String getProductForm(final Model model, @PathVariable(name = "entityCode") String entityCode,
-                                       @PathVariable(name = "id") Long id) throws ClassNotFoundException {
-        model.addAttribute("menuItems", adminMenuGroupRepository.findAll());
-        model.addAttribute("entityName", entityCode);
-        model.addAttribute("id", id);
-        List<RelationMetadata> relationalEntities = new ArrayList<>();
-        String className = adminMenuItemRepository.findByCode(entityCode)
-                .map(AdminMenuItem::getClassName)
-                .orElse("");
-        List<Field> fields = ExtensionUtil.getPolymorphicFielsdOf(className)
-                .stream()
-                .filter(field -> field.isAnnotationPresent(AdminVisible.class))
-                .sorted(Comparator.comparingInt(field -> field.getAnnotation(AdminVisible.class).order()))
-                .collect(Collectors.toList());
-        AbstractEntity entity = dynamicEntityDao.findAllPolimorficEntityWithId(className, id);
-        DynamicForm dynamicForm = new DynamicForm();
-        dynamicForm.setEntityClass(entityCode);
-        for (Field field : fields) {
-            for (Class<?> cls : ExtensionUtil.getSubclassesOf(className)) {
-                try {
-                    Field classField = cls.getDeclaredField(field.getName());
-                    classField.setAccessible(true);
-                    String fieldType = "text";
-                    if (classField.getType().getSimpleName().equals("Boolean")) {
-                        fieldType = "checkbox";
-                    }
-                    if (Collection.class.isAssignableFrom(classField.getType()) && classField.getAnnotation(OneToMany.class) != null) {
-                        String foreignKeyName = field.getAnnotation(OneToMany.class).mappedBy();
-                        String relationalClassName = field.getAnnotation(AdminVisible.class).className();
-                        List<AbstractEntity> lazyCollection = dynamicEntityDao.findAllPolimorficEntitiesWithForeignKey(relationalClassName, foreignKeyName, entity.getId());
-                        DynamicEntityTable entityTable = buildDynamicTable(relationalClassName, lazyCollection);
-                        entityTable.setName(field.getName());
-                        adminMenuItemRepository.findByClassName(relationalClassName).ifPresent(name ->
-                                entityTable.setCode(name.getCode()));
-                        relationalEntities.add(new RelationMetadata(foreignKeyName, relationalClassName, "o2m", entityTable));
-                    } else if (Collection.class.isAssignableFrom(classField.getType()) && classField.getAnnotation(ManyToMany.class) != null) {
-                        String foreignKeyName = field.getAnnotation(ManyToMany.class).mappedBy();
-                        if(foreignKeyName.equals("")) {
-                            foreignKeyName = field.getAnnotation(AdminVisible.class).mappedBy();
-                        }
-                        String relationalClassName = field.getAnnotation(AdminVisible.class).className();
-                        List<AbstractEntity> lazyCollection = dynamicEntityDao.findAllPolimorficEntitiesWithManyToManyRelation(relationalClassName, foreignKeyName, entity.getId());
-                        DynamicEntityTable entityTable = buildDynamicTable(relationalClassName, lazyCollection);
-                        entityTable.setName(field.getName());
-                        adminMenuItemRepository.findByClassName(relationalClassName).ifPresent(name ->
-                                entityTable.setCode(name.getCode()));
-                        relationalEntities.add(new RelationMetadata(foreignKeyName,relationalClassName, "m2m", entityTable));
-                    } else {
-                        dynamicForm.getDynamicFormFields().add(new DynamicFormField(fieldType, field.getName(), classField.get(entity)));
-                    }
-
-                } catch (NoSuchFieldException | IllegalAccessException ignored) {
-                }
-            }
-        }
-        model.addAttribute("relationalEntities", relationalEntities);
-        model.addAttribute("dynamicForm", dynamicForm);
-        return "dynamicEntityForm";
-    }
 
     @PersistenceContext
     EntityManager entityManager;

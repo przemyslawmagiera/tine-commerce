@@ -1,6 +1,7 @@
 package com.tinecommerce.core.catalog.model;
 
 import com.tinecommerce.core.AbstractEntity;
+import com.tinecommerce.core.AdminVisible;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,5 +22,6 @@ public class ProductFeature extends AbstractEntity {
     private CategoryFeature categoryFeature;
 
     @Column(name = "value")
+    @AdminVisible
     private String value;
 }
