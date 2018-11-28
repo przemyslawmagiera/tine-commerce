@@ -79,13 +79,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%i
 \part{Zdefiniowane problemy} %Tytuł części
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%i
-\begin{frame}{Plan prezentacji}
-% Komenda \tableofcontents tworzy, w obrebie danej części, plan prezentacji, na podstawie treści rozkazów
-% tworzenia rozdziałów i podrozdziałów czyli rozkazów \section oraz \subsection.
-% Jeśli w prezentacji nie używamy ani \section ani  \subsection, to  plan prezentacji należy utworzyć ręcznie 
-\tableofcontents
-\end{frame}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Tytuł rozdziału %%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -107,7 +100,7 @@
 \begin{itemize}
 \item<1-> sklepwy nieoparte o frameworki są trudne w utrzymaniu %Umieść ten podpunkt w warstwie 1 i kolejnych
 \item<2-> dodawanie nowych funkcjonalności jest bardzo kosztowne  %Umieść ten podpunkt w warstwie 2
-\item<2-> każda nowa funkcjonalność wymaga implementacji interfejsu do administracji i zarządzania
+\item<3-> każda nowa funkcjonalność wymaga implementacji interfejsu do administracji i zarządzania
 \end{itemize}
 \end{frame}
 
@@ -168,15 +161,133 @@
 	
 \end{frame}
 
+\begin{frame}{Dynamiczne menu w panelu administracyjnym}{Zarządzanie encjami}
+\begin{itemize}
+	\begin{exampleblock}{Przykład}
+		Dodajemy nową klasę do systemu opartego na frameworku, chcemy mieć możliwość zarządzania tą klasą (operacje CRUD). Aby system widział tę klasę (i wszystkie ją rozszerzające) należy dodać rekord do tabeli \texttt{admin-menu-item} z nazwą klasy nowej encji. W ten sposób powstały wszystkie funkcjonalności \textit{out-of-the-box} 
+	\end{exampleblock}
+	\item<1-> Menu w panelu jest oparte na dwóch tabelach \texttt{admin-menu-item} oraz \texttt{admin-menu-group}
+	\item<2-> AdminMenuItem i AdminMenuGroup to też encje, więc konfigurujemy widok panelu admina
+	\item<3-> efekt jest taki, że każdą encję, którą dodamy do tych tabel będziemy mogli zarządzać z poziomu panelu admina
+\end{itemize}
+\end{frame}
+
 \begin{frame}{Zarządzanie nadpisanymi klasami przez panel}{Zarządzanie funkcjonalnościami, które mogą zostać dopisane do platformy}
 	\begin{itemize}
 		\begin{exampleblock}{Przykład}
-			Programista decyduje się na 
+			Programista decyduje się na zaimplementowanie nowej funkcjonalności, która będzie polegała na tym, że każde zamówienie będzie mógło mieć uwagę. W systemie istnieje encja Order, ma już zdefiniowane pola, ma również swój formularz. Nie jest to jednak problem, gdyż w tym przypadku wystarczy zaimplementować klasę \texttt{MyOrder extends Order}, która będzie zawierała pole \texttt{private String note}.  Aplikacja korzystająca z frameworkowego panelu będzie świadoma tego, że encja order została nadpisana i będzie szukać w niej pól z aadnotacją \texttt{@AdminVisible}, które zostaną wyświetlone w dynamicznym formularzu i dynamicznej tabelce.
 		\end{exampleblock}
-		\item<1-> platforma będzie świadoma tego, że 
-		\item<2-> generowany formularz edycji dowolnej encji
-		\item<3-> generowany mechanizm zarządzania relacjami dowolnej klasy np. dzieci kategorii
+		\item<1-> platforma jest świadoma tego, że klasa którą zarządza panel administracyjny została nadpisana 
+		\item<2-> generowanie formularza i tabeli odbywa się poprzez wgląd do klas rozszerzających bazową encje
+		\item<3-> daje to efekt, że właściwie każde pole w encji, którą zarządza platforma i jest zaadnotowane jako \texttt{@AdminVisible} jest widziane w tabeli encyjnej i formularzu encyjnym
 	\end{itemize}
+\end{frame}
+
+\begin{frame}{Zarządzanie relacjami encji}{Wyświetlanie i zarządzanie relacjami w dynamicznym formularzu encyjnym}
+\begin{itemize}
+	\begin{exampleblock}{Przykład}
+		Encja \texttt{Product} jest w relacji \texttt{OneToMany} z encją \texttt{Price}. Aby panel administracyjny był w pełni wartościowy, po wejściu do formularza edycyjnego powinniśmy mieć możliwość dodania ceny do produktu. W tym celu należy umieścić adnotację \texttt{@AdminVisible(tableVisible = false, className = "com.example.Price", mappedBy = "product")} nad kolekcją cen. System w panelu administracyjnym wyświetli listę cen w produkcie. 
+	\end{exampleblock}
+	\item<1-> adnotacja \texttt{@AdminVisible(tableVisible = false, className = "com.example.ClassExample", mappedBy = "przyklad")} odpowiada również za wyświetlanie relacji w dynamicznym formularzu edycji. 
+	\item<2-> obsugiwane są relacje OneToMany jak i ManyToMany - a to nie jest oczywiste!
+	\item<3-> wyświetlane relacje można dowolnie modyfikować, usuwać lub dodawać (wszystko jest generowane)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Zarządzanie relacjami encji - jak działa}{Jak dokonano implementacji dynamicznego zarządzania relacjami w encji}
+\begin{itemize}
+	\item<1-> Wyświetlenie 
+	\begin{itemize}
+		\item<2-> z adnotacji \texttt{@AdminVisible} weź nazwę klasy w relacji z encją, dla której generujesz formularz ( \texttt{className}) oraz nazwę klucza obcego (\texttt{mappedBy})
+		\item<2-> za pomocą dynamicznego dao encyjnego (\texttt{DynamicEntityDao}) wyciągnij z bazy danych listę encji powiązanych
+	\end{itemize}
+	\item<1-> Dodanie 
+	\begin{itemize}
+		\item<3-> znajdź pole w klasie (lub jej pochodnych) odnoszące się do zarządzanej relacji, analogicznie dla drugiej strony
+		\item<3-> Hibernate zwróci PersistentSet'y z encjami relacyjnymi, odpowiednio zmodyfikuj je i zakończ transakcje
+		\item<3-> co tu jest nie tak?
+	\end{itemize}
+	\item<1-> Usunięcie
+		\begin{itemize}
+			\item<4-> analogicznie jak dodanie, tylko usuń wartości z setów...
+		\end{itemize}
+\end{itemize}
+\end{frame}
+
+\subsection{Funkcjonalności biznesowe wbudowane w platformę}
+
+\begin{frame}{Funkcjonalności biznesowe}{What's in the box?}
+\begin{itemize}
+	\item<1-> prawie wszystkie funkcjonalności biznesowe zostały zaimplementowane na podstawie dynamicznego panelu
+	\item<2-> implementacja ich ogarnicza się do stworzenia modelu i napisania funkcji korzystających z tej konkretnej funkcjonalności w kontrolerze/htmlu/komponencie/fasadzie/JS na stronie sklepu/fasadzie
+	\item<3-> pełna obsługa encji i jej relacji robi się sama
+\end{itemize}
+\end{frame}
+
+\subsection{Funkcjonalności biznesowe wbudowane w platformę}
+
+\begin{frame}{System klasyfikacyjny}{Schemat pobierania atrybutów produktowych z systemu kalsyfikacyjnego}
+\begin{itemize}
+	\begin{definition}{Systemu klasyfikacyjny}
+		Jest to drzewiasta struktura kategorii połączona z encjami, które mogą przyjmować postać różnych cech produktu, definiować wartości tych cech łączyć je z produktem. Cechy są dzidziczne, zgodnie z ułożeniem drzewa kategorii.
+	\end{definition}
+	\item<1-> rysunek \ref{cechyProd} bardzo dobrze obrazuje skąd system klasyfikacyjny bierze cechy produktu
+\end{itemize}
+\end{frame}
+
+\begin{frame}{System klasyfikacyjny}{Schemat pobierania atrybutów produktowych z systemu kalsyfikacyjnego}
+	\begin{figure}
+		\begin{center}
+			\includegraphics[scale=0.3]{cechyProd.png}
+		\end{center}
+		\caption{{\color{black}Diagram przykładowy pochodzenia atrybutów produktu}} \label{cechyProd}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{[TODO] System uprawnień}{Jak będzie działać system uprawnień w panelu administracyjnymm}
+\begin{itemize}
+	\item<1-> użytkownik administracyjny będzie miał kolekcję uprawnień
+	\item<2-> struktura systemu uprawnień będzie podobna do struktury kategorii, uprawnienia będą mogły po sobie dzidziczyć
+	\item<3-> AdminMenuGroup i AdminMenuItem będą miały kolekcje encji 'uprawnienie', podczas \textit{renderu} menu, będą brane pod uwagę, względem tego, kto jest aktualnie zalogowany
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Klasyczne funkcjonalności}{Inne (niekoniecznie ciekawe) funkcjonalności, które muszą być w sklepie}
+\begin{itemize}
+	\item<1-> koszyk
+	\item<1-> logowanie jako uzytkownik sklepu 
+	\item<1-> możliwość dokonania zakupu
+	\item<1-> zarządzanie zamówieniami/użytkownikami/adresami 
+	\item<1-> i pare innych... 
+\end{itemize}
+\end{frame}
+
+\subsection{Mechanizm indeksująco-wyszukujący}
+
+\begin{frame}{Mechanizm indeksująco-wyszukujący}{Integracja płaskiej bazy no-sql z bazą relacyjną}
+\begin{itemize}
+	\item<1-> do zapytań związanych z katalogiem produktowym użyto serwer Apache Solr 7.5 oparty na silniku Lucene
+	\item<2-> Solr umożliwia dobrą i wszechstronną analizę danych tekstowych, podświetlanie, podpowiadanie i facetowanie. 
+	\item<3-> (TODO) co jakiś czas uruchamiany jest Job w systemie, który synchronizuje bazę relacyjną z Solrem (na razie za każdym requestem)
+	\item<4-> Indeksacja to wydobycie atrybutów wyszukiwalnych i facetowalnych z produktu, zapakowanie w dokumenty i wysłane na serwer Solr - wyciągnięcie atrybutów pokazuje rysunek \ref{cechyProd}
+	
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Indeksacja atrybutów produktu}{Jak zachowano elastyczność?}
+\begin{itemize}
+	\item<1-> atrybuty niepochodzące z systemu klasyfikacyjnego są również indeksowane
+	\item<2-> pola w klasach rozszerzających \texttt{Product} (np. \texttt{MyProduct extends Product}) są również możliwe do zaindeksowania, wystarczy że z poziomu panelu administracyjnego dodamy do tabeli SearchField nazwę pola, reszta zrobi się sama
+\end{itemize}
+\end{frame}
+
+\part{Przykłady działania}
+ 
+\begin{frame}{Indeksacja atrybutów produktu}{Jak zachowano elastyczność?}
+\begin{itemize}
+	\item<1-> atrybuty niepochodzące z systemu klasyfikacyjnego są również indeksowane
+	\item<2-> pola w klasach rozszerzających \texttt{Product} (np. \texttt{MyProduct extends Product}) są również możliwe do zaindeksowania, wystarczy że z poziomu panelu administracyjnego dodamy do tabeli SearchField nazwę pola, reszta zrobi się sama
+\end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Slajd  %%%%%%%%%%
