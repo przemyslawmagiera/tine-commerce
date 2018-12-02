@@ -33,6 +33,7 @@ public class Product extends AbstractNameableEntity {
     @AdminVisible(tableVisible = false, className = "com.tinecommerce.core.catalog.model.Price")
     private Set<Price> prices;
 
+    @Setter(AccessLevel.NONE)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
     @AdminVisible(tableVisible = false, className = "com.tinecommerce.core.catalog.model.ProductFeature")
     private Set<ProductFeature> productFeatures;
