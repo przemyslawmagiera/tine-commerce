@@ -31,7 +31,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/entities/**").hasRole("ADMIN")
                 .and()
                 .formLogin()
-                .loginPage("/login").failureUrl("/login-error");
+                .loginPage("/login")
+//                .successForwardUrl("/entities/category")
+                .failureUrl("/login-error");
     }
 
     @Bean
