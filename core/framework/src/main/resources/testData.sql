@@ -30,13 +30,13 @@ insert into Category_Category values
   (-113, -110);
 
 insert into Category_feature values
-  (-100, 'rozmiarObuwie', '', 'Rozmiar', true, false, 'ENUM'),
-  (-101, 'rozmiarOdziez', '', 'Rozmiar', true, false, 'INTEGER'),
-  (-102, 'kolor', '', 'Kolor', true, false, 'STRING'),
-  (-103, 'material', '', 'Materiał', true, false, 'STRING'),
-  (-104, 'marka', '', 'Marka', true, true, 'STRING'),
-  (-105, 'dlugoscSpodnie', '', 'Długość', true, false, 'ENUM'),
-  (-106, 'podszewkaObuwie', '', 'Podszewka', true, false, 'ENUM');
+  (-100, 'rozmiarObuwie_t', '', 'Rozmiar', true, false, 'ENUM'),
+  (-101, 'rozmiarOdziez_t', '', 'Rozmiar', true, false, 'INTEGER'),
+  (-102, 'kolor_t', '', 'Kolor', true, false, 'STRING'),
+  (-103, 'material_t', '', 'Materiał', true, false, 'STRING'),
+  (-104, 'marka_t', '', 'Marka', true, true, 'STRING'),
+  (-105, 'dlugoscSpodnie_t', '', 'Długość', true, false, 'ENUM'),
+  (-106, 'podszewkaObuwie_t', '', 'Podszewka', true, false, 'ENUM');
 
 
 insert into category_feature_assignment values
@@ -92,4 +92,12 @@ insert into Price values
   (-103, 'kod4', 349.90, 'PLN',-102),
   (-104, 'kod5', 299.90, 'PLN',-102),
   (-105, 'kod6', 179.90, 'PLN',-102);
+  
+  
+insert into search_field values 
+  (1,'kod11',TRUE,'category',TRUE),
+  (2,'dcds',FALSE,'name',TRUE),
+  (3,'cds',FALSE,'description',FALSE),
+  (4,'kod1',FALSE,'photos',FALSE);
+
 

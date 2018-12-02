@@ -32,7 +32,7 @@ public abstract class AbstractNameableEntity extends AbstractEntity implements S
 
     @NotNull
     @Size(max = 255)
-    @Column(name = "description", nullable = false)
+    @Column(name = "description")
     @AdminVisible(order = 400)
     private String description;
 }

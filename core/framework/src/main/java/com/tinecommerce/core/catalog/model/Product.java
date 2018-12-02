@@ -35,6 +35,11 @@ public class Product extends AbstractNameableEntity {
 
     @Setter(AccessLevel.NONE)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
+    @AdminVisible(tableVisible = false, className = "com.tinecommerce.core.catalog.model.MediaAsset")
+    private Set<MediaAsset> mediaAssets;
+
+    @Setter(AccessLevel.NONE)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "product")
     @AdminVisible(tableVisible = false, className = "com.tinecommerce.core.catalog.model.ProductFeature")
     private Set<ProductFeature> productFeatures;
 
@@ -42,6 +47,7 @@ public class Product extends AbstractNameableEntity {
     @ManyToMany(mappedBy = Category.FIELD_PRODUCTS, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @AdminVisible(tableVisible = false, className = "com.tinecommerce.core.catalog.model.Category", mappedBy = "products")
     private Set<Category> categories = new HashSet<>();
+
 
     public Set<Category> getCategories() {
         return Collections.unmodifiableSet(categories);

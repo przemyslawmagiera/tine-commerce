@@ -9,4 +9,5 @@
 (-1008, 'categoryFeatureValue', 'CategoryFeatureValue',10, 'com.tinecommerce.core.catalog.model.CategoryFeatureValue', 'Feature Values', -1005),
 (-1009, 'categoryFeature', 'CategoryFeature',10, 'com.tinecommerce.core.catalog.model.CategoryFeature', 'Category Features', -1005),
 (-1010, 'adminGroupItem', 'AdminGroupItem',10, 'com.tinecommerce.admin.panel.model.AdminMenuItem', 'Admin group items', -1002),
-(-1011, 'adminGroup', 'AdminGroup',10, 'com.tinecommerce.admin.panel.model.AdminMenuGroup', 'Admin groups', -1002);
+(-1011, 'adminGroup', 'AdminGroup',10, 'com.tinecommerce.admin.panel.model.AdminMenuGroup', 'Admin groups', -1002),
+(-1012, 'mediaAsset', 'MediaAsset',10, 'com.tinecommerce.core.catalog.model.MediaAsset', 'Media Assets', -1001);

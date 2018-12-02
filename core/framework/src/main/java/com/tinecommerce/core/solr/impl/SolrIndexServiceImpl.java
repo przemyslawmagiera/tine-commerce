@@ -2,6 +2,7 @@ package com.tinecommerce.core.solr.impl;
 
 import com.tinecommerce.core.AbstractEntity;
 import com.tinecommerce.core.catalog.model.Category;
+import com.tinecommerce.core.catalog.model.MediaAsset;
 import com.tinecommerce.core.catalog.model.Price;
 import com.tinecommerce.core.catalog.model.Product;
 import com.tinecommerce.core.catalog.repository.ProductFeatureRepository;
@@ -59,6 +60,8 @@ public class SolrIndexServiceImpl implements SolrIndexService {
 
             doc.addField("category",
                     product.getCategories().stream().map(Category::getName).collect(Collectors.toList()));
+            doc.addField("photos",
+                    product.getMediaAssets().stream().map(MediaAsset::getUrl).collect(Collectors.toList()));
             doc.addField("price_d",
                     product.getPrices().stream().filter(price -> price.getCurrency().getCurrencyCode()
                             .equals(currency.getCurrencyCode())).map(Price::getAmount).map(BigDecimal::doubleValue).findFirst().orElse(null));

@@ -90,7 +90,10 @@
           <div th:if="${searchResult.productDTOS}" class="row">
             <div th:each="productItem : ${searchResult.productDTOS}" class="col-lg-4 col-md-6 mb-4">
               <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                <a href="#">
+                  <img th:unless="${productItem.attributes.get('photos')}" class="card-img-top" src="http://placehold.it/700x400" alt="">
+                  <img th:if="${productItem.attributes.get('photos') != null}" class="card-img-top" th:src="@{${productItem.attributes.get('photos').get(0)}}" alt="">
+                </a>
                 <div class="card-body">
                   <h4 class="card-title">
                     <a href="#" th:text="${productItem.attributes.get('name').get(0)}"></a>
