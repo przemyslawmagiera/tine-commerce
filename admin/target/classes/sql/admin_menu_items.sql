@@ -9,6 +9,29 @@
 (-1009, 'categoryFeature', 'CategoryFeature',10, 'com.tinecommerce.core.catalog.model.CategoryFeature', 'Category Features', -1005),
 (-1010, 'adminGroupItem', 'AdminGroupItem',10, 'com.tinecommerce.admin.panel.model.AdminMenuItem', 'Admin group items', -1002),
 (-1011, 'adminGroup', 'AdminGroup',10, 'com.tinecommerce.admin.panel.model.AdminMenuGroup', 'Admin groups', -1002),
-(-1012, 'mediaAsset', 'MediaAsset',10, 'com.tinecommerce.core.catalog.model.MediaAsset', 'Media Assets', -1001),
+(-1012, 'mediaAsset', 'MediaAsset',10, 'com.tinecommerce.core.catalog.model.MediaAsset', 'Media Assets', -1002),
 (-1013, 'adminUser', 'AdminUser',10, 'com.tinecommerce.admin.security.model.AdminUser', 'Admin users', -1003),
-(-1014, 'adminPermission', 'AdminPermission',10, 'com.tinecommerce.admin.security.model.AdminPermission', 'Admin permissions', -1003);
+(-1014, 'adminPermission', 'AdminPermission',10, 'com.tinecommerce.admin.security.model.AdminPermission', 'Admin permissions', -1003),
+(-1015, 'productFeature', 'ProductFeature',10, 'com.tinecommerce.core.catalog.model.ProductFeature', 'Product features', -1005);
+
+insert into admin_permission values
+  (1,'1','Root admin permission','Root permission [ROOT]',,''''),
+  (2,'catalogPermission','catalog section permission','Catalog Permission',1,''''),
+  (3,'systemPermissions','system section permission','System Permissions',1,''''),
+  (4,'securityPermissions','security section permissions','Security permissions',1,''''),
+  (5,'commercePermissions','permissions for commerce section','Commerce Permissions',1,''''),
+  (6,'classSystemPermissions','Classification system section permissions','Classification system permissions',1,''''),
+  (7,'product','''','Product',2,'com.tinecommerce.core.catalog.model.Product'),
+  (8,'category','''','Category',2,'com.tinecommerce.core.catalog.model.Category'),
+  (9,'price','''','Price',2,'com.tinecommerce.core.catalog.model.Price'),
+  (10,'customer','''','Customer',5,'com.tinecommerce.core.customer.model.Customer'),
+  (11,'order','''','Order',5,'com.tinecommerce.core.cart.Order'),
+  (12,'categoryFeatureAssignment','''','Category Feature Assignment',6,'com.tinecommerce.core.catalog.model.CategoryFeatureAssignment'),
+  (13,'categoryFeatureValue','''','Category Feature Value',6,'com.tinecommerce.core.catalog.model.CategoryFeatureValue'),
+  (14,'categoryFeature','''','Category Feature',6,'com.tinecommerce.core.catalog.model.CategoryFeature'),
+  (15,'adminMenuItem','''','Admin Menu Item',3,'com.tinecommerce.admin.panel.model.AdminMenuItem'),
+  (16,'adminMenuGroup','''','Admin Menu Group',3,'com.tinecommerce.admin.panel.model.AdminMenuGroup'),
+  (17,'mediaAsset','''','Media Asset',3,'com.tinecommerce.core.catalog.model.MediaAsset'),
+  (18,'adminUser','''','Admin User',4,'com.tinecommerce.admin.security.model.AdminUser'),
+  (19,'adminPermission','''','Admin Permission',4,'com.tinecommerce.admin.security.model.AdminPermission'),
+  (20,'productFeature','''','Product Feature',6,'com.tinecommerce.core.catalog.model.ProductFeature');

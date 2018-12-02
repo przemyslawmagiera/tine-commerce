@@ -9,26 +9,25 @@ import com.tinecommerce.admin.panel.model.AdminMenuItem;
 import com.tinecommerce.admin.panel.repository.AdminMenuGroupRepository;
 import com.tinecommerce.admin.panel.repository.AdminMenuItemRepository;
 import com.tinecommerce.admin.panel.repository.DynamicEntityDao;
+import com.tinecommerce.admin.security.model.AdminPermission;
+import com.tinecommerce.admin.security.model.AdminUser;
+import com.tinecommerce.admin.security.repository.AdminUserRepository;
 import com.tinecommerce.core.AbstractEntity;
 import com.tinecommerce.core.AdminVisible;
-import com.tinecommerce.core.catalog.repository.ProductRepository;
+import com.tinecommerce.core.catalog.model.Category;
 import com.tinecommerce.core.extension.ExtensionUtil;
-import com.tinecommerce.core.solr.model.SearchField;
 import org.hibernate.collection.internal.PersistentSet;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import sun.reflect.Reflection;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
-import java.awt.geom.Area;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -43,18 +42,52 @@ public class DynamicEntityController {
     @Autowired
     private DynamicEntityDao dynamicEntityDao;
 
+    @Autowired
+    private AdminUserRepository adminUserRepository;
+
+    @Transactional
+    public boolean hasPermissionForOperation(String checkedClassName){
+        AdminUser adminUser = adminUserRepository.findByUsername(getLoggedInUsername()).get();
+        return getAllChildPermissions(adminUser.getAdminPermissions())
+                .stream()
+                .map(AdminPermission::getClassName)
+                .anyMatch(checkedClassName::equals);
+    }
+
+    private Set<AdminPermission> getAllChildPermissions(Set<AdminPermission> adminPermissions) {
+        final Set<AdminPermission> result = new HashSet<>();
+        adminPermissions.forEach(adminPermission -> getAllChildPermissions(adminPermission, result));
+        return result;
+    }
+
+    private void getAllChildPermissions(final AdminPermission adminPermission, final Set<AdminPermission> result) {
+        adminPermission.getChildPermissions().forEach(child -> this.getAllChildPermissions(child, result));
+        result.add(adminPermission);
+    }
+
+    @GetMapping
+    public String getLoggedInUsername() {
+        return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
+                .map(Principal::getName)
+                .orElse(null);
+    }
+
     @GetMapping("/entities/{entityCode}")
     @Transactional
     public String getDynamicEntityList(final Model model, @PathVariable(name = "entityCode") String entityCode) throws ClassNotFoundException {
-        model.addAttribute("menuItems", adminMenuGroupRepository.findAll());
         String className = adminMenuItemRepository.findByCode(entityCode)
                 .map(AdminMenuItem::getClassName)
                 .orElse("");
-        List<? extends AbstractEntity> entities = dynamicEntityDao.findAllPolimorficEntities(className);
-        DynamicEntityTable entityTable = buildDynamicTable(className, entities);
-        model.addAttribute("headers", entityTable.getHeaders());
-        model.addAttribute("abstractTableLines", entityTable.getTableLines());
-        model.addAttribute("entityName", entityCode);
+        if(hasPermissionForOperation(className)) {
+            model.addAttribute("menuItems", adminMenuGroupRepository.findAll());
+            List<? extends AbstractEntity> entities = dynamicEntityDao.findAllPolimorficEntities(className);
+            DynamicEntityTable entityTable = buildDynamicTable(className, entities);
+            model.addAttribute("headers", entityTable.getHeaders());
+            model.addAttribute("abstractTableLines", entityTable.getTableLines());
+            model.addAttribute("entityName", entityCode);
+        } else {
+            model.addAttribute("entityName", "you do not have permission");
+        }
         return "tables";
     }
 
