@@ -1,7 +1,7 @@
 insert into Category values
   (-100, 'root', 'root Category', 'Main category [root]'),
-  (-101, 'cat1', 'Wszystkie ubrania', 'Odzież'),
-  (-102, 'cat2', '', 'Obuwie'),
+  (-102, 'cat1', 'Wszystkie ubrania', 'Odzież'),
+  (-101, 'cat2', '', 'Obuwie'),
   (-103, 'cat3', '', 'Sport'),
   (-104, 'obuwieEle', 'obuwieEle', 'Eleganckie'),
   (-105, 'obuwieTramp', '', 'Trampki'),

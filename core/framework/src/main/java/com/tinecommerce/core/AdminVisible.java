@@ -13,4 +13,5 @@ public @interface AdminVisible {
     //for relations:
     public String className() default "";
     public String mappedBy() default "";
+    public boolean viewOnly() default false;
 }

@@ -14,8 +14,8 @@
 (-1014, 'adminPermission', 'AdminPermission',10, 'com.tinecommerce.admin.security.model.AdminPermission', 'Admin permissions', -1003),
 (-1015, 'productFeature', 'ProductFeature',10, 'com.tinecommerce.core.catalog.model.ProductFeature', 'Product features', -1005);
 
-insert into admin_permission values
-  (1,'1','Root admin permission','Root permission [ROOT]',,''''),
+insert into admin_permission(id,code,description,name,parent_permission_id bigint,class_name) values
+  (1,'1','Root admin permission','Root permission [ROOT]',null,''''),
   (2,'catalogPermission','catalog section permission','Catalog Permission',1,''''),
   (3,'systemPermissions','system section permission','System Permissions',1,''''),
   (4,'securityPermissions','security section permissions','Security permissions',1,''''),

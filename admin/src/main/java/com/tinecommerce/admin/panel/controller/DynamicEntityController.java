@@ -171,7 +171,7 @@ public class DynamicEntityController {
                             entityTable.setName(field.getName());
                             adminMenuItemRepository.findByClassName(relationalClassName).ifPresent(name ->
                                     entityTable.setCode(name.getCode()));
-                            relationalEntities.add(new RelationMetadata(foreignKeyName, relationalClassName, "o2m", entityTable));
+                            relationalEntities.add(new RelationMetadata(foreignKeyName, relationalClassName, "o2m",field.getAnnotation(AdminVisible.class).viewOnly(), entityTable));
                         } else if (Collection.class.isAssignableFrom(classField.getType()) && classField.getAnnotation(ManyToMany.class) != null) {
                             String foreignKeyName = field.getAnnotation(ManyToMany.class).mappedBy();
                             if (foreignKeyName.equals("")) {
@@ -183,7 +183,7 @@ public class DynamicEntityController {
                             entityTable.setName(field.getName());
                             adminMenuItemRepository.findByClassName(relationalClassName).ifPresent(name ->
                                     entityTable.setCode(name.getCode()));
-                            relationalEntities.add(new RelationMetadata(foreignKeyName, relationalClassName, "m2m", entityTable));
+                            relationalEntities.add(new RelationMetadata(foreignKeyName, relationalClassName, "m2m",field.getAnnotation(AdminVisible.class).viewOnly(), entityTable));
                         } else {
                             dynamicForm.getDynamicFormFields().add(new DynamicFormField(fieldType, field.getName(), classField.get(entity)));
                         }

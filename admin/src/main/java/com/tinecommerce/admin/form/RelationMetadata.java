@@ -11,5 +11,6 @@ public class RelationMetadata {
     private String foreignKeyName;
     private String relationClass;
     private String type;
+    private boolean viewOnly;
     private DynamicEntityTable entityTable;
 }
