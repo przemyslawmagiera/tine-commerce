@@ -4,11 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Controller("/cart")
+@Controller
 public class CartController {
 
-    @GetMapping(name = "/show")
+    @GetMapping("/cart/show")
     public String showCart(Model model){
-        return "car-temp";
+        return "cart";
     }
 }

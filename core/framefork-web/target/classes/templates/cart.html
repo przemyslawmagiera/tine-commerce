@@ -52,58 +52,41 @@
 <!-- Page Content -->
 <div class="container">
     <div class="row">
+        <h1>Your shopping cart</h1>
+    </div>
+
+    <div class="row cart-margin">
 
         <div class="col-md-5 col-sm-12">
             <div class="bigcart"></div>
             <h1>Your shopping cart</h1>
-            <p>
-                This is a free and <b><a href="http://tutorialzine.com/2014/04/responsive-shopping-cart-layout-twitter-bootstrap-3/" title="Read the article!">responsive shopping cart layout, made by Tutorialzine</a></b>. It looks nice on both desktop and mobile browsers. Try it by resizing your window (or opening it on your smartphone and pc).
-            </p>
+            <img style="max-width: 250px;" src="https://cdn4.iconfinder.com/data/icons/shopping-21/64/shopping-06-512.png">
         </div>
 
-        <div class="col-md-7 col-sm-12 text-left">
-            <ul>
-                <li class="row list-inline columnCaptions">
-                    <span>QTY</span>
-                    <span>ITEM</span>
-                    <span>Price</span>
-                </li>
-                <li class="row">
-                    <span class="quantity">1</span>
-                    <span class="itemName">Birthday Cake</span>
-                    <span class="popbtn"><a class="arrow"></a></span>
-                    <span class="price">$49.95</span>
-                </li>
-                <li class="row">
-                    <span class="quantity">50</span>
-                    <span class="itemName">Party Cups</span>
-                    <span class="popbtn"><a class="arrow"></a></span>
-                    <span class="price">$5.00</span>
-                </li>
-                <li class="row">
-                    <span class="quantity">20</span>
-                    <span class="itemName">Beer kegs</span>
-                    <span class="popbtn"><a class="arrow"></a></span>
-                    <span class="price">$919.99</span>
-                </li>
-                <li class="row">
-                    <span class="quantity">18</span>
-                    <span class="itemName">Pound of beef</span>
-                    <span class="popbtn"><a class="arrow"></a></span>
-                    <span class="price">$269.45</span>
-                </li>
-                <li class="row">
-                    <span class="quantity">1</span>
-                    <span class="itemName">Bullet-proof vest</span>
-                    <span class="popbtn"  data-parent="#asd" data-toggle="collapse" data-target="#demo"><a class="arrow"></a></span>
-                    <span class="price">$450.00</span>
-                </li>
-                <li class="row totals">
-                    <span class="itemName">Total:</span>
-                    <span class="price">$1694.43</span>
-                    <span class="order"> <a class="text-center">ORDER</a></span>
-                </li>
-            </ul>
+        <div class="col-md-7 col-sm-12 text-center" >
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">QTY</th>
+                    <th scope="col">Photo</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td><img style="max-width: 60px;" src="https://diamonddreams.pl/environment/cache/images/500_500_productGfx_84c6f1d45ff570f1dc7258a1b72ed431.jpg"></td>
+                    <td>lorem ipsum dolor sir maet>lorem ipsum dolor sir maet</td>
+                    <td>@mdo</td>
+                    <td><a href="/">X</a></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h2>Cena całkowita: $400</h2>
+            <button class="btn btn-danger">ZAMÓW</button>
         </div>
 
     </div>
@@ -123,4 +106,11 @@
 
 </body>
 
+
 </html>
+
+<style>
+    .cart-margin {
+        margin: 70px;
+    }
+</style>
