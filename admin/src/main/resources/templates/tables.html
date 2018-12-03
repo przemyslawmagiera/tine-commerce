@@ -52,35 +52,41 @@
 
         <div class="container-fluid">
           <!-- DataTables Example -->
-          <form th:action="@{'/entities/' +  ${entityName}+ '/add'}" method="get">
-            <button type="submit" class="btn btn-info">ADD</button>
-          </form>
-          <div class="card mb-3">
-
-            <div class="card-header" th:text="${'Table of ' + entityName}">
+          <div th:if="${authError}">
+            <div class="card-header" th:text="${'You do not have permission'}">
               <i class="fas fa-table"></i>
-              </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th th:each="header : ${headers}" th:text="${header}"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr th:each="atl : ${abstractTableLines}">
-                      <td th:each="atlV,iter : ${atl.values}">
-                        <a th:if="${iter.index == 0}" th:href="@{'/entities/' + ${entityName} + '/' + ${atlV} + '/edit'}" th:text="${atlV.toString()}"></a>
-                        <p th:unless="${iter.index == 0}" th:text="${atlV.toString()}"></p>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+            </div>
+          </div>
+          <div th:unless="${authError}">
+            <form th:action="@{'/entities/' +  ${entityName}+ '/add'}" method="get">
+              <button type="submit" class="btn btn-info">ADD</button>
+            </form>
+            <div class="card mb-3">
+
+              <div class="card-header" th:text="${'Table of ' + entityName}">
+                <i class="fas fa-table"></i>
+                </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                      <tr>
+                        <th th:each="header : ${headers}" th:text="${header}"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr th:each="atl : ${abstractTableLines}">
+                        <td th:each="atlV,iter : ${atl.values}">
+                          <a th:if="${iter.index == 0}" th:href="@{'/entities/' + ${entityName} + '/' + ${atlV} + '/edit'}" th:text="${atlV.toString()}"></a>
+                          <p th:unless="${iter.index == 0}" th:text="${atlV.toString()}"></p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
-
         </div>
         <!-- /.container-fluid -->
 
