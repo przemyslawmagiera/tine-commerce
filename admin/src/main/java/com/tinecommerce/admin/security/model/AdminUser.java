@@ -1,7 +1,7 @@
 package com.tinecommerce.admin.security.model;
 
-import com.tinecommerce.core.AbstractEntity;
 import com.tinecommerce.core.AdminVisible;
+import com.tinecommerce.core.security.AbstractUserEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,17 +13,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "admin_user")
-public class AdminUser extends AbstractEntity {
-    @Column(name = "username")
-    @AdminVisible
-    private String username;
-
-    @Column(name = "password")
-    @AdminVisible(tableVisible = false)
-    private String password;
-
-    @Column(name = "role")
-    private String role;
+public class AdminUser extends AbstractUserEntity {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "adminUsers")
     @AdminVisible(tableVisible = false, className = "com.tinecommerce.admin.security.model.AdminPermission", mappedBy = "adminUsers")

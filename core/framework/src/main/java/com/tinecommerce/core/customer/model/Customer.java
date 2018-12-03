@@ -2,6 +2,7 @@ package com.tinecommerce.core.customer.model;
 
 import com.tinecommerce.core.AbstractEntity;
 import com.tinecommerce.core.AdminVisible;
+import com.tinecommerce.core.security.AbstractUserEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,7 +20,7 @@ import static java.util.Collections.unmodifiableSet;
 @EqualsAndHashCode(of = "email", callSuper = false)
 @Getter
 @Setter
-public class Customer extends AbstractEntity {
+public class Customer extends AbstractUserEntity {
     @NotBlank
     @Size(max = 255)
     @Column(name = "name", length = 255)

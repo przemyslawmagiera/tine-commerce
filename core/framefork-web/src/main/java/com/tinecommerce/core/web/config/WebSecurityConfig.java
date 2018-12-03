@@ -1,15 +1,14 @@
-package com.tinecommerce.admin.config;
+package com.tinecommerce.core.web.config;
 
+import com.tinecommerce.core.security.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import com.tinecommerce.admin.security.UserDetailsServiceImpl;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.annotation.Resource;
@@ -18,8 +17,8 @@ import javax.annotation.Resource;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Resource(name = "adminUserDetailsService")
-    UserDetailsServiceImpl userDetailsService;
+    @Resource(name = "customerUserDetailsService")
+    private UserDetailsServiceImpl userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -30,11 +29,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/css/**", "/assets/**").permitAll()
-                .antMatchers("/entities/**").hasRole("ADMIN")
+                .antMatchers("/customer/**").hasRole("CUSTOMER")
                 .and()
                 .formLogin()
                 .loginPage("/login")
-//                .successForwardUrl("/entities/category")
                 .failureUrl("/login-error");
     }
 
