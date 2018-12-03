@@ -53,6 +53,7 @@ public class SolrSearchServiceImpl {
         searchableCodes.add("price_d");
         searchableCodes.add("description");
         searchableCodes.add("photos");
+        searchableCodes.add("code_t");
         query.setFields(searchableCodes.toArray(new String[0]));
         query.setStart(0);
         query.set("defType", "edismax");

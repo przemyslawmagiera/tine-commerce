@@ -57,6 +57,7 @@ public class SolrIndexServiceImpl implements SolrIndexService {
             final SolrInputDocument doc = new SolrInputDocument();
             final Set<Class<? extends AbstractEntity>> classes = ExtensionUtil.getProductSubclasses();
             addProductFeatures(product, doc);
+            doc.addField("code_t", product.getCode());
 
             doc.addField("category",
                     product.getCategories().stream().map(Category::getName).collect(Collectors.toList()));

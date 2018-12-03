@@ -98,7 +98,8 @@ insert into search_field values
   (1,'kod11',TRUE,'category',TRUE),
   (2,'dcds',FALSE,'name',TRUE),
   (3,'cds',FALSE,'description',FALSE),
-  (4,'kod1',FALSE,'photos',FALSE);
+  (4,'kod1',FALSE,'photos',FALSE),
+  (5,'kod33',FALSE,'code',FALSE);
 
 
 

@@ -96,14 +96,14 @@
                 </a>
                 <div class="card-body">
                   <h4 class="card-title">
-                    <a href="#" th:text="${productItem.attributes.get('name').get(0)}"></a>
+                    <a th:href="@{'/productDetail/' + ${productItem.attributes.get('code_t')}}" th:text="${productItem.attributes.get('name').get(0)}"></a>
                   </h4>
                   <h5 th:text="${productItem.attributes.get('price_d') + 'zł'}"></h5>
                   <p class="card-text" th:text="${productItem.attributes.get('description').get(0)}"></p>
                 </div>
                 <div class="card-footer">
                   <button class="btn btn-info btn-lg">
-                    <i>Add to cart</i>
+                    <i>Dodaj</i>
                   </button>
                 </div>
               </div>
