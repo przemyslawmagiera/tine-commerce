@@ -192,10 +192,15 @@
 
 
 \begin{frame}{Funkcjonalności systemu}{System uprawnień w panelu administracyjnym}
+	\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.28]{uprawnienia.png}
+	\end{center}
+	\caption{{\color{black}Przykład przypisania uprawnienia do sekcji}} 
+\end{figure}
 \begin{itemize}
-	\item<1-> użytkownik administracyjny będzie miał kolekcję uprawnień
-	\item<1-> struktura systemu uprawnień będzie podobna do struktury kategorii, uprawnienia będą mogły po sobie dzidziczyć
-	\item<1-> AdminMenuGroup i AdminMenuItem będą miały kolekcje encji 'uprawnienie', podczas \textit{renderu} menu, będą brane pod uwagę, względem tego, kto jest aktualnie zalogowany
+	\item<1-> użytkownik administracyjny ma kolekcję uprawnień
+	\item<1-> każde uprawnienie ma kolekcję swoich dzieci, domyślnie zostały ułożone w strukturę przypominającą zawartość menu
 \end{itemize}
 \end{frame}
 
@@ -205,6 +210,7 @@
 	\item<1-> możliwość dokonania zakupu
 	\item<1-> strona szegółowa produktu
 	\item<1-> strona wyszukiwania produktu
+	\item<1-> zdjęcia produktowe
 	\item<1-> zarządzanie zamówieniami/użytkownikami/adresami 
 \end{itemize}
 \end{frame}
