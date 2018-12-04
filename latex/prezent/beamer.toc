@@ -1,12 +1,7 @@
 \beamer@endinputifotherversion {3.36pt}
 \select@language {polish}
-\beamer@sectionintoc {1}{Zdefiniowane problemy}{3}{1}{1}
-\beamer@subsectionintoc {1}{1}{Problemy - zagadnienie 1}{3}{1}{1}
-\beamer@subsectionintoc {1}{2}{Problemy - zagadnienie 2}{4}{1}{1}
-\beamer@subsectionintoc {1}{3}{Problemy - zagadnienie 3}{5}{1}{1}
-\beamer@subsectionintoc {1}{4}{Problemy - zagadnienie 4}{6}{1}{1}
-\beamer@sectionintoc {2}{Zastosowane rozwi\IeC {\k a}zania problem\IeC {\'o}w}{8}{2}{2}
-\beamer@subsectionintoc {2}{1}{Dynamiczny panel administracyjny}{8}{2}{2}
-\beamer@subsectionintoc {2}{2}{Funkcjonalno\IeC {\'s}ci biznesowe wbudowane w platform\IeC {\k e}}{13}{2}{2}
-\beamer@subsectionintoc {2}{3}{Funkcjonalno\IeC {\'s}ci biznesowe wbudowane w platform\IeC {\k e}}{14}{2}{2}
-\beamer@subsectionintoc {2}{4}{Mechanizm indeksuj\IeC {\k a}co-wyszukuj\IeC {\k a}cy}{18}{2}{2}
+\beamer@sectionintoc {1}{Wymagania}{2}{0}{1}
+\beamer@subsectionintoc {1}{1}{Wsp\IeC {\'o}\IeC {\l }czesne frameworki e-commerce}{2}{0}{1}
+\beamer@sectionintoc {2}{Zastosowane rozwi\IeC {\k a}zania}{3}{0}{2}
+\beamer@subsectionintoc {2}{1}{Dynamiczny panel administracyjny}{3}{0}{2}
+\beamer@subsectionintoc {2}{2}{Funkcjonalno\IeC {\'s}ci budowane w platform\IeC {\k e}}{7}{0}{2}

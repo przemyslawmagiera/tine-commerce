@@ -1,6 +1,7 @@
 package com.tinecommerce.core.cart;
 
 import com.tinecommerce.core.AbstractEntity;
+import com.tinecommerce.core.AdminVisible;
 import com.tinecommerce.core.customer.model.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ public class Order extends AbstractEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "order_status")
+    @AdminVisible
     private OrderStatus orderStatus = OrderStatus.NEW;
 
     @Column(name = "submit_date")
