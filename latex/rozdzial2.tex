@@ -234,7 +234,7 @@ Wart zauważenia jest region wykresu w ramce \textit{cached}, otóż jednym z po
 
 
 \subsection{Proces zakupowy}
-Proces zakupowy jest standardowym mechanizmem konicznym do przeprowadzenia transakcji, nie wymaga on szczególnej optymalizacji, ze względu na to, że nie jest to obciążona część platformy. Klient po wyszukaniu produktu może się zalogować i umieścić go w koszyku, a następnie zamówić produkty dodane do koszyka. Szczególnym rozwiązaniem dla frameworka jest stworzenie kopii produktu w tym momencie, aby klient w razie reklamacji miał się do czego odwołać, gdyż parametry produktu są bardzo dynamiczne i często się zmieniają, więc coś sprzedane 2 tygodnie wcześniej może być niemożliwe do odnalezienia po pewnym czasie. Funkcjonalność ta jest jedną z prostszych i nie wymaga dalszego opisu. Całość została umieszczona na diagramie z rysunku \ref{procZakup}
+Proces zakupowy jest standardowym mechanizmem konicznym do przeprowadzenia transakcji, nie wymaga on szczególnej optymalizacji, ze względu na to, że nie jest to obciążona część platformy. Klient końcowy, po wejściu na sklep może wyszukać produkt oraz zdefiniować kryteria wyszukiwania. Po znalezieniu szukanych produktów może umieścić je w koszyku, a następnie zamówić elementy dodane do koszyka. Szczególnym rozwiązaniem dla frameworka jest tworzenie kopii produktu w momencie składania zamówienia, aby klient w razie reklamacji miał się do czego odwołać. Ta funkcjonalność, jest umotywowana tym, że cechy produktu w systemie są bardzo dynamiczne i mogą być dowolnie zmieniane, więc produkt sprzedany w danym miesiącu może być niemożliwy do odnalezienia po pewnym czasie. Całość została umieszczona na diagramie z rysunku \ref{procZakup}.
 \begin{figure}
 	\begin{center}
 	%	\includegraphics[scale=0.4]{procZakup.png}
@@ -242,14 +242,6 @@ Proces zakupowy jest standardowym mechanizmem konicznym do przeprowadzenia trans
 	\caption{{\color{black}Diagram sekwencji opisujący proces zakupowy.}} \label{procZakup}
 \end{figure}
 
-\subsection{Proces reklamacji}
-Proces reklamacji, ujęty na diagramie \ref{procRek} podobnie jak proces zakupowy, jest przykładowym procesem, który został zaimplementowany za pomocą modelu frameworka, oczywiście jest jego częścią, jednak nie wnosi dużej wartości do samej pracy. Został on zaimplementowany z powodu wspomnianego w rozdziale \textbf{Wymagania funkcjonalne}, we frameworkach e-commerce rzadko spotyka się takie funkcjonalności \textit{out of the box} dlatego jest to coś dodatkowego - rozszerzenie platformy.
-\begin{figure}
-	\begin{center}
-	%	\includegraphics[scale=0.4]{procRek.png}
-	\end{center}
-	\caption{{\color{black}Diagram sekwencji opisujący proces zakupowy.}} \label{procRek}
-\end{figure}
 
 \newpage
 \section{Diagramy klas}
@@ -257,8 +249,9 @@ Proces reklamacji, ujęty na diagramie \ref{procRek} podobnie jak proces zakupow
 Na podstawie wcześniejszych rozważań możliwe jest zdefiniowanie następujących części frameworku: 
 \begin{itemize}
 	\item system klasyfikacyjny i katalog produktowy
-	\subitem model
-	\subitem warstwa serwisowa systemu klasyfikacyjnego
+	\subitem warstwa modelowa
+	\subitem warstwa serwisowa
+	\subitem warstwa kontrolerów
 	\item proces zamówienia i wersjonowania produktu
 	\item dynamiczna obsługa modelu w panelu administracyjnym
 	\subitem formularz encyjny
@@ -271,7 +264,20 @@ Diagramy klas zostaną podzielone ze względu na pochodzenie funkcjonalności zd
 \subsection{System klasyfikacyjny i katalog produktowy}
 
 \subsubsection{Model systemu klasyfikacyjnego}
-opis
+System klasyfikacyjny jest powiązany z drzewem kategorii. Pozwala na zdefiniowanie dziedzicznych cech dla każdej z nich, które pojawią się w końcowym produkcie przypisanym do kategorii. Poniżej znajduje się opis słowny poszczególnych klas ujętych na diagramie \ref{klasy_model_sysKlas}.
+
+\noindent Cechy kategorii (\texttt{com.tinecommerce.core.catalog.model::Category}):
+\begin{itemize}
+	\item dowolną liczbę dzieci i rodziców
+	\item listę asocjacjji do zdefiniowanych jej cech
+	\item przypisane do niej produkty
+\end{itemize} 
+Cechy produktu (\texttt{com.tinecommerce.core.catalog.model::Product}):
+\begin{itemize}
+	\item dowolną liczbę dzieci i rodziców
+	\item listę asocjacjji do zdefiniowanych jej cech
+	\item przypisane do niej produkty
+\end{itemize} 
 \begin{figure}[H]
 	\begin{center}
 		\includegraphics[scale=0.5,angle=270]{klasy_model_sysKlas.png}
@@ -288,7 +294,7 @@ opis
 	\caption{{\color{black}Diagram klas systemu klasyfikacyjnego - serwisy}} \label{klasy_serwisy_sysKlas}
 \end{figure}
 
-\subsubsection{Warstwa fasadowa systemu klasyfikacyjnego}
+\subsubsection{Warstwa kontrolerów systemu klasyfikacyjnego}
 opis
 \begin{figure}[H]
 	\begin{center}
