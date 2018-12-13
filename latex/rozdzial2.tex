@@ -252,7 +252,7 @@ Na podstawie wcześniejszych rozważań możliwe jest zdefiniowanie następując
 	\subitem warstwa modelowa
 	\subitem warstwa serwisowa
 	\subitem warstwa kontrolerów
-	\item proces zamówienia i wersjonowania produktu
+	\item proces zamówienia i archwizacji produktu
 	\item dynamiczna obsługa modelu w panelu administracyjnym
 	\subitem formularz encyjny
 	\subitem tabela encyjna
@@ -274,11 +274,17 @@ System klasyfikacyjny jest powiązany z drzewem kategorii. Pozwala na zdefiniowa
 \end{itemize} 
 Cechy produktu (\texttt{com.tinecommerce.core.catalog.model::Product}):
 \begin{itemize}
-	\item dowolną liczbę dzieci i rodziców
-	\item listę asocjacjji do zdefiniowanych jej cech
-	\item przypisane do niej produkty
-\end{itemize} 
-\begin{figure}[H]
+	\item lista cen
+	\item lista przypisanych kategorii
+	\item lista cech (ProductFeature)
+\end{itemize}
+\texttt{Product Feature} jest to klasa pośrednicząca pomiędzy strukturą drzewiastą systemu klasyfikacyjnego, a samym produktem, dlatego jej cechy to: produkt, cecha ketegorii oraz wartość cechy kategorii. Warto zauważyć, że z punktu widzenia modelu jest możliwe aby każdy produkt posiadał dowolną cechę wynikającą z klasyfikacji, ponieważ Product i CategoryFeature są  \textit{de facto} w relacji many to many. Jednak warstwa serwisowa (opisana w dalszej sekcji) jest odpowiedzialna za ograniczenie tych cech tylko do takich, które wynikają ze ścieżki w drzewie kategorii, która prowadzi od korzenia do samego produktu. Aby jaśniej nakreślić udział modelu w systemie klasyfikacyjnym został podany przykład \ref{przyklCatFeat}
+\begin{example}
+	\label{przyklCatFeat}
+	Kategoria (Category) \textbf{sport} posiada atrybut klasyfikacyjny (Category Feature) \textbf{waga sprzętu}, ich powiązanie definiuje się encją Category Feature Assignment. Atrybut klasyfikacyjny może mieć zdefiniowane wiele możliwych dla siebie wartości (Category Feature Value), np. \textbf{5KG, 2KG, 1KG}. Jeżeli jakiś produkt będzie należał do kategorii \textbf{sport}, to w jego fromularzu edycji pojawi się możliwe do zdefiniowania pole (Product Feature) \textbf{waga sprzętu}, której będziemy mogli nadać wartość \textbf{5KG, 2KG, 1KG}.
+\end{example}
+
+\begin{figure}
 	\begin{center}
 		\includegraphics[scale=0.5,angle=270]{klasy_model_sysKlas.png}
 	\end{center}
@@ -286,8 +292,16 @@ Cechy produktu (\texttt{com.tinecommerce.core.catalog.model::Product}):
 \end{figure}
 
 \subsubsection{Warstwa serwisowa systemu klasyfikacyjnego}
-opis
-\begin{figure}[H]
+W opisie warstwy modelowej zostało wspomniane, że warstwa serwisowa zajmuje się ograniczeniem atrybutów klasyfikacyjnych i przypisywaniem ich produktom. Ponadto zapewnia walidacje drzewa kategorii (aby nie powstawały cykle).
+
+\noindent
+\textbf{Serwis kategorii} (CategoryService) jest interfejsem, który waliduje strukture drzewa kategorii, dodaje kategorie do drzewa (tworzy powiazania) oraz umożliwia wydobycie wszystkich przodków i potomków węzła. Serwis w przypadku znalezienia cyklu w drzewie kategorii rzuca wyjątek informujący o cyklicznym połączeniu między kategoriami (CircularEntityConnectionException) Interfejs posiada podstawową implementację w postaci klasy CategoryServiceImpl. 
+
+\noindent
+\textbf{Serwis atrybutów klasyfikacyjnych} (CategoryFeatureService) został zaimplementowany po to aby umożliwić pobranie wszystkich możliwych atrybutów klasyfikacyjnych dla dowolnego Produktu. To właśnie ten serwis jest odpowiedzialny za ograniczenie tych cech tylko do takich, które wynikają ze ścieżki w drzewie kategorii, która prowadzi od korzenia do samego produktu. Sytuacja ta została opisana na diagramach aktywności w sekcji \textbf{Wyszukiwanie cech produktu}.
+
+Serwisy mają również połączenie z bazą danych za pomocą obiektów \textit{repository}. W tych klasach są konkretne metody pobierające encje z bazy danych. Każda metoda odpowiada kwerendzie bazodanowej, która została wygenerowana przez framework Hibernate na podstawie nazwy metody. 
+\begin{figure}
 	\begin{center}
 		\includegraphics[scale=0.4,angle=270]{klasy_serwisy_sysKlas.png}
 	\end{center}
@@ -295,12 +309,12 @@ opis
 \end{figure}
 
 \subsubsection{Warstwa kontrolerów systemu klasyfikacyjnego}
-opis
-\begin{figure}[H]
+Panel administracyjny i edycja encji w systemie jest oparta na refleksji (czyli wyciąganiu wartości pól z klas), jednak w przypadku atrybutów klasyfikacyjnych nie mamy do czynienia z fizycznymi polami, dlatego potrzebujemy mechanizmu, który obsłuży przypisywanie ich wartości, dodawanie lub usuwanie. Kontrolery związane z systemem klasyfikacyjnym są rozszerzeniem ogólnego kontrolera \textbf{DynamicEntityController} (omówiony w sekcji \textbf{Dynamiczna obsługa modelu w panelu administracyjnym}), który zapewnia właśnie to domyślne rozwiązanie oparte na refleksji. Więc kontrolery te powstały ze względu na konieczność obsługi nietypowych pól w formularzu edycji produktu jak i kategorii. W przypadku produktu są to pola, które nie należą bezpośrednio do klasy Product, jednak mogą mieć zdefiniowaną wartość - czyli wartości atrybutów klasyfikacyjnych. Natomiast w przypadku kategorii wiąże się to z koniecznością walidacji dodawania kolejnych powiązań w drzewie kategorii. 
+\begin{figure}
 	\begin{center}
 		\includegraphics[scale=0.4,angle=270]{klasy_kontrolery_sysKlas.png}
 	\end{center}
-	\caption{{\color{black}Diagram klas systemu klasyfikacyjnego - fasada}} \label{klasy_kontrolery_sysKlas}
+	\caption{{\color{black}Diagram klas systemu klasyfikacyjnego - kontrolery}} \label{klasy_kontrolery_sysKlas}
 \end{figure}
 
 \section{Projekt bazy danych}

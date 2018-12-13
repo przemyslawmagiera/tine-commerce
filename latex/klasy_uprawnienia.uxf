@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="13.3">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>210</x>
+      <y>640</y>
+      <w>330</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>AdminUser
+--
+-adminPermissions: Set&lt;AdminPermission&gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>270</x>
+      <y>500</y>
+      <w>210</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>AbstractUserEntity
+--
+-username: String
+-password: String
+-role: String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>590</y>
+      <w>30</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>660</x>
+      <y>620</y>
+      <w>300</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>AdminPermission
+--
+-name: String
+-parentPermission: AdminPermission
+-childPermissions: Set&lt;AdminPermission&gt;
+-adminUsers: List&lt;AdminUser&gt;
+-className: ClassName
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>530</x>
+      <y>670</y>
+      <w>150</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=0..1</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>290</x>
+      <y>350</y>
+      <w>440</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+AdminPermissionService
+--
++hasPermissionForOperation(String className): Boolean
+-getAllChildPermissions(AdminPermission adminPermission, Set&lt;AdminPermission&gt; result)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>540</x>
+      <y>500</y>
+      <w>440</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+AdminUserRepository
+--
++findByUsername(String username): AdminUser
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>490</x>
+      <y>430</y>
+      <w>290</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;&gt;
+zaczytanie użytkowników 
+i ich uprawnień z bazy danych</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;30.0;270.0;30.0;270.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>420</x>
+      <y>250</y>
+      <w>410</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>DynamicEntityController
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>560</x>
+      <y>270</y>
+      <w>320</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=.&gt;&gt;
+sprawdzenie uprawnień 
+przy bufowaniu tabeli encyjnej i formularza</panel_attributes>
+    <additional_attributes>60.0;10.0;60.0;40.0;250.0;40.0;250.0;120.0;170.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>810</x>
+      <y>590</y>
+      <w>180</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=0..1
+</panel_attributes>
+    <additional_attributes>90.0;30.0;90.0;10.0;160.0;10.0;160.0;170.0;10.0;170.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>200</x>
+      <y>230</y>
+      <w>800</w>
+      <h>580</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>490</x>
+      <y>560</y>
+      <w>170</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+pobieranie z bazy
+danych</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;40.0;150.0;40.0;150.0;10.0</additional_attributes>
+  </element>
+</diagram>
