@@ -24,13 +24,11 @@ public abstract class AbstractNameableEntity extends AbstractEntity implements S
 
     private static final long serialVersionUID = -2968157318009412565L;
 
-    @NotBlank
     @Size(max = 255)
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     @AdminVisible(order = 300)
     private String name;
 
-    @NotNull
     @Size(max = 255)
     @Column(name = "description")
     @AdminVisible(order = 400)

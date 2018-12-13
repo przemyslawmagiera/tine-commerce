@@ -1,6 +1,7 @@
 package com.tinecommerce.core.cart;
 
 import com.tinecommerce.core.AbstractEntity;
+import com.tinecommerce.core.AdminVisible;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,9 +20,11 @@ public class OrderItem extends AbstractEntity {
     private Order order;
 
     @Column(name = "quantity")
+    @AdminVisible
     private Long quantity;
 
-    @ManyToOne(targetEntity = ArchivalProduct.class, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = ArchivalProduct.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "archival_product_id")
+    @AdminVisible
     private ArchivalProduct archivalProduct;
 }

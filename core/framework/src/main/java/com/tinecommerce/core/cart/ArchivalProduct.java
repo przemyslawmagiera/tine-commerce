@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.Map;
 
 @Entity
@@ -16,8 +17,16 @@ import java.util.Map;
 @Setter
 public class ArchivalProduct extends AbstractNameableEntity {
 
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyColumn(name = "attr_key")
     @Column(name = "attribute")
-    private Map<String, String> attributes;
+    private Map<String, String> attributes = new HashMap<>();
+
+    @Column(name = "price")
+    private Double price;
+
+    @Override
+    public String toString() {
+        return attributes.get("name");
+    }
 }

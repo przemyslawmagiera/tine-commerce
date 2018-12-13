@@ -152,7 +152,19 @@
 \end{frame}
 
 
+
 \subsection{Funkcjonalności budowane w platformę}
+
+\begin{frame}{Funkcjonalności systemu}{Mechanizm indeksująco-wyszukujący}
+\begin{itemize}
+	\item<1-> do zapytań związanych z katalogiem produktowym użyto serwer Apache Solr 7.5 oparty na silniku Lucene
+	\item<1-> Solr umożliwia analizę danych tekstowych: podświetlanie, podpowiadanie i facetowanie 
+	\item<1-> obsługa zapytań pochodzących ze sklepu obsługiwana jest przez zewnętrzny serwer, co umożliwia jego skalowanie
+	\item<1-> co 15 minut uruchamiany jest job w systemie, który synchronizuje bazę relacyjną z Solrem - indeksacja
+	\item<1-> indeksacja to wydobycie atrybutów wyszukiwalnych z produktu
+\end{itemize}
+\end{frame}
+
 
 \begin{frame}{Funkcjonalności systemu}{System klasyfikacyjny}
 	\begin{figure}
@@ -165,16 +177,6 @@
 
 
 
-\begin{frame}{Funkcjonalności systemu}{Mechanizm indeksująco-wyszukujący}
-\begin{itemize}
-	\item<1-> do zapytań związanych z katalogiem produktowym użyto serwer Apache Solr 7.5 oparty na silniku Lucene
-	\item<1-> Solr umożliwia analizę danych tekstowych: podświetlanie, podpowiadanie i facetowanie 
-	\item<1-> obsługa zapytań pochodzących ze sklepu obsługiwana jest przez zewnętrzny serwer, co umożliwia jego skalowanie
-	\item<1-> co 15 minut uruchamiany jest job w systemie, który synchronizuje bazę relacyjną z Solrem - indeksacja
-	\item<1-> indeksacja to wydobycie atrybutów wyszukiwalnych z produktu
-\end{itemize}
-\end{frame}
-
 \begin{frame}{Funkcjonalności systemu}{Przykład działania systemu klasyfikacyjnego z mechanizmem wyszukiwania}
 	\begin{figure}
 		\begin{center}
@@ -182,20 +184,6 @@
 		\end{center}
 		\caption{{\color{black}Działanie systemmu klasyfikacyjnego z wyszukiwarką}} 
 	\end{figure}
-\end{frame}
-
-
-\begin{frame}{Funkcjonalności systemu}{System uprawnień w panelu administracyjnym}
-	\begin{figure}
-	\begin{center}
-		\includegraphics[scale=0.28]{uprawnienia.png}
-	\end{center}
-	\caption{{\color{black}Przykład przypisania uprawnienia do sekcji}} 
-\end{figure}
-\begin{itemize}
-	\item<1-> użytkownik administracyjny ma kolekcję uprawnień
-	\item<1-> każde uprawnienie ma kolekcję swoich dzieci, domyślnie zostały ułożone w strukturę przypominającą zawartość menu
-\end{itemize}
 \end{frame}
 
 \begin{frame}{Funkcjonalności sklepu}{Inne funkcjonalności, które zostały zaimplementowane z pomocą frameworka}

@@ -23,26 +23,25 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">Tine-commerce: przykładowy sklep</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" th:href="@{/search?query=}">Tine-commerce: przykładowy sklep</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
+                    <a class="nav-link" th:href="@{/search?query=}">Home
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" th:href="@{/customer/orders}">Zamówienia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
+                    <a class="nav-link" th:href="@{/customer/cart/show}">Koszyk</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <p class="nav-link" th:text="${'Zalogowany: ' + @loggedCmp.getAuthName()}">Contact</p>
                 </li>
             </ul>
         </div>
@@ -59,7 +58,7 @@
 
         <div class="col-md-5 col-sm-12">
             <div class="bigcart"></div>
-            <h1>Your shopping cart</h1>
+            <h1>Twój koszyk</h1>
             <img style="max-width: 250px;" src="https://cdn4.iconfinder.com/data/icons/shopping-21/64/shopping-06-512.png">
         </div>
 
@@ -75,18 +74,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td><img style="max-width: 60px;" src="https://diamonddreams.pl/environment/cache/images/500_500_productGfx_84c6f1d45ff570f1dc7258a1b72ed431.jpg"></td>
-                    <td>lorem ipsum dolor sir maet>lorem ipsum dolor sir maet</td>
-                    <td>@mdo</td>
-                    <td><a href="/">X</a></td>
+                <tr th:each="orderItem : ${orderItems}">
+                    <th scope="row" th:text="${orderItem.quantity}"></th>
+                    <td><img style="max-width: 60px;" th:src="@{${orderItem.archivalProduct.attributes.get('photo')}}"></td>
+                    <td th:text="${orderItem.archivalProduct.attributes.get('name')}"></td>
+                    <td th:text="${orderItem.archivalProduct.price + ' ' + orderItem.archivalProduct.attributes.get('currency')}"></td>
+                    <td><a th:href="@{${'/customer/cart/delete/' + orderItem.archivalProduct.attributes.get('code')}}">X</a></td>
                 </tr>
                 </tbody>
             </table>
 
-            <h2>Cena całkowita: $400</h2>
-            <button class="btn btn-danger">ZAMÓW</button>
+            <h2 th:text="${'Cena całkowita: ' + price + ' PLN'}"></h2>
+            <a class="btn btn-danger" th:href="@{/customer/cart/buy}">ZAMÓW</a>
         </div>
 
     </div>

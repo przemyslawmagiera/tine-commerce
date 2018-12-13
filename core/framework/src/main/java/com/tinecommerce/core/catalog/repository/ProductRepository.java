@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product,Long>, ProductRepositoryCustom {
+    Product findByCode(String code);
 }

@@ -21,26 +21,25 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">Tine-commerce: przykładowy sklep</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" th:href="@{/search?query=}">Tine-commerce: przykładowy sklep</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
+                    <a class="nav-link" th:href="@{/search?query=}">Home
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" th:href="@{/customer/orders}">Zamówienia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
+                    <a class="nav-link" th:href="@{/customer/cart/show}">Koszyk</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <p class="nav-link" th:text="${'Zalogowany: ' + @loggedCmp.getAuthName()}"></p>
                 </li>
             </ul>
         </div>
@@ -65,12 +64,12 @@
 
             <div class="card mt-4">
                 <img th:unless="${product.attributes.get('photos')}" class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
-                <img th:if="${product.attributes.get('photos') != null}" class="card-img-top" th:src="@{${productItem.attributes.get('photos').get(0)}}" alt="">
+                <img th:if="${product.attributes.get('photos') != null}" class="card-img-top" th:src="@{${product.attributes.get('photos').get(0)}}" alt="">
                 <div class="card-body">
                     <h3 class="card-title" th:text="${product.attributes.remove('name').get(0)}"></h3>
                     <h4 th:text="${product.attributes.remove('price_d') + ' PLN'}"></h4>
                     <p class="card-text" th:text="${product.attributes.remove('description').get(0)}"></p>
-                    <a th:href="@{'/cart/add/' + ${product.attributes.remove('code_t')}}" class="btn btn-success">Dodaj do koszyka</a>
+                    <a th:href="@{'/customer/cart/add/' + ${product.attributes.remove('code_t')}}" class="btn btn-success">Dodaj do koszyka</a>
                 </div>
             </div>
             <!-- /.card -->

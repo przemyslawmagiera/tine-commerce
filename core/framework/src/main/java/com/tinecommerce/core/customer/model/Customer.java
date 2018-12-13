@@ -1,7 +1,7 @@
 package com.tinecommerce.core.customer.model;
 
-import com.tinecommerce.core.AbstractEntity;
 import com.tinecommerce.core.AdminVisible;
+import com.tinecommerce.core.cart.Order;
 import com.tinecommerce.core.security.AbstractUserEntity;
 import lombok.*;
 
@@ -34,16 +34,13 @@ public class Customer extends AbstractUserEntity {
     @AdminVisible
     private String email;
 
-    @NotBlank
-    @Email
-    @Size(max = 254)
-    @Column(name = "password", length = 255)
-    @AdminVisible(tableVisible = false)
-    private String password;
-
     @ManyToMany(mappedBy = "customers", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @Setter(AccessLevel.NONE)
     private Set<Address> addresses = new HashSet<>();
+
+    @OneToMany(targetEntity = Order.class, mappedBy = "customer", cascade = CascadeType.ALL)
+    @AdminVisible(tableVisible = false, className = "com.tinecommerce.core.cart.Order")
+    private Set<Order> orders = new HashSet<>();
 
     public Set<Address> getAddresses() {
         return unmodifiableSet(addresses);
