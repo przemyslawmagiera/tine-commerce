@@ -23,17 +23,16 @@
 \contentsline {subsection}{\numberline {3.4.3}Dodanie dowolnej encji na przyk\IeC {\l }adzie atrybutu klasyfikacyjnego}{22}{subsection.3.4.3}
 \contentsline {subsection}{\numberline {3.4.4}Wyszukiwanie produktu}{23}{subsection.3.4.4}
 \contentsline {subsection}{\numberline {3.4.5}Proces zakupowy}{23}{subsection.3.4.5}
-\contentsline {subsection}{\numberline {3.4.6}Proces reklamacji}{25}{subsection.3.4.6}
 \contentsline {section}{\numberline {3.5}Diagramy klas}{26}{section.3.5}
 \contentsline {subsection}{\numberline {3.5.1}System klasyfikacyjny i katalog produktowy}{26}{subsection.3.5.1}
-\contentsline {subsubsection}{Model systemu klasyfikacyjnego}{26}{subsubsection*.20}
-\contentsline {subsubsection}{Warstwa serwisowa systemu klasyfikacyjnego}{27}{subsubsection*.22}
-\contentsline {subsubsection}{Warstwa fasadowa systemu klasyfikacyjnego}{28}{subsubsection*.24}
+\contentsline {subsubsection}{Model systemu klasyfikacyjnego}{26}{subsubsection*.19}
+\contentsline {subsubsection}{Warstwa serwisowa systemu klasyfikacyjnego}{27}{subsubsection*.21}
+\contentsline {subsubsection}{Warstwa kontroler\IeC {\'o}w systemu klasyfikacyjnego}{28}{subsubsection*.23}
 \contentsline {section}{\numberline {3.6}Projekt bazy danych}{30}{section.3.6}
 \contentsline {chapter}{\numberline {4}Implementacja systemu}{31}{chapter.4}
 \contentsline {section}{\numberline {4.1}Opis technologii}{31}{section.4.1}
 \contentsline {section}{\numberline {4.2}Om\IeC {\'o}wienie kod\IeC {\'o}w \IeC {\'z}r\IeC {\'o}d\IeC {\l }owych}{31}{section.4.2}
 \contentsline {chapter}{\numberline {5}Instalacja i wdro\IeC {\.z}enie}{33}{chapter.5}
 \contentsline {chapter}{\numberline {6}Podsumowanie}{35}{chapter.6}
-\contentsline {chapter}{Bibliografia}{37}{chapter*.26}
+\contentsline {chapter}{Bibliografia}{37}{chapter*.25}
 \contentsline {chapter}{\numberline {A}Zawarto\IeC {\'s}\IeC {\'c} p\IeC {\l }yty CD}{39}{appendix.A}
