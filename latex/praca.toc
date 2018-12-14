@@ -24,15 +24,31 @@
 \contentsline {subsection}{\numberline {3.4.4}Wyszukiwanie produktu}{23}{subsection.3.4.4}
 \contentsline {subsection}{\numberline {3.4.5}Proces zakupowy}{23}{subsection.3.4.5}
 \contentsline {section}{\numberline {3.5}Diagramy klas}{26}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}System klasyfikacyjny i katalog produktowy}{26}{subsection.3.5.1}
-\contentsline {subsubsection}{Model systemu klasyfikacyjnego}{26}{subsubsection*.19}
-\contentsline {subsubsection}{Warstwa serwisowa systemu klasyfikacyjnego}{27}{subsubsection*.21}
-\contentsline {subsubsection}{Warstwa kontroler\IeC {\'o}w systemu klasyfikacyjnego}{27}{subsubsection*.23}
-\contentsline {section}{\numberline {3.6}Projekt bazy danych}{27}{section.3.6}
-\contentsline {chapter}{\numberline {4}Implementacja systemu}{31}{chapter.4}
-\contentsline {section}{\numberline {4.1}Opis technologii}{31}{section.4.1}
-\contentsline {section}{\numberline {4.2}Om\IeC {\'o}wienie kod\IeC {\'o}w \IeC {\'z}r\IeC {\'o}d\IeC {\l }owych}{31}{section.4.2}
-\contentsline {chapter}{\numberline {5}Instalacja i wdro\IeC {\.z}enie}{33}{chapter.5}
-\contentsline {chapter}{\numberline {6}Podsumowanie}{35}{chapter.6}
-\contentsline {chapter}{Bibliografia}{37}{chapter*.25}
-\contentsline {chapter}{\numberline {A}Zawarto\IeC {\'s}\IeC {\'c} p\IeC {\l }yty CD}{39}{appendix.A}
+\contentsline {subsection}{\numberline {3.5.1}Konfigurowalne menu}{26}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}Dynamiczna tabela encyjna}{27}{subsection.3.5.2}
+\contentsline {subsection}{\numberline {3.5.3}Dynamiczny formularz encyjny}{28}{subsection.3.5.3}
+\contentsline {subsection}{\numberline {3.5.4}Model systemu klasyfikacyjnego}{30}{subsection.3.5.4}
+\contentsline {subsection}{\numberline {3.5.5}Warstwa serwisowa systemu klasyfikacyjnego}{30}{subsection.3.5.5}
+\contentsline {subsection}{\numberline {3.5.6}Warstwa kontroler\IeC {\'o}w systemu klasyfikacyjnego}{31}{subsection.3.5.6}
+\contentsline {subsection}{\numberline {3.5.7}Struktura uprawnie\IeC {\'n} w panelu administracyjnym}{31}{subsection.3.5.7}
+\contentsline {subsection}{\numberline {3.5.8}Indeksacja i wyszukiwanie produkt\IeC {\'o}w}{33}{subsection.3.5.8}
+\contentsline {subsection}{\numberline {3.5.9}Proces zam\IeC {\'o}wienia}{34}{subsection.3.5.9}
+\contentsline {section}{\numberline {3.6}Projekt bazy danych}{35}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Menu w panelu administracyjnym}{35}{subsection.3.6.1}
+\contentsline {subsection}{\numberline {3.6.2}System klasyfikacyjny}{36}{subsection.3.6.2}
+\contentsline {subsection}{\numberline {3.6.3}Mechanizm uprawnie\IeC {\'n}}{36}{subsection.3.6.3}
+\contentsline {subsection}{\numberline {3.6.4}Proces zakupowy}{37}{subsection.3.6.4}
+\contentsline {subsection}{\numberline {3.6.5}Po\IeC {\l }\IeC {\k a}czenie bazy relacyjnej z p\IeC {\l }ask\IeC {\k a} struktur\IeC {\k a} noSQL Apache Solr}{39}{subsection.3.6.5}
+\contentsline {subsection}{\numberline {3.6.6}System utrzymania bazy danych}{40}{subsection.3.6.6}
+\contentsline {subsection}{\numberline {3.6.7}Normalizacja bazy danych}{40}{subsection.3.6.7}
+\contentsline {chapter}{\numberline {4}Implementacja systemu}{41}{chapter.4}
+\contentsline {section}{\numberline {4.1}Opis technologii}{41}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Spring Framework/Spring Boot}{41}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Hibernate/JPA 2.1}{41}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Spring Data}{41}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}Apache Solr}{41}{subsection.4.1.4}
+\contentsline {section}{\numberline {4.2}Om\IeC {\'o}wienie kod\IeC {\'o}w \IeC {\'z}r\IeC {\'o}d\IeC {\l }owych}{42}{section.4.2}
+\contentsline {chapter}{\numberline {5}Instalacja i wdro\IeC {\.z}enie}{45}{chapter.5}
+\contentsline {chapter}{\numberline {6}Podsumowanie}{47}{chapter.6}
+\contentsline {chapter}{Bibliografia}{49}{chapter*.33}
+\contentsline {chapter}{\numberline {A}Zawarto\IeC {\'s}\IeC {\'c} p\IeC {\l }yty CD}{51}{appendix.A}

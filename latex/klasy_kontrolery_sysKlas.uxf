@@ -1,46 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="13.3">
-  <zoom_level>9</zoom_level>
+  <zoom_level>8</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>90</x>
-      <y>252</y>
-      <w>459</w>
-      <h>54</h>
+      <x>152</x>
+      <y>296</y>
+      <w>224</w>
+      <h>48</h>
     </coordinates>
-    <panel_attributes>com.tinecommerce.admin.panel.controller::AdminCategoryController
+    <panel_attributes>AdminCategoryController
 --
-~addCategoryRelation()
++addCategoryRelation(): void
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>801</x>
-      <y>270</y>
-      <w>522</w>
-      <h>126</h>
+      <x>600</x>
+      <y>312</y>
+      <w>408</w>
+      <h>112</h>
     </coordinates>
-    <panel_attributes>&lt;&lt;interface&gt;&gt;
-com.tinecommerce.core.catalog.service::CategoryService
+    <panel_attributes>CategoryService
 --
---
-~getAllChildCategories(Category category): List&lt;Category&gt;
-~getAllParentCategories(Category category): List&lt;Category&gt;
-~canAddChildToCategory(Category category, Category child): Boolean
-~addChildToCategory(Category category, Category child): void
---
++getAllChildCategories(Category category): List&lt;Category&gt;
++getAllParentCategories(Category category): List&lt;Category&gt;
++canAddChildToCategory(Category category, Category child): Boolean
++addChildToCategory(Category category, Category child): void
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>540</x>
-      <y>261</y>
-      <w>279</w>
-      <h>36</h>
+      <x>368</x>
+      <y>304</y>
+      <w>248</w>
+      <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.&gt;&gt;
 walidacja</panel_attributes>
@@ -49,10 +46,10 @@ walidacja</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>540</x>
-      <y>288</y>
-      <w>279</w>
-      <h>45</h>
+      <x>368</x>
+      <y>328</y>
+      <w>248</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.&gt;&gt;
 dodanie/usunięcie kategorii 
@@ -62,24 +59,24 @@ z drzewa </panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>90</x>
-      <y>351</y>
-      <w>459</w>
-      <h>54</h>
+      <x>112</x>
+      <y>384</y>
+      <w>264</w>
+      <h>48</h>
     </coordinates>
-    <panel_attributes>com.tinecommerce.admin.panel.controller::AdminProductController
+    <panel_attributes>AdminProductController
 --
-~getFieldsFromClassificationSystem()
++getFieldsFromClassificationSystem():void
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>477</x>
-      <y>351</y>
-      <w>261</w>
-      <h>126</h>
+      <x>312</x>
+      <y>384</y>
+      <w>232</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.&gt;&gt;
 pobieranie 
@@ -91,27 +88,26 @@ formularza</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>450</x>
-      <y>459</y>
-      <w>522</w>
-      <h>81</h>
+      <x>288</x>
+      <y>480</y>
+      <w>432</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
-com.tinecommerce.core.catalog.service::CategoryFeatureService
+CategoryFeatureService
 --
---
-~getCategoryFeaturesForProduct(Product product): List&lt;CategoryFeature&gt;
---
++getCategoryFeaturesForProduct(Product product): List&lt;CategoryFeature&gt;
+
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>747</x>
-      <y>387</y>
-      <w>315</w>
-      <h>90</h>
+      <x>552</x>
+      <y>416</y>
+      <w>280</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.&gt;&gt;
 Pobieranie przodków 
@@ -121,10 +117,10 @@ kategorii </panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>72</x>
-      <y>216</y>
-      <w>1269</w>
-      <h>351</h>
+      <x>104</x>
+      <y>264</y>
+      <w>912</w>
+      <h>312</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>

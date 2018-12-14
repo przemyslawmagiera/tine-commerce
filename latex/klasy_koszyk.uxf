@@ -124,7 +124,7 @@ m2=0..n</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>486</x>
-      <y>441</y>
+      <y>468</y>
       <w>189</w>
       <h>90</h>
     </coordinates>
@@ -140,12 +140,12 @@ m2=0..n</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>567</x>
-      <y>522</y>
+      <y>549</y>
       <w>27</w>
-      <h>72</h>
+      <h>45</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;30.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -254,7 +254,7 @@ m2=1</panel_attributes>
       <x>189</x>
       <y>54</y>
       <w>810</w>
-      <h>927</h>
+      <h>396</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -265,21 +265,22 @@ m2=1</panel_attributes>
       <x>279</x>
       <y>216</y>
       <w>315</w>
-      <h>72</h>
+      <h>90</h>
     </coordinates>
     <panel_attributes>OrderService
 --
 +deleteFromCart(String productCode): void
 +addToCart(String productCode): void
-+acceptOrder(): void</panel_attributes>
++acceptOrder(): void
+-archvizeProduct(Product product): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>324</x>
+      <x>297</x>
       <y>351</y>
-      <w>225</w>
+      <w>252</w>
       <h>63</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
@@ -332,18 +333,6 @@ warstwa serwisowa</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>180</x>
-      <y>414</y>
-      <w>837</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>lt=.
-model</panel_attributes>
-    <additional_attributes>10.0;20.0;910.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
       <x>333</x>
       <y>108</y>
       <w>135</w>
@@ -358,12 +347,12 @@ koszykiem</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>423</x>
-      <y>279</y>
+      <y>297</y>
       <w>27</w>
-      <h>90</h>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>

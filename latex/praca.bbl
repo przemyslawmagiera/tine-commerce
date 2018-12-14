@@ -1,22 +1,45 @@
 \begin{thebibliography}{1}
 
-\bibitem{Solr}
+\bibitem{Solr-doc}
 Apache solr technology.
 \newblock Web pages: \url{https://lucene.apache.org/solr/guide/}.
 
-\bibitem{Java}
+\bibitem{Java-doc}
 Java technology.
 \newblock Web pages: \url{http://www.oracle.com/technetwork/java/}.
 
-\bibitem{HTML-CSS}
-B.~Frain.
-\newblock {\em Responsive Web Design with HTML5 and CSS3}.
-\newblock Packt Publishing, 2012.
+\bibitem{solrJ}
+Solrj guide.
+\newblock Web pages:
+  \url{https://lucene.apache.org/solr/guide/7_5/using-solrj.html}.
+
+\bibitem{springb-docs}
+Spring boot documentation.
+\newblock Web pages: \url{https://docs.spring.io/}.
+
+\bibitem{sb}
+Start bootstrap project.
+\newblock Web pages: \url{https://startbootstrap.com/}.
+
+\bibitem{JPA-hib}
+G.~G. G.~K. Christian~Bauer.
+\newblock {\em Java Persistence with Hibernate, Second Edition}.
+\newblock Manning, 2015.
 
 \bibitem{oracle}
 G.~McCluskey.
 \newblock Using java reflection.
 \newblock Web pages:
   \url{https://www.oracle.com/technetwork/articles/java/javareflection-1536171.html}.
+
+\bibitem{solrbook}
+T.~G. T.~Potter.
+\newblock {\em Solr in Action}.
+\newblock Manning, 2014.
+
+\bibitem{springbook}
+C.~Walls.
+\newblock {\em Spring Boot in Action}.
+\newblock Manning, 2016.
 
 \end{thebibliography}

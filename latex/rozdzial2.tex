@@ -248,22 +248,67 @@ Proces zakupowy jest standardowym mechanizmem konicznym do przeprowadzenia trans
 
 Na podstawie wcześniejszych rozważań możliwe jest zdefiniowanie następujących części frameworku: 
 \begin{itemize}
-	\item system klasyfikacyjny i katalog produktowy
-	\subitem warstwa modelowa
-	\subitem warstwa serwisowa
-	\subitem warstwa kontrolerów
-	\item proces zamówienia i archwizacji produktu
-	\item dynamiczna obsługa modelu w panelu administracyjnym
-	\subitem formularz encyjny
-	\subitem tabela encyjna
-	\subitem menu w panelu administracyjnym
-	\item mechanizm indeksacji i wyszukiwania produktów
+	\item części przewidziane dla programisty i administratora sklepu
+	\subitem konfigurowalne menu w panelu administracyjnym
+	\subitem dynamiczny formularz encyjny
+	\subitem dynamiczna tabela encyjna
+	\item części przewidziane dla administratora sklepu
+	\subitem system klasyfikacyjny - warstwa modelowa
+	\subitem system klasyfikacyjny - warstwa serwisowa
+	\subitem system klasyfikacyjny - warstwa kontrolerów
+	\subitem struktura uprawnień w panelu administracyjnym
+	\subitem mechanizm indeksacji i wyszukiwania produktów
+	\item część przewidziana dla użytkownika końcowego - klienta sklepu
+	\subitem mechanizm wyszukiwania produktów
+	\subitem proces zamówienia i archiwizacji produktu
 \end{itemize}
 Diagramy klas zostaną podzielone ze względu na pochodzenie funkcjonalności zdefiniowane wyżej. 
 
-\subsection{System klasyfikacyjny i katalog produktowy}
+%\subsection{System klasyfikacyjny i katalog produktowy}
 
-\subsubsection{Model systemu klasyfikacyjnego}
+\subsection{Konfigurowalne menu}
+Na diagramie \ref{klasy_menu} został przedstawiony diagram klas dla menu panelu administracyjnego. Aby zapewnić możliwość obsługi dowolnej encji w panelu administracyjnym, które zostały zaimplementowane na potrzeby sklepu, np. Order (zamówienie), zostało stworzone menu, które jest oparte na klasie AdminMenuItem. Klasa ta bespośrednio odpowiada dowolnej encji. Oznacza to, że jeśli encja powinna być obsługiwana z panelu administracyjnego, to musi w systemie (jego bazie danych) istnieć jej odpowiednik w postaci AdminMenuItem z nazwą jej klasy (\texttt{className}). W systemie została przewidziana możliwość grupowania poszczególnych zakładek za pomocą klasy \texttt{AdminMenuGroup}. Budowanie menu odbywa się w klasie \texttt{DynamicEntityController}, która korzysta z klas połączonych z bazą danych, tak aby móc zaczytywać kolejne encje (\texttt{AdminMenuGroupRepository i AdminMenuItemRepository}). Dla lepszego zrozumienia został podany przykład \ref{przyklad_menu}
+\begin{example}
+	W systemie istnieje encja Order, chcielibyśmy mieć możliwość zarządzania tą encją z poziomu panelu administracyjnego. W tym celu na poziomie bazy danych powinna być zapisany egzemplarz AdminMenuItem z nazwą klasy (className): com.example.model.Order (nazwa pakietu została podana tylko dla przykładu). System w tym momencie będzie już rozpoznawał encję Order, wyświetli ją w menu oraz będzie w stanie stworzyć dla niej tabele encyjną ze wszystkimi rekordami oraz formularz edycji. 
+\end{example} 
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.5]{klasy_menu.png}
+	\end{center}
+	\caption{{\color{black}Diagram klas dla menu w panelu administracyjnym}} \label{klasy_menu}
+\end{figure}
+
+\subsection{Dynamiczna tabela encyjna}
+Na rysunku \ref{klasy_tabela_encyjna} został umieszczony diagram klas dla dynamicznej tabeli encyjnej, o której była mowa w poprzedniej podsekcji. Tabela ta służy do wyświetlania wszystkich egzemplarzy danej encji w systemie, np. wszystkie produkty lub kategorie. Aby zamodelować tabelę zostały zaimplementowane dwie klasy: \texttt{DynamicEntityTable i AbstractTableLine}. Odpowiednio odpowiadają one całej strukturze tabeli oraz pojedynczemu wierszowi. Oczywiste jest, że tabela musi posiadać wiele wierszy. \texttt{DynamicEntityService} używa tych klas do konstrukcji tabelki. Serwis musi mieć możliwość pobierania danych z bazy, jednak jest to utrudnione zadanie ze względu na to, że nie jest z góry określone, że serwis ten zawsze konstruuje tabelkę klasy, np. \texttt{Product}. W tym celu została zaimplementowana klasa \texttt{DynamicEntityDao}. Jest to obiekt typu DAO\footnote{DAO - Data Access Object - obiekt dostępu do bazy danych}, którego zadaniem jest wyciągać z bazy danych encje zdefiniowane w systemie, niezależnie od tego jakiej klasy są i czy nie zostały nadpisane. Stąd metoda \texttt{getCeilingClass(className)}, która odpowiada za znalezienie \textit{najmłodszej} klasy w abstrakcji. Aby rozjaśnić ten mechanizm został podany przykład \ref{przyklad_tabela}
+\begin{example}
+\label{przyklad_tabela}
+	W systemie istnieje wiele encji, np. Customer, Order, Product. W przypadku generowania dla nich tabeli, należy pamiętać o tym, że każda z nich może zostać nadpisana przez programistów budujących rozwiązania oparte o implementowany framework. Powiedzmy, że dodano klasę \texttt{MyProduct extends Product}. Abyśmy otrzymali dostęp do pól z tej nowej, nieznanej systemowi klasy potrzebujemy właśnie metody, która znajdzie za pomocą refleksji, klasę \texttt{MyProduct}, dzięki której system automatycznie, bez wkładu programisty będzie mógł uwzględnić w tabeli encyjnej pola, które zostały dopisane do produktu. To jest właśnie zadanie metody \texttt{getCeilingClass}. 
+\end{example}
+Kontroler \texttt{DynamicEntityControler} korzysta z serwisu, aby umieścić tabelę z encjami na stronie panelu administracyjnego pod konkretnym mapowaniem, np. \textit{/admin/entity/product/table}. 
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.4]{klasy_tabela_encyjna.png}
+	\end{center}
+	\caption{{\color{black}Diagram klas dla tabeli encyjnej w panelu administracyjnym}} \label{klasy_tabela_encyjna}
+\end{figure}
+
+\subsection{Dynamiczny formularz encyjny}
+Na rysunku \ref{klasy_formularz_encyjny} został umieszczony diagram klas dla dynamicznego formularza edycji encji. Zdefiniowano dla niego dwa rodzaje pól: \texttt{DynamicFormField i RelationMetadata}. Odpowiadają one odpowiednio polom prostym oraz relacyjnym. Każde pole relacyjne ma tabelkę z encjami (\texttt{DynamicEntityTable} - modelowo jest to ta sama tabelka co w poprzedniej podsekcji) będącymi w relacji z encją dla której generowany jest formularz, np. kolekcja cen w każdym produkcie. Dynamiczny serwis encyjny podobnie jak w przypadku tabeli, konstruuje formularz korzystając z opisanych wyżej modelowych klas. Posiada zestaw metod które:
+\begin{itemize}
+	\item wyciągają wartości pól z encji za pomocą refleksji (tak eby wpisać je do formularza edycji)
+	\item znajdują za pomocą refleksji relacje encji, dla której budowany jest formularz, z uwzględnieniem problemu nadpisania klasy opisanego w przykładzie \ref{przyklad_tabela}
+	\item obsługują CRUD edytowanej encji oraz jej relacji 
+\end{itemize}  
+
+\texttt{DynamicEntityController} w przypadku tej funkcjonalności obsługuje zapytania z serwera związane z wyświetleniem formularza encji, przetwarzaniem edycji oraz obsługą relacji encji (CRUD\footnote{CRUD - CreateReadUpdateDelete - zestaw podstawowych operacji na encji, w przypadku tej funkcjonalności odnosi się do obsługi pól relacyjnych w encji, np. dodawania, usuwania, czytania i edytowania zdjęć do produktu }). Klasa \texttt{DynamicEntityDao} spełnia takie samo zadanie jak w przypadku tabeli, wyciąga z bazy danych egzemplarze encji z uwzględnieniem możliwej abstrakcji.
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.4]{klasy_formularz_encyjny.png}
+	\end{center}
+	\caption{{\color{black}Diagram klas dla tabeli encyjnej w panelu administracyjnym}} \label{klasy_formularz_encyjny}
+\end{figure}
+
+\subsection{Model systemu klasyfikacyjnego}
 System klasyfikacyjny jest powiązany z drzewem kategorii. Pozwala na zdefiniowanie dziedzicznych cech dla każdej z nich, które pojawią się w końcowym produkcie przypisanym do kategorii. Poniżej znajduje się opis słowny poszczególnych klas ujętych na diagramie \ref{klasy_model_sysKlas}.
 
 \noindent Cechy kategorii (\texttt{com.tinecommerce.core.catalog.model::Category}):
@@ -286,13 +331,13 @@ Cechy produktu (\texttt{com.tinecommerce.core.catalog.model::Product}):
 
 \begin{figure}
 	\begin{center}
-		\includegraphics[scale=0.5,angle=270]{klasy_model_sysKlas.png}
+		\includegraphics[scale=0.4]{klasy_model_sysKlas.png}
 	\end{center}
 	\caption{{\color{black}Diagram klas systemu klasyfikacyjnego - model}} \label{klasy_model_sysKlas}
 \end{figure}
 
-\subsubsection{Warstwa serwisowa systemu klasyfikacyjnego}
-W opisie warstwy modelowej zostało wspomniane, że warstwa serwisowa zajmuje się ograniczeniem atrybutów klasyfikacyjnych i przypisywaniem ich produktom. Ponadto zapewnia walidacje drzewa kategorii (aby nie powstawały cykle).
+\subsection{Warstwa serwisowa systemu klasyfikacyjnego}
+Na rysunku \ref{klasy_serwisy_sysKlas} został umieszczony diagram klas warstwy serwisowej systemu klasyfikacyjnego. W opisie modelu zostało wspomniane, że warstwa serwisowa zajmuje się ograniczeniem atrybutów klasyfikacyjnych i przypisywaniem ich produktom. Ponadto zapewnia walidacje drzewa kategorii (aby nie powstawały cykle).
 
 \noindent
 \textbf{Serwis kategorii} (CategoryService) jest interfejsem, który waliduje strukture drzewa kategorii, dodaje kategorie do drzewa (tworzy powiazania) oraz umożliwia wydobycie wszystkich przodków i potomków węzła. Serwis w przypadku znalezienia cyklu w drzewie kategorii rzuca wyjątek informujący o cyklicznym połączeniu między kategoriami (CircularEntityConnectionException) Interfejs posiada podstawową implementację w postaci klasy CategoryServiceImpl. 
@@ -303,21 +348,130 @@ W opisie warstwy modelowej zostało wspomniane, że warstwa serwisowa zajmuje si
 Serwisy mają również połączenie z bazą danych za pomocą obiektów \textit{repository}. W tych klasach są konkretne metody pobierające encje z bazy danych. Każda metoda odpowiada kwerendzie bazodanowej, która została wygenerowana przez framework Hibernate na podstawie nazwy metody. 
 \begin{figure}
 	\begin{center}
-		\includegraphics[scale=0.4,angle=270]{klasy_serwisy_sysKlas.png}
+		\includegraphics[scale=0.38]{klasy_serwisy_sysKlas.png}
 	\end{center}
 	\caption{{\color{black}Diagram klas systemu klasyfikacyjnego - serwisy}} \label{klasy_serwisy_sysKlas}
 \end{figure}
 
-\subsubsection{Warstwa kontrolerów systemu klasyfikacyjnego}
-Panel administracyjny i edycja encji w systemie jest oparta na refleksji (czyli wyciąganiu wartości pól z klas), jednak w przypadku atrybutów klasyfikacyjnych nie mamy do czynienia z fizycznymi polami, dlatego potrzebujemy mechanizmu, który obsłuży przypisywanie ich wartości, dodawanie lub usuwanie. Kontrolery związane z systemem klasyfikacyjnym są rozszerzeniem ogólnego kontrolera \textbf{DynamicEntityController} (omówiony w sekcji \textbf{Dynamiczna obsługa modelu w panelu administracyjnym}), który zapewnia właśnie to domyślne rozwiązanie oparte na refleksji. Więc kontrolery te powstały ze względu na konieczność obsługi nietypowych pól w formularzu edycji produktu jak i kategorii. W przypadku produktu są to pola, które nie należą bezpośrednio do klasy Product, jednak mogą mieć zdefiniowaną wartość - czyli wartości atrybutów klasyfikacyjnych. Natomiast w przypadku kategorii wiąże się to z koniecznością walidacji dodawania kolejnych powiązań w drzewie kategorii. 
+\subsection{Warstwa kontrolerów systemu klasyfikacyjnego}
+Rysunek \ref{klasy_kontrolery_sysKlas} przedstawia diagram klas warstwy kontrolerów systemu klasyfikacyjnego. Panel administracyjny i edycja encji w systemie jest oparta na refleksji (czyli wyciąganiu wartości pól z klas), jednak w przypadku atrybutów klasyfikacyjnych nie mamy do czynienia z fizycznymi polami, dlatego potrzebujemy mechanizmu, który obsłuży przypisywanie ich wartości, dodawanie lub usuwanie. Kontrolery związane z systemem klasyfikacyjnym są rozszerzeniem ogólnego kontrolera \textbf{DynamicEntityController} (omówionego w poprzednich sekcjach), który zapewnia właśnie domyślne rozwiązanie oparte na refleksji. Więc kontrolery te powstały ze względu na konieczność obsługi nietypowych pól w formularzu edycji produktu jak i kategorii. W przypadku produktu są to pola, które nie należą bezpośrednio do klasy Product, jednak mogą mieć zdefiniowaną wartość - czyli wartości atrybutów klasyfikacyjnych. Natomiast w przypadku kategorii wiąże się to z koniecznością walidacji dodawania kolejnych powiązań w drzewie kategorii. 
 \begin{figure}
 	\begin{center}
-		\includegraphics[scale=0.4,angle=270]{klasy_kontrolery_sysKlas.png}
+		\includegraphics[scale=0.4]{klasy_kontrolery_sysKlas.png}
 	\end{center}
 	\caption{{\color{black}Diagram klas systemu klasyfikacyjnego - kontrolery}} \label{klasy_kontrolery_sysKlas}
 \end{figure}
 
+\subsection{Struktura uprawnień w panelu administracyjnym}
+Panel administracyjny wyposażony jest w drzewiasty system uprawnień, który zapewnia kontrole dostępu do encji dla różnych użytkowników. Diagram klas użytych w tym rozwiązaniu został przedstawiony na rysunku \ref{klasy_uprawnienia}. \texttt{DynamicEntityControler} w przypadku tej funkcjonalności sprawdza w swoich metodach CRUD dotyczących encji, czy zalogowany użytkownik ma prawo do wyświetlenia i edycji encji, w którą ma zamiar wejść. Dzieje się to za sprawą metody \texttt{hasPermissionForOperation}
+\texttt{(className)} w klasie \texttt{AdminPermissionService}, która wędrując po drzewie uprawnień sprawdza czy dany użytkownik ma powiązanie z uprawnieniem potrzebnym do wyświetlenia danej encji. Obiekty z bazy danych są pobierane za pomocą klasy \texttt{AdminUserRepository}. System skonfigurowany jest domyślnie na to aby jeden egzemplarz klasy \texttt{AdminPermission} odpowiadał jednej klasie encyjnej (np. cenie - Price). Uprawnienia mają również listę dzieci, dlatego można je układać w drzewiaste struktury. Działąnie struktury objaśni przykład \ref{przyklad_upraw}
+\begin{example}
+	\label{przyklad_upraw}
+	Gdy użytkownik administracyjny \texttt{AdminUser} otrzymuje dane uprawnienie A, jest w stanie wyświetlić i edytować encję, której dotyczy to uprawnienie A jak i również wszystkie inne encje, których dotyczą uprawnienia, dla których A jest rodzicem. 
+\end{example}
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.4]{klasy_uprawnienia.png}
+	\end{center}
+	\caption{{\color{black}Diagram klas systemu uprawnień}} \label{klasy_uprawnienia}
+\end{figure}
+
+\subsection{Indeksacja i wyszukiwanie produktów}
+W systemie zostały zaimplementowane dwa główne serwisy obsługujące zapytania związane z wyszukiwaniem i widzialnością produktów na sklepie. Pierwszy z nich to \texttt{SolrIndexService}, którego zadaniem jest wydobyć atrybuty produktu z systemu klasyfikacyjnego oraz z pól jego klasy jak zostało to przedstawione na rysunku \ref{cechyProd}. Potrzebuje on w tym celu dwóch obiektów dostępów do bazy dancyh. \texttt{ProductRepository} wyciągnie produkty (\texttt{Product}) wraz z kolekcjami ich dynamicznych cech z systemu klasyfikacyjnego (\texttt{ProductFeature/CategoryFeature}). Natomiast \texttt{SearchFieldRepository} wyciągnie nazwy pól, które zosatły zdefiniowane w systemie jako potrzebne do indeksacji (np. nazwa, opis lub cena). Każdy egzemplarz klasy \texttt{SearchField} odpowiada więc pewnej cesze produktu, która ma być wyszukiwalna. Cechy te zostaną wyciągnięte z klasy \texttt{Product} i jego ewentualnych nadklas (np. opisywany wielokrotnie hipotetyczny \textit{MyProduct}). Wszystkie atrybutu produktu są pakowane w tak zwane \textit{dokumenty} (jeden dokument odpowiada jednemu produktowi) i wysyłane na serwer Apache Solr. Zaindeksowany Solr jest wtedy gotowy do przyjmowania zapytań dotyczących wyszukiwania. \textbf{SolrSearchService} jest odpowiedzialny za konstruowanie kwerend Solrowych i interpretacje wyników wyszukiwania.
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.4]{klasy_solr.png}
+	\end{center}
+	\caption{{\color{black}Diagram klas mechanizmu indeksująco-wyszukującego}} \label{klasy_solr}
+\end{figure}
+
+\subsection{Proces zamówienia}
+Jeden z najbardziej charakterystycznych procesów we frameworku e-commerce to procces zamówienia, diagram klas użytych do implementacji tego procesu został umieszczony na rysunku \ref{klasy_koszyk}. \texttt{CartController} odpowiada za obsłuje zapytań związanych z operacjami na koszyku takimi jak dodawanie, usuwanie, złożenie zamówienia, wyświetlenie koszyka. Serwis zamówień \texttt{OrderService} obsługuje logikę tych zapytań wraz z funkcjonalnością archiwizacji cech produktu (metoda \texttt{archvizePr-} \texttt{oduct(Product product)}). Serwis używa singletonów Repository, aby znajdować w bazie danych zamówienia rozpoczęte przez zalogowanych użytkowników, produkty i szczegóły kupujących. 
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.4]{klasy_koszyk.png}
+	\end{center}
+	\caption{{\color{black}Diagram klas procesu zamówienia}} \label{klasy_koszyk}
+\end{figure}
+
+\newpage
 \section{Projekt bazy danych}
+W tej sekcji został przedstawiony projekt bazy danych. Dla zachowania ciągłości i przejrzystości rozważań diagramy zostały podzielone ze względu na funkcjonalności, podobnie jak na diagramach klas: 
+\begin{itemize}
+	\item menu w panelu administracyjnym
+	\item system klasyfikacyjny
+	\item struktura uprawnień
+	\item proces zamówienia i archiwizacji produktu
+\end{itemize}
+Następnie w podsekcji \textbf{Mechanizm wyszukiwania} została opisana nierelacyjna baza Apache Solr i jej korelacje z relacyjną bazą danych. Na samym końcu została omówiona platforma DBMS i normalizacja relacyjnej części bazy danych.
 
-W tej sekcji należy przedstawić projekt bazy danych. Należy omówić wycinek rzeczywistości i odpowiadające mu zidentyfikowane elementy systemu, których wartości będą podlegać utrwalaniu. Należy przedyskutować wybór typów danych dla atrybutów poszczególnych obiektów. Należy uzasadnić wybór platformy DBMS. Dla relacyjnych baz danych należy przedyskutować jej normalizację.
+Warto zaznaczyć w tym miejscu, że większość tabel ma kod (\texttt{code}), który jest unikalnym kluczem, po którym (zaraz obok id) można wyciągać encje z tabeli. Takie rozwiązanie zwiększa bezpieczeństwo aplikacji webowej, gdyż na stronie sklepu dostępnej dla osób trzecich nie są ujawniane klucze główne, tylko kody, które jednoznacznie określają encję w tabeli. Pogrubione kolumny w tabelach oznaczają unikalność wartości. 
 
+\subsection{Menu w panelu administracyjnym}
+Na rysunku \ref{db_menu} zosatł umieszczony diagram fragmentu bazy danych odpowiadający za menu w panelu. Zostało ono oparte na dwóch tabelach relacyjnych \texttt{admin\_menu\_item} (zakładka w menu) oraz \texttt{admin\_menu\_group} (grupa zakładek). Do pierwszej z nich składa się z id, unikalnego kodu, nazwy klasy, jaką ma reprezentować dana zakładka, kolejności wyświetlania, nazwy i nazwy wyświetlanej (\texttt{friendly\_name}) oraz \texttt{group\_id}, czyli klucz obcy grupy, w której się znajduje. Te dwie tabele łączy relacja one to many, w której rodzicem jest \texttt{admin\_menu\_group}. Nie jest konieczne aby grupa musiała zawierać jakiekolwiek elementy, podobnie nie jest obligatoryjne aby element musiał być przypisany do konkretnej grupy. 
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.3]{db_menu.png}
+	\end{center}
+	\caption{{\color{black}Diagram fragmentu bazy danych odpowiadającego za menu}} \label{db_menu}
+\end{figure}
+
+\subsection{System klasyfikacyjny}
+Diagram na rysunku \ref{db_sysKlas} przedstawia część bazy danych odpowiadającą za system klasyfikacyjny. Ze względu na obszerność diagramu, tabele zostaną omówione jedna po drugiej. 
+\begin{itemize}
+	\item \texttt{category} -- główna tabela zawierająca kategorię produktów dostępnych w systemie, kategorie mogą przyjmować strukturę drzewa, w którym każdy węzeł ma dowolną ilość dzieci i rodziców, dlatego tabela jest w relacji many to many ze samą sobą. 
+	\item \texttt{product} -- tabela przechowująca produkty dostępne w systemie, powiązana relacją many to many z kategoriami, tym sposobem każdy produkt może być w dowolnie wielu kategoriach oraz każda kategoria może być przypisana do wielu produktów. 
+	\item \texttt{category\_feature} -- w tej tabeli przechowuje się atrybuty klasyfikacyjne, które mogą zostać przypisane do kategorii, oprócz standardowych kolumn takich jak nazwa lub opis, są również flagi, które informują system o tym czy dany atrybut ma być wyszukiwalny pełnotekstowo na sklepie (\texttt{searchable}) lub czy ma być filtrem ograniczającym wyniki wyszukiwania (\texttt{is\_facet}). Tabela ta jest w relacji many to many z tabelą \texttt{category}, co umożliwia kategorii mieć wiele atrybutów i atrybutowi znaleźć się w wielu kategoriach.
+	\item \texttt{category\_feature\_assignment} -- jest to tabela asocjacyjna pomiędzy kategorią, a atrybutem klasyfikacyjnym. Posiada ona własne id i kod, gdyż jest również systemową encją.
+	\item \texttt{category\_feature\_value} -- każdy atrybut klasyfikacyjny może mieć predefiniowane wartości, które składowane są w tej tabeli. \texttt{category\_feature\_value} jest powiązane relacją one to many z \texttt{category\_feature} z kluczem obcym \texttt{category\_feature\_id}.
+	\item \texttt{product\_feature} -- jest to tabela, która pozwala na powiązanie produktu atrybutami klasyfikacyjnymi jest w relacji one to many z tabelą \texttt{product i category\_feature}, ma w tym celu dwa klucze obce  \texttt{category\_feature\_id} i  \texttt{product\_id}. Pozwala również przypisać wartość atrybutowi w produkcie. Dla uproszczenia można powiedzieć, że to kolekcja cech produktu. 
+\end{itemize}
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.3]{db_sysKlas.png}
+	\end{center}
+	\caption{{\color{black}Diagram fragmentu bazy danych odpowiadającego za menu}} \label{db_sysKlas}
+\end{figure}
+
+\subsection{Mechanizm uprawnień}
+Rysunek \ref{db_uprawnienia} przedstawia fragment bazy danych odpowiedzialny za obsługę uprawnień w panelu administracyjnym. Tabela \texttt{admin\_user} zawiera rekordy z użytkownikami administracyjnymi, którzy mogą zalogować się do systemu. Tabela ta jest w relacji many to many z \texttt{admin\_permission}, co oznacza, że użytkownik administracyjny może mieć wiele uprawnień, jak i jedno uprawnienie może być przypisane do wielu użytkowników. Dodatkowo \texttt{admin\_permission} posiada kolumnę \texttt{class\_name} z nazwą klasy w systemie, której dotyczy uprawnienie. Aby stworzyć możliwość dziedziczenia uprawnień i układania ich w grupy, dodano klucz obcy \texttt{parent\_permission\_id} tworząc relację one to many do samego siebie. W ten sposób można tworzyć z uprawnień drzewiaste struktury -- oczywiście przy założeniu niewystępowania cykli. 
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.3]{db_uprawnienia.png}
+	\end{center}
+	\caption{{\color{black}Diagram fragmentu bazy danych odpowiadającego za uprawnienia w panelu administracyjnym}} \label{db_uprawnienia}
+\end{figure}
+
+\subsection{Proces zakupowy}
+Diagram na rysunku \ref{db_zakup} przedstawia tabele bazodanowe, które biorą udział w porocesie składania zamówienia. Oczywistymi elementami są tabele \texttt{customer i address}, powiązane relacją many to many. Zawierają one niezbędne szczegóły, które potrzebne są przy składaniu zamówień. Tabela \texttt{order} natomiast odpowiada systemowemu koszykowi, ma klucz obcy \texttt{customer\_id}, co oznacza, że jest w relacji one to many z klientem. Daje to klientowi możliwość składania wielu zamówień. Jest ona również w relacji one to many (tym razem jako rodzic) z tabelą \texttt{order\_item}.  Ta reprezentuje jeden produkt dodany do koszyka w dowolnej ilości (za sprawą kolumny \texttt{quantity}). \texttt{order\_item} posiada również relację one to one do tabeli \texttt{archival\_product}, które pełni w sysetmie rolę archiwum produktowego, tak aby przy hipotetycznym usunięciu produktu ze sklepu zamówienie, które zostało już złożone nie zmieniło się. W celu utrzymania największej elastyczności w opisie archiwalnego produktu, stworzono dla niego w relacji one to many tabelę \texttt{archival\_product\_attributes}, do której jest możliwość zapisania prawie wszsytkich cech oryginalnego produktu. Te dwie tabele to przykład na to, jak może zostać zapisana w bazie danych mapa klucz-wartość.  
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.28]{db_zakup.png}
+	\end{center}
+	\caption{{\color{black}Diagram fragmentu bazy danych odpowiadającego za uprawnienia w panelu administracyjnym}} \label{db_zakup}
+\end{figure}
+
+\subsection{Połączenie bazy relacyjnej z płaską strukturą noSQL Apache Solr}
+W tym podrozdziale został opisany mechanizm wyszukiwania od strony bazodanowej. Na diagramie \ref{db_wyszukiwarka} znajduje się diagram fragmentu relacyjnej bazy danych, w których znajdują się atrybuty produktowe, biorące udział w procesie wyszukiwania. Tabele na tym diagramie zostały opisane już w poprzednich podrozdziałach, jednak celem tego diagramu jest pokazanie, z jak wielu tabel pochodzą atrybuty produktowe i jak skomplikowane są połączenia między nimi. Niemożliwe jest aby system był w stanie za każdym wyszukaniem przez klienta wyciągać z relacyjnej bazy taką ilość danych. Byłoby to bardzo obciążające dla serwera. Dlatego podczas opisanego w poprzednich rozdziałach procesu indeksacji, który odbywa się w systemie raz na 15 minut, dane te są zbierane i produkty wraz ze wszystkimi ich atrybutami są wysyłane do nierelacyjnej bazy danych Apache Solr. Każdy produkt odpowiada jednemu dokumentowi w strukturze Solra. Takie rozwiązanie jest istotnie szybsze dlatego, że:
+\begin{itemize}
+	\item unikamy klasycznych połączeń bazodanowych, które są zwykle transakcyjne, co jest kosztowne czasowo
+	\item unikamy kwerend z JOIN'ami, które często sprowadzają się do iloczynu kartezjańskiego, który również jest bardzo kosztowny
+	\item Solr korzysta z silnika Lucene, który indeksuje każde słowo w każdym dokumencie, dlatego kwerenda jednosłowna z jednym dokumentem daje złożoność O(1). W miarę wzrostu danych złożoność wyszukiwania jest liniowa, gdyż przy każdym wyszukaniu skanowany jest każdy dokument. W przypadku relacyjnej bazy danych przy wzroście ilości rekordów, drastycznie spada wydajność ze względu na konieczność użycia JOIN'ów.
+\end{itemize}
+ 
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.25]{db_wyszukiwarka.png}
+	\end{center}
+	\caption{{\color{black}Diagram fragmentu bazy danych skąd zbierane są atrybuty produktowe}} \label{db_wyszukiwarka}
+\end{figure}
+
+
+\subsection{System utrzymania bazy danych}
+Jako system utrzymania bazy danych został wybrany PostgreSQL. Głównym powodem jest to, że uchodzi on za lepiej spisujący się do dużych baz danych (które mogą pojawić się w platfromie e-commerce). Bywa używany w projektach zawierających hurtownie danych, i które są nastawione na bardzo szybki zapis i odczyt.  Dodatkowo Hibernate\footnote{Hibernate -- framework w Javie do komunnikacji z bazą danych} jest łatwo konfigurowalny dla baz opartych o PostgreSQL. Ważną zaletą tego systemu jest także spełnienie właściwości transakcji według ACID (Atomicity, Consistency, Isolation, Durability). Spełnienie tych właściwości gwarantuje brak zagubionych lub błędnych danych w razie awarii systemu. 
+
+\subsection{Normalizacja bazy danych}
+Tabele zawarte w systemie są w trzeciej postaci normalnej. Wynika to z tego, że do tworzenia schematu bazy danych zostało wykorzystane mapowanie relacyjno-obiektowe, które same w sobie nie zapewnia 3NF, jednak sposób implementowania encji w standardzie JPA narzuca ją domyślnie. Każda tabela ma swój klucz główny oraz jest odzwierciedleniem pól w danej klasie - spełnienie 1NF, każda kolumna powinna być atomowa, przechowywać tylko jedną informację. Dodatkowo jedna encja w systemie oznacza jedną tabelę w bazie danych, co jest zgodne z 2NF, czyli wszystkie niekluczowe kolumny w tabeli muszą dotyczyć konkretnej klasy. 3NF jest również spełniona, ponieważ w żadnej z tabel nie ma niekluczowych informacji, które zależałyby od innych niekluczowych informacji. Wprowadzająca zamieszanie może być w tym przypadku tabela \texttt{order} z kolumną \texttt{full\_amount}, która zależy od ilości i ceny produktów, jednak te informacje znajdują się w innych tabelach, przez co 3NF jest zachowana. 

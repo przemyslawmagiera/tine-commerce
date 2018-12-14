@@ -1,81 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="13.3">
-  <zoom_level>9</zoom_level>
+  <zoom_level>8</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>198</x>
-      <y>477</y>
-      <w>522</w>
-      <h>126</h>
+      <x>64</x>
+      <y>320</y>
+      <w>464</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
-com.tinecommerce.core.catalog.service::CategoryService
+CategoryService
 --
---
-~getAllChildCategories(final Category category): List&lt;Category&gt;
-~getAllParentCategories(final Category category): List&lt;Category&gt;
-~canAddChildToCategory(final Category category, final Category child): Boolean
-~addChildToCategory(final Category category, final Category child): void
---
++getAllChildCategories(final Category category): List&lt;Category&gt;
++getAllParentCategories(final Category category): List&lt;Category&gt;
++canAddChildToCategory(final Category category, final Category child): Boolean
++addChildToCategory(final Category category, final Category child): void
+
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>765</x>
-      <y>486</y>
-      <w>522</w>
-      <h>81</h>
+      <x>568</x>
+      <y>328</y>
+      <w>424</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
-com.tinecommerce.core.catalog.service::CategoryFeatureService
+CategoryFeatureService
 --
---
-~getCategoryFeaturesForProduct(Product product): List&lt;CategoryFeature&gt;
---
++getCategoryFeaturesForProduct(Product product): List&lt;CategoryFeature&gt;
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>747</x>
-      <y>756</y>
-      <w>459</w>
-      <h>81</h>
+      <x>576</x>
+      <y>568</y>
+      <w>376</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
-com.tinecommerce.core.catalog.repository::ProductFeatureRepository
+ProductFeatureRepository
 --
---
-~findAllByProductId(final Long productId): List&lt;ProductFeature&gt;
---
++findAllByProductId(final Long productId): List&lt;ProductFeature&gt;
+
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>234</x>
-      <y>360</y>
-      <w>477</w>
-      <h>63</h>
+      <x>96</x>
+      <y>224</y>
+      <w>304</w>
+      <h>48</h>
     </coordinates>
-    <panel_attributes>com.tinecommerce.core.exception::CircularEntityConnectionException
+    <panel_attributes>CircularEntityConnectionException
 --
 +CircularEntityConnectionException(String s): ctor
---
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>189</x>
-      <y>702</y>
-      <w>1053</w>
-      <h>189</h>
+      <x>64</x>
+      <y>520</y>
+      <w>928</w>
+      <h>136</h>
     </coordinates>
     <panel_attributes>Repository objects - klasy komunikujące się z bazą danych</panel_attributes>
     <additional_attributes/>
@@ -83,10 +78,10 @@ com.tinecommerce.core.catalog.repository::ProductFeatureRepository
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>486</x>
-      <y>558</y>
-      <w>540</w>
-      <h>216</h>
+      <x>320</x>
+      <y>392</y>
+      <w>480</w>
+      <h>192</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.
 Pobieranie powiązań produktów z kategoriami</panel_attributes>
@@ -95,10 +90,10 @@ Pobieranie powiązań produktów z kategoriami</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>423</x>
-      <y>594</y>
-      <w>243</w>
-      <h>180</h>
+      <x>264</x>
+      <y>424</y>
+      <w>216</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.
 Pobieranie kategorii z bazy danych</panel_attributes>
@@ -107,10 +102,10 @@ Pobieranie kategorii z bazy danych</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>441</x>
-      <y>414</y>
-      <w>54</w>
-      <h>81</h>
+      <x>280</x>
+      <y>264</y>
+      <w>48</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.
 uses</panel_attributes>
@@ -119,10 +114,10 @@ uses</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1035</x>
-      <y>558</y>
-      <w>225</w>
-      <h>216</h>
+      <x>808</x>
+      <y>392</y>
+      <w>200</w>
+      <h>192</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.
 Pobieranie powiązań atrybutów 
@@ -132,84 +127,69 @@ i produktów</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>216</x>
-      <y>756</y>
-      <w>486</w>
-      <h>81</h>
+      <x>80</x>
+      <y>568</y>
+      <w>432</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
-com.tinecommerce.core.catalog.repository::CategoryRepository
+CategoryRepository
 --
---
-~findAllByProductsContaining(List&lt;Product&gt; products): List&lt;Category&gt;
---
++findAllByProductsContaining(List&lt;Product&gt; products): List&lt;Category&gt;
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>774</x>
-      <y>306</y>
-      <w>522</w>
-      <h>126</h>
+      <x>488</x>
+      <y>240</y>
+      <w>144</w>
+      <h>24</h>
     </coordinates>
-    <panel_attributes>com.tinecommerce.core.catalog.service.impl::CategoryServiceImpl
---
---
-~getAllChildCategories(final Category category): List&lt;Category&gt;
-~getAllParentCategories(final Category category): List&lt;Category&gt;
-~canAddChildToCategory(final Category category, final Category child): Boolean
-~addChildToCategory(final Category category, final Category child): void
---
-</panel_attributes>
+    <panel_attributes>CategoryServiceImpl</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>477</x>
-      <y>423</y>
-      <w>567</w>
-      <h>72</h>
+      <x>312</x>
+      <y>256</y>
+      <w>312</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=-&gt;</panel_attributes>
-    <additional_attributes>610.0;10.0;610.0;50.0;10.0;50.0;10.0;60.0</additional_attributes>
+    <additional_attributes>370.0;10.0;370.0;40.0;10.0;40.0;10.0;80.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>207</x>
-      <y>243</y>
-      <w>522</w>
-      <h>81</h>
+      <x>736</x>
+      <y>248</y>
+      <w>176</w>
+      <h>24</h>
     </coordinates>
-    <panel_attributes>com.tinecommerce.core.catalog.service.impl::CategoryFeatureServiceImpl
---
---
-~getCategoryFeaturesForProduct(Product product): List&lt;CategoryFeature&gt;
---
-</panel_attributes>
+    <panel_attributes>CategoryFeatureServiceImpl</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>423</x>
-      <y>315</y>
-      <w>360</w>
-      <h>216</h>
+      <x>536</x>
+      <y>264</y>
+      <w>296</w>
+      <h>104</h>
     </coordinates>
     <panel_attributes>lt=-&gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;30.0;350.0;30.0;350.0;220.0;380.0;220.0</additional_attributes>
+    <additional_attributes>350.0;10.0;350.0;50.0;10.0;50.0;10.0;110.0;40.0;110.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>711</x>
-      <y>558</y>
-      <w>279</w>
-      <h>45</h>
+      <x>520</x>
+      <y>392</y>
+      <w>248</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.
 Pobieranie przodków kategorii </panel_attributes>
@@ -218,10 +198,10 @@ Pobieranie przodków kategorii </panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>144</x>
-      <y>180</y>
-      <w>1206</w>
-      <h>756</h>
+      <x>48</x>
+      <y>192</y>
+      <w>960</w>
+      <h>488</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>

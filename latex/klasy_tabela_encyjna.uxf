@@ -136,10 +136,13 @@ DynamicEntityDao
     <coordinates>
       <x>520</x>
       <y>376</y>
-      <w>24</w>
+      <w>72</w>
       <h>96</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <panel_attributes>lt=.&gt;&gt;
+budowa
+tabelki
+encyjnej</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
   </element>
   <element>
@@ -182,10 +185,12 @@ encji do tabeli</panel_attributes>
     <coordinates>
       <x>520</x>
       <y>536</y>
-      <w>24</w>
+      <w>128</w>
       <h>88</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <panel_attributes>lt=.&gt;&gt;
+pobieranie danych 
+z bazy</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
   </element>
   <element>

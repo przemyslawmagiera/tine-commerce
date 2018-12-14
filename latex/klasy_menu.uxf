@@ -48,8 +48,8 @@
 AdminMenuItemRepository
 --
 --
-~findByCode(String code): Optional&lt;AdminMenuItem&gt;
-~findByClassName(String className): Optional&lt;AdminMenuItem&gt;
++findByCode(String code): Optional&lt;AdminMenuItem&gt;
++findByClassName(String className): Optional&lt;AdminMenuItem&gt;
 --
 </panel_attributes>
     <additional_attributes/>
@@ -57,14 +57,15 @@ AdminMenuItemRepository
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>240</x>
+      <x>220</x>
       <y>460</y>
-      <w>220</w>
+      <w>260</w>
       <h>60</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 AdminMenuGroupRepository
 --
++findAll(): List&lt;AdminMenuGroup&gt;
 
 </panel_attributes>
     <additional_attributes/>
