@@ -16,53 +16,130 @@ Spring Data ułatwia konfigurację połączeń między bazą danych, a serwerem.
 Oparta na silniku Lucene i uruchomiona na osobnym serwerze wyszukiwarka zapewnia odseparowanie najbardziej obciążonej części sklepu. Dzięki Solrowi w implementowanym frameworku jest obecna bardzo szybka wyszukiwarka z możliwością wyszukiwania pełnotekstowego, filtrowania, sortowania i zawężania wyników względem różnych pól produktu. Książka \cite{solrbook} i dokumentacja \cite{Solr-doc} opisują działanie i możliwości Solra. Do integracji serwera Apache Solr z implementowanym frameworkiem użyto biblioteki SolrJ \cite{solrJ}.
 
 \section{Omówienie kodów źródłowych}
-Projekt składa się z 3986 linii kodu w języku Java, dlatego aby zachować zwięzłość i zrozumiałość w ramach omówienia kodów źródłowych zostanie przedstawiona tylko jedna funkcjonalność odnosząca się do konkretnych przypadków użycia zdefiniowanych w sekcji \textbf{Przypadki użycia} rozdziału \textbf{Projekt systemu}. 
+Projekt składa się z 3986 linii kodu w języku Java, dlatego aby zachować zwięzłość i zrozumiałość w ramach omówienia kodów źródłowych zostanie przedstawiona tylko jedna funkcjonalność odnosząca się do konkretnych przypadków użycia zdefiniowanych w sekcji \textbf{Przypadki użycia} rozdziału \textbf{Projekt systemu}. Większość funkcjonalności jest napisana w analogiczny sposób ze względu na wzorzec architektoniczny model-view-controller, dlatego dokładna analiza jednej funkcjonalności wystarczy do zrozumienia metodologi wytwarzania kodu w projekcie. 
 
-Na rysunku \ref{useCaseProgrammer} znajduje się use-case: \textit{Zarządzanie encjami}. Związany jest przypadek z diagramu \ref{dynEntFormUC} \textit{Wyświetlenie i manipulacja relacjami encji}.  Te dwa przypadki wiążą się z konstrukcją dynamicznego formularza edycji dla danej encji. Dla lepszego zrozumienia warto przypomnieć diagramy związane z implementacją tej funkcjonalności. Na rysunku \ref{konsFormEnc} przedstawiono diagram aktywności, zaś rysunek \ref{klasy_formularz_encyjny} przedstawia klasy użyte do implementacji.
-
-Dla przykładu działania kodu źródłowego zostanie przeanalizowana budowa formularza dla encji \texttt{Product}. Kod 
+Na rysunku \ref{useCaseProgrammer} znajduje się use-case: \textit{Zarządzanie encjami}. Związany jest przypadek z diagramu \ref{dynEntFormUC} \textit{Wyświetlenie i manipulacja relacjami encji}.  Te dwa przypadki wiążą się z konstrukcją dynamicznego formularza edycji dla danej encji. Dla lepszego zrozumienia warto przypomnieć diagramy związane z implementacją tej funkcjonalności. Na rysunku \ref{konsFormEnc} przedstawiono diagram aktywności, zaś rysunek \ref{klasy_formularz_encyjny} przedstawia klasy użyte do implementacji. Dla przykładu działania kodu źródłowego zostanie przeanalizowana budowa formularza dla dowolnej encji.
 
 \begin{small}
-\begin{lstlisting}[language=Java, frame=lines, numberstyle=\tiny, stepnumber=5, caption=Wyświetlenie formularza encyjnego: \texttt{DynamicEntityController.java}\label{ws}., firstnumber=1]
+\begin{lstlisting}[language=Java, frame=lines, numberstyle=\tiny, stepnumber=5, caption=Przetworzenie zapytania żądania edycji encji \texttt{DynamicEntityController.java}\label{listing_dec}., firstnumber=1]
+@GetMapping("/entities/{entityCode}/{id}/edit")
+public String getDynamicEntityForm(final Model model, 
+    @PathVariable(name = "entityCode") String entityCode,
+    @PathVariable(name = "id") Long id) {
+    model.addAttribute(ATTR_MENU_ITEMS , adminMenuGroupRepository.findAll());
 
+    String className = resolveEntityCode(entityCode);
+    if(permissionService.hasPermissionForOperation(className)) {
+        DynamicForm dynamicForm = new DynamicForm();
+        dynamicForm.setEntityClass(entityCode);
+        List<RelationMetadata> relationalEntities = new ArrayList<>();
 
+        dynamicEntityService.constructDynamicEntityForm(className, id,
+                             dynamicForm, relationalEntities);
+
+        model.addAttribute("relationalEntities", relationalEntities);
+        model.addAttribute("dynamicForm", dynamicForm);
+        model.addAttribute("entityName", entityCode);
+        model.addAttribute("id", id);
+    } else {
+        model.addAttribute("authError", true);
+    }
+    return "dynamicEntityForm";
+}
 \end{lstlisting} 
 \end{small}
 
-{\color{dgray}
-Kod źródłowy~\ref{req} przedstawia procedurę przetwarzającą żądanie. Hasz utrwalany \verb|%granulacja| wykorzystywany jest do komunikacji międzyprocesowej.
-}https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/
+Kod źródłowy \ref{listing_dec} przedstawia kontroler odpowiadający za przetworzenie żądania konstrukcji formularza edycji. Na przykład w przypadku produktu o \texttt{id = -105} mapowanie (url) będzie wyglądało następująco: \texttt{/entities/product/-105/edit}, gdzie \texttt{product} to kod encji \texttt{entityCode}. Na początku metody następuje dodanie do modelu menu, które jest widoczne na każdej stronie administracyjnej. Następnie w metodzie \texttt{resolveEntityCode}, kod encji produkt zostaje przetłumaczony na pełną nazwę klasy z której pochodzi. W tym celu system sprawdza czy w bazie danych encja o takim kodzie należy do tych zdefiniowanych jako możliwe do obsłużenia w panelu administracyjnym. Kod źródłowy tej metody znajduje się na listingu \ref{listing_klasa}. 
+\begin{small}
+	\begin{lstlisting}[language=Java, frame=lines, numberstyle=\tiny, stepnumber=5, caption=Zamiana kodu encji na nazwę klasy: \texttt{DynamicEntityController.java}\label{listing_klasa}., firstnumber=1]
+	private String resolveEntityCode(String entityCode){
+	    return adminMenuItemRepository.findByCode(entityCode)
+	           .map(AdminMenuItem::getClassName)
+	           .orElse("");
+	}
+	\end{lstlisting} 
+\end{small}
+
+Mając nazwę klasy sprawdzane jest czy zalogowany użytkownik posiada prawa do edycji i wyświetlania danej klasy. Dzieje się to w metodzie \texttt{hasPermissionForOperation}. Zalogowany użytkownik pobierany jest z bazy danych, po czym jego wszystkie uprawnienia zostają zebrane w metodach \texttt{getAllChildrenPermissions} za pomocą rekurencyjnego przejścia po drzewie uprawnień, które należą do użytkownika administracyjnego. W tym przypadku każde uprawnienie, które jest mu przypisane odgrywa role korzenia (przechodzimy po wielu drzewach). Każde uprawnienie będące potomkiem korzenia, jest brane pod uwagę.
 
 \begin{small}
-\begin{lstlisting}[language=perl, frame=lines, caption=Przetwarzanie żądania - procedura \texttt{process\_req()}\label{req}., firstnumber=86]
-sub process_req(){	
-  my($r) = @_;
-  $wyn = "";
-  if ($r=~/get/i) {
-	@reqest = split(" ",$r);
-	$zad = $reqest[0];
-	$ts1 = $reqest[1];
-	$ts2 = $reqest[2];
-	@date1 = split(/\D/,$ts1);
-	@date2 = split(/\D/,$ts2);
-	print "odebralem: $r"; 
-	$wyn = $wyn."zadanie: $zad\n";
-	$wyn = $wyn."czas_od: "."$date1[0]"."-"."$date1[1]"."-"."$date1[2]"."_"."$date1[3]".":"."$date1[4]".":"."$date1[5]"."\n";
-	$wyn = $wyn."czas_do: "."$date2[0]"."-"."$date2[1]"."-"."$date2[2]"."_"."$date2[3]".":"."$date2[4]".":"."$date2[5]"."\n";		
-	$wyn = $wyn.&sym_sens($ts1,$ts2);
-	return $wyn;
-  }
-  if ($r=~/set gt/i) {
-	@reqest = split(" ",$r);
-	$zad = $reqest[0];
-	$ts1 = $reqest[1];
-	$ts2 = $reqest[2];
-	$gt = $reqest[2];
-	dbmopen(%granulacja,"granulacja_baza",0644);
-	$granulacja{"gt"}=$gt;
-	dbmclose(%granulacja);
-	$wyn = "\'GT\' zmienione na: $gt";
-  }		
-}	
-\end{lstlisting} 
+	\begin{lstlisting}[language=Java, frame=lines, numberstyle=\tiny, stepnumber=5, caption=Sprawdzenie uprawnień i algorytm przeszukiwania drzewa: \texttt{PermissionService.java}\label{listing_permission}., firstnumber=1]
+	public boolean hasPermissionForOperation(String checkedClassName){
+	    AdminUser adminUser = adminUserRepository
+	                          .findByUsername(getLoggedInUsername()).get();
+	    return getAllChildPermissions(adminUser.getAdminPermissions())
+	           .stream()
+	           .map(AdminPermission::getClassName)
+	           .anyMatch(checkedClassName::equals);
+	}
+	
+	private Set<AdminPermission> getAllChildPermissions(
+	Set<AdminPermission> adminPermissions) {
+	    final Set<AdminPermission> result = new HashSet<>();
+	    adminPermissions.forEach(adminPermission -> 
+	        getAllChildPermissions(adminPermission, result));
+	    return result;
+	}
+	
+	private void getAllChildPermissions(AdminPermission adminPermission, 
+	                                    Set<AdminPermission> result) {
+	    adminPermission.getChildPermissions().forEach(child ->     
+	        this.getAllChildPermissions(child, result));
+	    result.add(adminPermission);
+	}
+	\end{lstlisting} 
 \end{small}
+
+Jeżeli algorytm przeszukiwania drzewa znajdzie nazwę klasy w finalnej kolekcji uprawnień administratora, kontroler z listingu \ref{listing_dec} rozpoczyna budowę formularza. Formularz konstruowany jest w metodzie \texttt{constructDynamicEntityForm} przedstawionej na listingu \ref{listing_form}. Korzystając z metody \texttt{getAllFieldsFromClass} wyciąga z klasy (i wszystkich możliwych nadklas) wszystkie pola, które są objęte interfejsem \texttt{@AdminVisible}, następnie dla każdego pola metoda \texttt{handleFieldInClass} obiera strategię jak skonstruować fragment formularza dla konkretnego pola.
+\newpage
+\begin{small}
+	\begin{lstlisting}[language=Java, frame=lines, numberstyle=\tiny, stepnumber=5, caption=Konstrukcja formularza: \texttt{DynamicEntityService.java}\label{listing_form}., firstnumber=1]
+	public void constructDynamicEntityForm(String className, Long id,     
+	            DynamicForm dynamicForm, 
+	            List<RelationMetadata> relationalEntities) {
+	    List<Field> fields = getAllFieldsFromClass(className);
+	    AbstractEntity entity = dynamicEntityDao
+	                            .findAllPolimorficEntityWithId(className, id);
+	    for (Field field : fields) {
+	        for (Class<?> cls : ExtensionUtil.getSubclassesOf(className)) {
+	            handleFieldInClass(cls, field, entity, dynamicForm, 
+	            relationalEntities);
+	        } 
+	    }
+	}
+	
+	private List<Field> getAllFieldsFromClass(String className) {
+	    return ExtensionUtil.getPolymorphicFielsdOf(className)
+	           .stream()
+	           .filter(field -> field.isAnnotationPresent(AdminVisible.class))
+	           .sorted(Comparator.comparingInt(field -> 
+	                   field.getAnnotation(AdminVisible.class).order()))
+	           .collect(Collectors.toList());
+	}
+	\end{lstlisting} 
+\end{small}
+
+Kod źródłowy \ref{listing_handler} z metodą \texttt{handleClassField} przedstawia pracę mechanizmu determinującego strategię konstrukcji pola w formularzu. System rozpoznaje 3 typy pól: kolekcje jeden-do-wielu, kolekcje wiele-do-wielu oraz pola proste (string, bool, int). Dla każdego z nich zaimplementowano osobną metodę, która dodaje do formularza edycji aktualnie obsługiwane pole.
+ 
+\begin{small}
+	\begin{lstlisting}[language=Java, frame=lines, numberstyle=\tiny, stepnumber=5, caption=Konstrukcja formularza: \texttt{ClassFieldHandler.java}\label{listing_handler}., firstnumber=1]
+	private void handleFieldInClass(Class cls, Field field, 
+	             AbstractEntity entity, DynamicForm dynamicForm, 
+	             List<RelationMetadata> relationalEntities){
+	    Field classField = cls.getDeclaredField(field.getName());
+	    classField.setAccessible(true);
+	
+	    if (Collection.class.isAssignableFrom(classField.getType()) && 
+	    classField.getAnnotation(OneToMany.class) != null) {
+	        handleOneToManyField(field,entity,relationalEntities);
+	    } else if (Collection.class.isAssignableFrom(classField.getType()) 
+	               && classField.getAnnotation(ManyToMany.class) != null) {
+	        handleManyToManyField(field,entity,relationalEntities);
+	    } else {
+	        handlePlainField(field,entity,classField,dynamicForm);
+	    }
+	}
+	\end{lstlisting} 
+\end{small}
+
+Po zakończeniu budowy formularza kontroler z listingu \ref{listing_dec} skonstruowany formularz oraz dodatkowe informacje do modelu (\texttt{model.addAttribute}). Następnie zwraca nazwę widoku (pliku HTML) z szablonem formularza encyjnego. W przypadku braku znalezienia odpowiedniego uprawnienia, użytkownikowi wyświetlany jest widok z brakiem uprawnień. 

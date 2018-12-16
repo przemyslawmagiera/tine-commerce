@@ -6,12 +6,14 @@ W tym rozdziale przedstawiony zostanie dokładny projekt systemu, jest on podzie
 
 W kolejnych sekcjach znajdą się \textbf{Diagramy klas} oraz \textbf{Projekt bazy danych}. W pierwszej opisane zostaną klasy, które musiały zostać stworzne do implementacji procesów zdefiniowanych w wcześniejszych podrozdziałach, odpowiednio w drugiej znajdą się schematy bazy danych podzielone ze względu na funkcjonalności.
 
-Do implementacji frameworku oraz funkcjonalności wbudowanych użyto wzorca architektonicznego model-view-controller. Polega on na następującym podziale aplikacji: \textbf{model}, odpowiedzialny za reprezentacje problemu i logikę, \textbf{view} (widok) opisujący interfejs użytkownika oraz \textbf{controller}, który przyjmuje polecenia użytkownika i odpowiada na jego żądania za pomocą modelu i widoku. Składa się on z trzech wzorców projektowych:
+Do implementacji frameworku oraz funkcjonalności wbudowanych użyto wzorca architektonicznego \textit{model-view-controller}. Polega on na następującym podziale aplikacji: \textbf{model}, odpowiedzialny za reprezentacje problemu i logikę, \textbf{view} (widok) opisujący interfejs użytkownika oraz \textbf{controller}, który przyjmuje polecenia użytkownika i odpowiada na jego żądania za pomocą modelu i widoku. Składa się on z trzech wzorców projektowych:
 \begin{itemize}
 	\item kompozyt -- sposób tworzenia widoków, możliwość zagnieżdżania ich w sobie
 	\item obserwator -- model może zmienić stan, o czym musi zostać powiadomiony widok (aktualizacja informacji)
 	\item strategia -- wybranie strategii obsługi zapytania w kontrolerze na podstawie samego żądania
 \end{itemize}
+W projekcie użyto również wzorzec projektowy \textit{inversion of control (odwórcenie sterowania)}. Egzemplarze większości encji i serwisów obsługuje Spring Framework, o który oparty jest projekt. Wspomniane \textit{IoC} zostało zrealizowane poprzez wstrzykiwanie zależności. 
+
 \section{Grupy użytkowników}
 We frameworku możemy zdefiniować 3 grupy użytkowników, którzy będą korzystać z jego udogodnień. \textbf{Programista} jest to użytkownik frameworka, który implementuje swój sklep z pomocą narzędzi dostarczonych przez opisywany system. \textbf{Administrator} to ktoś, zajmujący się backofficową\footnote{backoffice - w systemach e-commerce panel do obsługi i utrzymania sklepu} obsługą sklepu - obsługa reklamacji. \textbf{Klient} jest to końcowy klient sklepu, który przegląda katalog i dokonuje zakupów. 
 
@@ -36,13 +38,13 @@ Dodane przez Programistę encje są obsługiwane przez framework, dodatkowo po d
 \end{example}
 \begin{figure}
 \begin{center}
-	\includegraphics[width=1\textwidth]{ucdev.pdf}
+	\includegraphics[width=1\textwidth]{ucdev.png}
 \end{center}
 \caption{{\color{black}Diagram przypadków użycia związany z Programistą.}} \label{useCaseProgrammer}
 \end{figure}
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=1\textwidth]{ucadmin.pdf}
+		\includegraphics[width=1\textwidth]{ucadmin.png}
 	\end{center}
 	\caption{{\color{black}Diagram przypadków użycia związany z Administratorem ewentualniego systemu.}} \label{useCaseAdmin}
 \end{figure}
@@ -51,7 +53,7 @@ Rysunek \ref{useCaseAdmin} przedstawia przypadki użycia z punktu widzenia Admin
 Diagram na rysunku \ref{useCaseCustomer} dotyczy przypadków użycia elementów frameworku przez końcowego użytkownika. Są to klasyczne funkcjonalności tradycyjnego sklepu internetowego. \textit{Wyszukanie produktu} zostało zaprojektowane, tak aby możliwy był również do zaimplementowania mechanizm podpowiedzi i podświetlania. Apache Solr udostępnia taką funkcjonalność. \textit{Reklamacja} dotyczy opisanego w rozdziale \textbf{Analiza problemu} kłopotu z archwizacją produktu, został on rozwiązany prostym mechanizmem wersjonowania. 
 \begin{figure}
 	\begin{center}
-		\includegraphics[width=1\textwidth]{uccustomer.pdf}
+		\includegraphics[width=1\textwidth]{uccustomer.png}
 	\end{center}
 	\caption{{\color{black}Diagram przypadków użycia związany z Klientem końcowym ewentualniego systemu.}} \label{useCaseCustomer}
 \end{figure}

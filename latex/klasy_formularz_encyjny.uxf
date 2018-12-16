@@ -3,10 +3,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>312</x>
-      <y>568</y>
+      <x>352</x>
+      <y>512</y>
       <w>656</w>
-      <h>168</h>
+      <h>160</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 DynamicEntityService
@@ -20,15 +20,15 @@ DynamicEntityService
                                                                                   String manyToManyField, Long foreignKey): List&lt;AbstractEntity&gt;
 +save(AbstractEntity abstractEntity)
 +delete(AbstractEntity abstractEntity)
---
+
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>336</x>
-      <y>392</y>
+      <x>376</x>
+      <y>336</y>
       <w>224</w>
       <h>88</h>
     </coordinates>
@@ -38,15 +38,15 @@ DynamicEntityService
 -code: String
 -headers: List&lt;String&gt;
 -tableLines: List&lt;AbstractTableLine&gt;
---
+
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>456</x>
-      <y>472</y>
+      <x>496</x>
+      <y>416</y>
       <w>120</w>
       <h>112</h>
     </coordinates>
@@ -58,8 +58,8 @@ konstrukcja tabeli
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>400</x>
-      <y>784</y>
+      <x>560</x>
+      <y>816</y>
       <w>456</w>
       <h>88</h>
     </coordinates>
@@ -69,15 +69,15 @@ DynamicEntityDao
 -getCeilingClass(String entityClass): Class&lt;?&gt;
 +findAllPolimorficEntities(String entityClass): List&lt;AbstractEntity&gt;
 +findAllPolimorficEntityWithId(String className, Long id): List&lt;AbstractEntity&gt;
---
+
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>328</x>
-      <y>744</y>
+      <x>360</x>
+      <y>872</y>
       <w>144</w>
       <h>24</h>
     </coordinates>
@@ -87,8 +87,8 @@ DynamicEntityDao
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>792</x>
-      <y>752</y>
+      <x>832</x>
+      <y>696</y>
       <w>184</w>
       <h>24</h>
     </coordinates>
@@ -98,8 +98,8 @@ DynamicEntityDao
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>584</x>
-      <y>264</y>
+      <x>624</x>
+      <y>208</y>
       <w>104</w>
       <h>320</h>
     </coordinates>
@@ -114,42 +114,43 @@ encyjnego</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>880</x>
-      <y>728</y>
+      <x>920</x>
+      <y>664</y>
       <w>24</w>
-      <h>40</h>
+      <h>48</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;30.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>360</x>
-      <y>760</y>
-      <w>56</w>
-      <h>72</h>
+      <x>408</x>
+      <y>840</y>
+      <w>168</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;70.0;50.0;70.0</additional_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0;190.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>584</x>
-      <y>728</y>
-      <w>176</w>
-      <h>72</h>
+      <x>800</x>
+      <y>664</y>
+      <w>104</w>
+      <h>168</h>
     </coordinates>
     <panel_attributes>lt=.&gt;&gt;
-komunikacja z bazą danych</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+komunikacja z 
+bazą danych</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>320</x>
-      <y>160</y>
+      <x>360</x>
+      <y>104</y>
       <w>552</w>
       <h>112</h>
     </coordinates>
@@ -161,35 +162,15 @@ komunikacja z bazą danych</panel_attributes>
 +removeRelation(Model model, String entityCode, Long id, Long secondId, String toManyClass, 
                       String relationType, String foreignKeyName)
 +getDynamicEntityAddForm(final Model model, String entityCode)
---
+
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>760</x>
-      <y>304</y>
-      <w>200</w>
-      <h>104</h>
-    </coordinates>
-    <panel_attributes>RelationMetadata
---
--foreignKeyName: String
--relationClass: String
--type: String
--viewOnly: boolean
--entityTable: DynamicEntityTable
---
---
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>632</x>
-      <y>304</y>
+      <x>672</x>
+      <y>248</y>
       <w>120</w>
       <h>80</h>
     </coordinates>
@@ -198,16 +179,15 @@ komunikacja z bazą danych</panel_attributes>
 -type: String
 -name: String
 -value: Object
---
---
+
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>672</x>
-      <y>464</y>
+      <x>712</x>
+      <y>408</y>
       <w>152</w>
       <h>56</h>
     </coordinates>
@@ -220,8 +200,8 @@ komunikacja z bazą danych</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>680</x>
-      <y>376</y>
+      <x>720</x>
+      <y>320</y>
       <w>88</w>
       <h>104</h>
     </coordinates>
@@ -231,8 +211,8 @@ komunikacja z bazą danych</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>744</x>
-      <y>400</y>
+      <x>784</x>
+      <y>344</y>
       <w>120</w>
       <h>80</h>
     </coordinates>
@@ -242,8 +222,8 @@ komunikacja z bazą danych</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>616</x>
-      <y>512</y>
+      <x>656</x>
+      <y>456</y>
       <w>232</w>
       <h>72</h>
     </coordinates>
@@ -254,12 +234,61 @@ konstrukcja pól formularza encyjnego</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>288</x>
-      <y>128</y>
-      <w>712</w>
-      <h>776</h>
+      <x>328</x>
+      <y>72</y>
+      <w>704</w>
+      <h>856</h>
     </coordinates>
     <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>344</x>
+      <y>728</y>
+      <w>440</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>ClassFieldHandler
+--
+handleFieldInClass(class, field, entity, dynamicForm)
+handlePlainField(field, entity, classField, dynamicForm)
+handleManyToManyField(field, entity, relationalEntities)	             
+handleOneToManyField(field, entity, relationalEntities)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>536</x>
+      <y>664</y>
+      <w>176</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+wybranie strategii
+dodania pola do formularza
+</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>800</x>
+      <y>248</y>
+      <w>200</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>RelationMetadata
+--
+-foreignKeyName: String
+-relationClass: String
+-type: String
+-viewOnly: boolean
+-entityTable: DynamicEntityTable
+
+</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>

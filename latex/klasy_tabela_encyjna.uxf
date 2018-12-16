@@ -11,7 +11,7 @@
     <panel_attributes>AbstractTableLine
 --
 -values: List&lt;Objects&gt;
---
+
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -27,7 +27,6 @@
 --
 +getDynamicEntityList(final Model model, String entityCode): html page
 
---
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -45,7 +44,7 @@ DynamicEntityService
 +buildDynamicTable(String className, List entities): DynamicEntityTable
 +findDynamicHeaders(String className): List&lt;Field&gt;
 +buildAbstractTableLines(List entities, String className, List headers): List&lt;AbstractTableLine&gt;
---
+
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -63,7 +62,7 @@ DynamicEntityService
 -code: String
 -headers: List&lt;String&gt;
 -tableLines: List&lt;AbstractTableLine&gt;
---
+
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -105,7 +104,7 @@ DynamicEntityDao
 --
 -getCeilingClass(String entityClass): Class&lt;?&gt;
 +findAllPolimorficEntities(String entityClass): List&lt;AbstractEntity&gt;
---
+
 </panel_attributes>
     <additional_attributes/>
   </element>

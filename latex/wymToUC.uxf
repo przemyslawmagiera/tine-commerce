@@ -186,8 +186,8 @@ bg=orange</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>810</x>
-      <y>270</y>
+      <x>828</x>
+      <y>297</y>
       <w>135</w>
       <h>54</h>
     </coordinates>
@@ -199,8 +199,8 @@ bg=orange</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>1062</x>
-      <y>216</y>
+      <x>1053</x>
+      <y>270</y>
       <w>135</w>
       <h>54</h>
     </coordinates>
@@ -212,7 +212,7 @@ bg=orange</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>918</x>
+      <x>954</x>
       <y>207</y>
       <w>135</w>
       <h>54</h>
@@ -225,8 +225,8 @@ bg=orange</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>1206</x>
-      <y>216</y>
+      <x>1170</x>
+      <y>207</y>
       <w>135</w>
       <h>54</h>
     </coordinates>
@@ -320,7 +320,7 @@ bg=red</panel_attributes>
     <id>UMLUseCase</id>
     <coordinates>
       <x>765</x>
-      <y>207</y>
+      <y>216</y>
       <w>135</w>
       <h>54</h>
     </coordinates>
@@ -359,7 +359,7 @@ bg=blue
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>864</x>
+      <x>999</x>
       <y>342</y>
       <w>135</w>
       <h>54</h>
@@ -371,8 +371,8 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>792</x>
-      <y>405</y>
+      <x>864</x>
+      <y>396</y>
       <w>135</w>
       <h>54</h>
     </coordinates>
@@ -384,40 +384,14 @@ bg=blue</panel_attributes>
   <element>
     <id>UMLUseCase</id>
     <coordinates>
-      <x>1080</x>
-      <y>351</y>
+      <x>1143</x>
+      <y>405</y>
       <w>135</w>
       <h>54</h>
     </coordinates>
     <panel_attributes>Złożenie 
 zamówienia
 bg=blue</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLUseCase</id>
-    <coordinates>
-      <x>963</x>
-      <y>387</y>
-      <w>135</w>
-      <h>54</h>
-    </coordinates>
-    <panel_attributes>Dokonanie
-płatności
-bg=blue</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLUseCase</id>
-    <coordinates>
-      <x>1188</x>
-      <y>387</y>
-      <w>135</w>
-      <h>54</h>
-    </coordinates>
-    <panel_attributes>Reklamacja
-bg=blue
-</panel_attributes>
     <additional_attributes/>
   </element>
   <element>

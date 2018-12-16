@@ -8,7 +8,7 @@
 \contentsline {chapter}{\numberline {3}Projekt systemu}{7}{chapter.3}
 \contentsline {section}{\numberline {3.1}Grupy u\IeC {\.z}ytkownik\IeC {\'o}w}{7}{section.3.1}
 \contentsline {section}{\numberline {3.2}Przypadki u\IeC {\.z}ycia}{8}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Dynamiczna tabela encyjna}{10}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.1}Dynamiczna tabela encyjna}{12}{subsection.3.2.1}
 \contentsline {subsection}{\numberline {3.2.2}Dynamiczny formularz encyjny}{12}{subsection.3.2.2}
 \contentsline {subsection}{\numberline {3.2.3}Manipulacja produktem}{12}{subsection.3.2.3}
 \contentsline {section}{\numberline {3.3}Diagramy aktywno\IeC {\'s}ci}{13}{section.3.3}

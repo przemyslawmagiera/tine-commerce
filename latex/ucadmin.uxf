@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<diagram program="umlet" version="14.2">
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="13.3">
   <zoom_level>10</zoom_level>
   <element>
     <id>UMLUseCase</id>
@@ -71,7 +70,7 @@ użytkownikami</panel_attributes>
       <h>60</h>
     </coordinates>
     <panel_attributes>Zarządzanie
-zamówieniami</panel_attributes>
+encjami</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -169,7 +168,7 @@ uprawnieniami</panel_attributes>
       <x>680</x>
       <y>520</y>
       <w>120</w>
-      <h>110</h>
+      <h>100</h>
     </coordinates>
     <panel_attributes>Administrator</panel_attributes>
     <additional_attributes/>
