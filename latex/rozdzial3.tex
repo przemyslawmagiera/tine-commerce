@@ -16,55 +16,16 @@ Spring Data ułatwia konfigurację połączeń między bazą danych, a serwerem.
 Oparta na silniku Lucene i uruchomiona na osobnym serwerze wyszukiwarka zapewnia odseparowanie najbardziej obciążonej części sklepu. Dzięki Solrowi w implementowanym frameworku jest obecna bardzo szybka wyszukiwarka z możliwością wyszukiwania pełnotekstowego, filtrowania, sortowania i zawężania wyników względem różnych pól produktu. Książka \cite{solrbook} i dokumentacja \cite{Solr-doc} opisują działanie i możliwości Solra. Do integracji serwera Apache Solr z implementowanym frameworkiem użyto biblioteki SolrJ \cite{solrJ}.
 
 \section{Omówienie kodów źródłowych}
+Projekt składa się z 3986 linii kodu w języku Java, dlatego aby zachować zwięzłość i zrozumiałość w ramach omówienia kodów źródłowych zostanie przedstawiona tylko jedna funkcjonalność odnosząca się do konkretnych przypadków użycia zdefiniowanych w sekcji \textbf{Przypadki użycia} rozdziału \textbf{Projekt systemu}. 
 
-{\color{dgray}
-Kod źródłowy~\ref{ws} przedstawia opisy poszczególnych metod interfejsu: \texttt{WSPodmiotRejestracjaIF}. Kompletne
-kody źródłowe znajdują się na płycie CD dołączonej do niniejszej pracy w katalogu \texttt{Kody} (patrz Dodatek~\ref{plytaCD}).
-}
+Na rysunku \ref{useCaseProgrammer} znajduje się use-case: \textit{Zarządzanie encjami}. Związany jest przypadek z diagramu \ref{dynEntFormUC} \textit{Wyświetlenie i manipulacja relacjami encji}.  Te dwa przypadki wiążą się z konstrukcją dynamicznego formularza edycji dla danej encji. Dla lepszego zrozumienia warto przypomnieć diagramy związane z implementacją tej funkcjonalności. Na rysunku \ref{konsFormEnc} przedstawiono diagram aktywności, zaś rysunek \ref{klasy_formularz_encyjny} przedstawia klasy użyte do implementacji.
 
-%https://lucene.apache.org/solr/guide/7_5/using-solrj.html
+Dla przykładu działania kodu źródłowego zostanie przeanalizowana budowa formularza dla encji \texttt{Product}. Kod 
 
 \begin{small}
-\begin{lstlisting}[language=Java, frame=lines, numberstyle=\tiny, stepnumber=5, caption=Interfejs usługi Web Service: \texttt{WSPodmiotRejestracjaIF}\label{ws}., firstnumber=1]
-package erejestracja.podmiot;
-import java.rmi.RemoteException;
-// Interfejs web serwisu dotyczącego obsługi podmiotów i rejestracji.
-public interface WSPodmiotRejestracjaIF extends java.rmi.Remote{
-// Pokazuje informacje o danym podmiocie.
-// parametr: nrPeselRegon - numer PESEL podmiotu lub numer REGON firmy.
-// return: Podmiot - obiekt transportowy: informacje o danym podmiocie.
-public Podmiot pokazPodmiot(long nrPeselRegon) throws RemoteException;
-// Dodaje nowy podmiot.
-// parametr: nowyPodmiot - obiekt transportowy: informacje o nowym podmiocie.
-// return: true - jeśli podmiot dodano, false - jeśli nie dodano.
-public boolean dodajPodmiot(Podmiot nowyPodmiot) throws RemoteException;
-// Usuwa dany podmiot.
-// parametr: nrPeselRegon - numer PESEL osoby fizycznej lub numer REGON firmy.
-// return: true - jeśli podmiot usunięto, false - jeśli nie usunięto.
-public boolean usunPodmiot(long nrPeselRegon) throws RemoteException;
-// Modyfikuje dany podmiot.
-// parametr: podmiot - obiekt transportowy: informacje o modyfikowanym podmiocie.
-// return: true - jeśli podmiot zmodyfikowano, false - jeśli nie zmodyfikowano.
-public boolean modyfikujPodmiot(Podmiot podmiot) throws RemoteException;
-// Pokazuje zarejestrowane podmioty na dany dowód rejestracyjny.
-// parametr: nrDowoduRejestracyjnego - numer dowodu rejestracyjnego.
-// return: PodmiotRejestracja[] - tablica obiektów transportowych: informacje o
-// wszystkich zarejestrowanych podmiotach.
-public PodmiotRejestracja[] pokazZarejestrowanePodmioty(
-String nrDowoduRejestracyjnego) throws RemoteException;
-// Nowa rejestracja podmiotu na dany dowód rejestracyjny.
-// parametr: nrDowoduRejestracyjnego - numer dowodu rejestracyjnego.
-// parametr: nrPeselRegon - numer PESEL podmiotu lub numer REGON firmy.
-// parametr: czyWlasciciel - czy dany podmiot jest właścicielem pojazdu.
-// return: true - jeśli zarejestrowano podmiot, false - jeśli nie zarejestrowano.
-public boolean zarejestrujNowyPodmiot(String nrDowoduRejestracyjnego,
-long nrPeselRegon, boolean czyWlasciciel) throws RemoteException;
-// Usuwa wiązanie pomiędzy danym podmiotem, a dowodem rejestracyjnym.
-// parametr: nrDowoduRejestracyjnego - numer dowodu rejestracyjnego.
-// parametr: nrPeselRegon - numer PESEL podmiotu lub numer REGON firmy.
-// return: true - jeśli podmiot wyrejestrowano, false - jeśli nie wyrejestrowano.
-public boolean wyrejestrujPodmiot(String nrDowoduRejestracyjnego,
-long nrPeselRegon) throws RemoteException;
+\begin{lstlisting}[language=Java, frame=lines, numberstyle=\tiny, stepnumber=5, caption=Wyświetlenie formularza encyjnego: \texttt{DynamicEntityController.java}\label{ws}., firstnumber=1]
+
+
 \end{lstlisting} 
 \end{small}
 

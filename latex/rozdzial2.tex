@@ -6,6 +6,12 @@ W tym rozdziale przedstawiony zostanie dokładny projekt systemu, jest on podzie
 
 W kolejnych sekcjach znajdą się \textbf{Diagramy klas} oraz \textbf{Projekt bazy danych}. W pierwszej opisane zostaną klasy, które musiały zostać stworzne do implementacji procesów zdefiniowanych w wcześniejszych podrozdziałach, odpowiednio w drugiej znajdą się schematy bazy danych podzielone ze względu na funkcjonalności.
 
+Do implementacji frameworku oraz funkcjonalności wbudowanych użyto wzorca architektonicznego model-view-controller. Polega on na następującym podziale aplikacji: \textbf{model}, odpowiedzialny za reprezentacje problemu i logikę, \textbf{view} (widok) opisujący interfejs użytkownika oraz \textbf{controller}, który przyjmuje polecenia użytkownika i odpowiada na jego żądania za pomocą modelu i widoku. Składa się on z trzech wzorców projektowych:
+\begin{itemize}
+	\item kompozyt -- sposób tworzenia widoków, możliwość zagnieżdżania ich w sobie
+	\item obserwator -- model może zmienić stan, o czym musi zostać powiadomiony widok (aktualizacja informacji)
+	\item strategia -- wybranie strategii obsługi zapytania w kontrolerze na podstawie samego żądania
+\end{itemize}
 \section{Grupy użytkowników}
 We frameworku możemy zdefiniować 3 grupy użytkowników, którzy będą korzystać z jego udogodnień. \textbf{Programista} jest to użytkownik frameworka, który implementuje swój sklep z pomocą narzędzi dostarczonych przez opisywany system. \textbf{Administrator} to ktoś, zajmujący się backofficową\footnote{backoffice - w systemach e-commerce panel do obsługi i utrzymania sklepu} obsługą sklepu - obsługa reklamacji. \textbf{Klient} jest to końcowy klient sklepu, który przegląda katalog i dokonuje zakupów. 
 
