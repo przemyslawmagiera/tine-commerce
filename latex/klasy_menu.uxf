@@ -13,7 +13,7 @@
 -name: String
 -order: Integer
 -adminMenuItems: Set&lt;AdminMenuItem&gt;
---
+
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -32,7 +32,7 @@
 -className: String
 -friendlyName: String
 -adminMenuGroup: AdminMenuGroup
---
+
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -42,15 +42,14 @@
       <x>490</x>
       <y>460</y>
       <w>490</w>
-      <h>110</h>
+      <h>90</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 AdminMenuItemRepository
 --
---
 +findByCode(String code): Optional&lt;AdminMenuItem&gt;
 +findByClassName(String className): Optional&lt;AdminMenuItem&gt;
---
+
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -60,7 +59,7 @@ AdminMenuItemRepository
       <x>220</x>
       <y>460</y>
       <w>260</w>
-      <h>60</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 AdminMenuGroupRepository
@@ -81,7 +80,6 @@ AdminMenuGroupRepository
     <panel_attributes>DynamicEntityController
 --
 -getAdminMenu(): List&lt;AdminMenuItem&gt;
---
 </panel_attributes>
     <additional_attributes/>
   </element>

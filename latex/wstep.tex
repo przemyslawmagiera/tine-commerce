@@ -1,29 +1,24 @@
 \chapter{Wstęp}
 \thispagestyle{chapterBeginStyle}
-Celem niniejszej pracy dyplomowej jest zaprojektowanie i zaimplementowanie frameworku służącego do usprawnienia implementacji systemów e-commerce. Istnieje wiele rozwiązań tego typu, jednak bardzo duża część z nich nie oferuje satysfakcjonujących parametrów wydajnościowych, przez co platformy oparte o takie frameworki są czesto bardzo powolne, do tego rozwijane od wielu lat wykorzystują stare rozwiązania i technologie. Prowadzi to często do niepotrzebnego skalowania pionowego aplikacji, czyli zwiększania mocy obliczeniowej. Proces ten wiąże się z bardzo dużymi kosztami, szczególnie w przypadku platform handlowych typu B2B. Zdecydowanie lepszym wyjściem okazuje się w takim przypadku jeden z dzisiejszych trendów budowania aplikacji, czyli skalowanie poziome, polegające na dzieleniu aplikacji według zastosowania poszczególnych komponentów, umieszczając niezależne jej części na serwerach dziedzinowych (architektura mikroserwisowa). Taka architektura pozwala na skalowanie tylko konkretnych, najbardziej narażonych na wzmożony ruch, elementów infrastruktury, co skutkuje bardzo dużą oszczędnością w stosunku do aplikacji monolitycznych. Budowa mikroserwisowa nie jest jednak cudownym środkiem na każdego rodzaju problemy dzisiejszych aplikacji internetowych, wiąże się z nim bowiem wiele problemów, jak chociażby integracja i synchronizacja między komponentami lub konieczność administracji bardzo złożonego środowiska. Właśnie ze względu na to ostatnie widzimy dziś tak wiele ofert pracy na stanowisko DevOps (development and operations). Wydaje się dlatego, że architektura monolityczna z oddzieleniem warstwy katalogowej (tej najbardziej obciążonej) jest optymalnym rozwiązaniem problemu implementacji sklepów internetowych.
-\newline
-Często dewelopment aplikacji idzie w parze z presją czasu, przez co zapomina  się o jakości kodu i rozwiązaniach, które poprawiłyby wydajność i ograniczyły konieczność skalowania. Z zamkniętymi oczami podąża się za schematami i szablonami, aby dostarczyć rozwiązanie jak najszybciej, a nie jak najlepiej. Dlatego właśnie założeniem projektu w ramach pracy jest zaprojektowanie i implementacja frameworku e-commerce spełniającego następujące założenia funkcjonalne:
+Celem niniejszej pracy dyplomowej jest zaprojektowanie i zaimplementowanie frameworku służącego do usprawnienia implementacji systemów e-commerce. Istnieje wiele rozwiązań tego typu, jednak bardzo duża część z nich nie oferuje satysfakcjonujących parametrów wydajnościowych, przez co platformy oparte o takie frameworki są czesto bardzo powolne, do tego rozwijane od wielu lat wykorzystują stare rozwiązania i technologie. Prowadzi to często do niepotrzebnego skalowania pionowego aplikacji, czyli zwiększania mocy obliczeniowej. Proces ten wiąże się z bardzo dużymi kosztami, szczególnie w przypadku platform handlowych typu B2B. Zdecydowanie lepszym wyjściem okazuje się w takim przypadku jeden z dzisiejszych trendów budowania aplikacji, czyli skalowanie poziome, polegające na dzieleniu aplikacji według zastosowania poszczególnych komponentów, umieszczając niezależne jej części na serwerach dziedzinowych (architektura mikroserwisowa). Taka architektura pozwala na skalowanie tylko konkretnych, najbardziej narażonych na wzmożony ruch, elementów infrastruktury, co skutkuje bardzo dużą oszczędnością w stosunku do aplikacji monolitycznych. Budowa mikroserwisowa nie jest jednak cudownym środkiem na każdego rodzaju problemy dzisiejszych aplikacji internetowych, wiąże się z nią bowiem wiele problemów, jak chociażby integracja i synchronizacja między komponentami lub konieczność administracji bardzo złożonego środowiska. Właśnie ze względu na to ostatnie widzimy dziś tak wiele ofert pracy na stanowisko DevOps (development and operations). Wydaje się dlatego, że architektura monolityczna takiego sklepu z oddzieloną warstwą przeznaczoną do obsługi katalogu produktowego (tej najbardziej obciążonej przez użytkowników) jest optymalnym rozwiązaniem problemu implementacji sklepów internetowych. Takie rozwiązanie zostało zaproponowane w niniejszej pracy.
 
-Praca składa się z czterech rozdziałów. W rozdziale pierwszym omówiono strukturę przedsiębior-
-stwa . . . , scharakteryzowano grupy użytkowników oraz przedstawiono procedury związane z obie-
-giem dokumentów. Szczegółowo opisano mechanizmy . . . . Przedstawiono uwarunkowania prawne
-udostępniania informacji . . . , w ramach . . . .
-W rozdziale drugim przedstawiono szczegółowy projekt systemy w notacji UML. Wykorzystano
-diagramy . . . . Zawarto w niej w pseudokod algorytmów generowania oraz omówiono jego właściwo-
-ści. . . 
+Często dewelopment aplikacji idzie w parze z presją czasu, przez co zapomina  się o jakości kodu i rozwiązaniach, które poprawiłyby wydajność i ograniczyły konieczność skalowania. Z zamkniętymi oczami podąża się za schematami i szablonami, aby dostarczyć rozwiązanie jak najszybciej, a nie jak najlepiej. Dlatego właśnie założeniem projektu w ramach pracy jest zaprojektowanie i implementacja frameworku e-commerce, który zawiera funkcjonalności wspólne dla wielu sklepów internetowych.
+
+Praca składa się z czterech rozdziałów. Pierwszy rozdział poświęcony został na wstęp i wprowadzenie do tematu. W rozdziale drugim poddano analizie sklepy internetowe i frameworki e-commerce, aby zdefiniować problemy, z którymi na co dzień się spotykają. W dalszej części zaproponowano rozwiązania znalezionych problemów i zdefiniowano wymagania funkcjonalne, które zostały skojarzone z problemami. Trzeci rozdział dotyczy projektu systemu, zidentyfikowano w nim grupy użytkowników oraz przypadki użycia. W dalszej części rozdziału zaproponowano ich realizację na podstawie diagramów aktywności oraz sekwencji. Następnie implementację opisanych funkcjonalności opisano na diagramach klas oraz schemacie bazy danych. Czwarty i ostatni rozdział dotyczy implementacji systemu i użytych technologii. Pod koniec omówiono konkretny wycinek kodu źródłowego na podstawie jednej z kluczowych funkcjonalności systemu. 
+ 
 \newpage
 \section{Słowniczek}
 \noindent
 \textit{indeksacja} -- proces synchronizacji pomiędzy relacyjną bazą danych, a szybką bazą noSQL, używany w systemie do encji najbardziej narzuconych na duże wykorzystanie. W skrócie: 
 \begin{quote}
-	\textit{By adding content to an \textbf{index}, we make it searchable by Solr.}\cite{Solr} 
+	\textit{By adding content to an \textbf{index}, we make it searchable by Solr.}\cite{Solr-doc} 
 \end{quote}
 
 \noindent
 \textit{facet} -- jest to atrybut danej encji, zazwyczaj wyszukiwalny. Używa się ich do implementacji filtrów używanych podczas wyszukiwania. Z dokumentacji Solra:
 \begin{quote} \textit{
 	Searchers are presented with the indexed terms, along with numerical counts of how many matching documents were found were each term. Faceting makes it easy for users to explore search results, narrowing in on exactly the results they are looking for.
-	}\cite{Solr}
+	}\cite{Solr-doc}
 \end{quote}
 
 \noindent

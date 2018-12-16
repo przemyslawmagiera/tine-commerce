@@ -16,30 +16,30 @@
 \contentsline {subsection}{\numberline {3.3.2}Konstrukcja zapytania dynamicznego Apache Solr}{14}{subsection.3.3.2}
 \contentsline {subsection}{\numberline {3.3.3}Konstrukcja dynamicznej tabeli encyjnej}{14}{subsection.3.3.3}
 \contentsline {subsection}{\numberline {3.3.4}Konstrukcja dynamicznego formularza encyjnego}{16}{subsection.3.3.4}
-\contentsline {subsection}{\numberline {3.3.5}Podsumowanie diagram\IeC {\'o}w aktywno\IeC {\'s}ci}{20}{subsection.3.3.5}
-\contentsline {section}{\numberline {3.4}Diagramy sekwencji}{20}{section.3.4}
+\contentsline {subsection}{\numberline {3.3.5}Podsumowanie diagram\IeC {\'o}w aktywno\IeC {\'s}ci}{19}{subsection.3.3.5}
+\contentsline {section}{\numberline {3.4}Diagramy sekwencji}{21}{section.3.4}
 \contentsline {subsection}{\numberline {3.4.1}Zmiana w\IeC {\l }a\IeC {\'s}ciwo\IeC {\'s}ci dowolnej encji}{21}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}Modyfikacja dowolnej relacji encji}{22}{subsection.3.4.2}
-\contentsline {subsection}{\numberline {3.4.3}Dodanie dowolnej encji na przyk\IeC {\l }adzie atrybutu klasyfikacyjnego}{22}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.2}Modyfikacja dowolnej relacji encji}{21}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}Dodanie dowolnej encji na przyk\IeC {\l }adzie atrybutu klasyfikacyjnego}{23}{subsection.3.4.3}
 \contentsline {subsection}{\numberline {3.4.4}Wyszukiwanie produktu}{23}{subsection.3.4.4}
 \contentsline {subsection}{\numberline {3.4.5}Proces zakupowy}{23}{subsection.3.4.5}
 \contentsline {section}{\numberline {3.5}Diagramy klas}{26}{section.3.5}
 \contentsline {subsection}{\numberline {3.5.1}Konfigurowalne menu}{26}{subsection.3.5.1}
-\contentsline {subsection}{\numberline {3.5.2}Dynamiczna tabela encyjna}{27}{subsection.3.5.2}
-\contentsline {subsection}{\numberline {3.5.3}Dynamiczny formularz encyjny}{28}{subsection.3.5.3}
-\contentsline {subsection}{\numberline {3.5.4}Model systemu klasyfikacyjnego}{30}{subsection.3.5.4}
+\contentsline {subsection}{\numberline {3.5.2}Dynamiczna tabela encyjna}{26}{subsection.3.5.2}
+\contentsline {subsection}{\numberline {3.5.3}Dynamiczny formularz encyjny}{27}{subsection.3.5.3}
+\contentsline {subsection}{\numberline {3.5.4}Model systemu klasyfikacyjnego}{28}{subsection.3.5.4}
 \contentsline {subsection}{\numberline {3.5.5}Warstwa serwisowa systemu klasyfikacyjnego}{30}{subsection.3.5.5}
-\contentsline {subsection}{\numberline {3.5.6}Warstwa kontroler\IeC {\'o}w systemu klasyfikacyjnego}{31}{subsection.3.5.6}
-\contentsline {subsection}{\numberline {3.5.7}Struktura uprawnie\IeC {\'n} w panelu administracyjnym}{31}{subsection.3.5.7}
+\contentsline {subsection}{\numberline {3.5.6}Warstwa kontroler\IeC {\'o}w systemu klasyfikacyjnego}{32}{subsection.3.5.6}
+\contentsline {subsection}{\numberline {3.5.7}Struktura uprawnie\IeC {\'n} w panelu administracyjnym}{32}{subsection.3.5.7}
 \contentsline {subsection}{\numberline {3.5.8}Indeksacja i wyszukiwanie produkt\IeC {\'o}w}{33}{subsection.3.5.8}
-\contentsline {subsection}{\numberline {3.5.9}Proces zam\IeC {\'o}wienia}{34}{subsection.3.5.9}
+\contentsline {subsection}{\numberline {3.5.9}Proces zam\IeC {\'o}wienia}{33}{subsection.3.5.9}
 \contentsline {section}{\numberline {3.6}Projekt bazy danych}{35}{section.3.6}
 \contentsline {subsection}{\numberline {3.6.1}Menu w panelu administracyjnym}{35}{subsection.3.6.1}
 \contentsline {subsection}{\numberline {3.6.2}System klasyfikacyjny}{36}{subsection.3.6.2}
 \contentsline {subsection}{\numberline {3.6.3}Mechanizm uprawnie\IeC {\'n}}{36}{subsection.3.6.3}
-\contentsline {subsection}{\numberline {3.6.4}Proces zakupowy}{37}{subsection.3.6.4}
-\contentsline {subsection}{\numberline {3.6.5}Po\IeC {\l }\IeC {\k a}czenie bazy relacyjnej z p\IeC {\l }ask\IeC {\k a} struktur\IeC {\k a} noSQL Apache Solr}{39}{subsection.3.6.5}
-\contentsline {subsection}{\numberline {3.6.6}System utrzymania bazy danych}{40}{subsection.3.6.6}
+\contentsline {subsection}{\numberline {3.6.4}Proces zakupowy}{36}{subsection.3.6.4}
+\contentsline {subsection}{\numberline {3.6.5}Po\IeC {\l }\IeC {\k a}czenie bazy relacyjnej z p\IeC {\l }ask\IeC {\k a} struktur\IeC {\k a} noSQL Apache Solr}{38}{subsection.3.6.5}
+\contentsline {subsection}{\numberline {3.6.6}System utrzymania bazy danych}{39}{subsection.3.6.6}
 \contentsline {subsection}{\numberline {3.6.7}Normalizacja bazy danych}{40}{subsection.3.6.7}
 \contentsline {chapter}{\numberline {4}Implementacja systemu}{41}{chapter.4}
 \contentsline {section}{\numberline {4.1}Opis technologii}{41}{section.4.1}
