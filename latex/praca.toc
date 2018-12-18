@@ -48,7 +48,15 @@
 \contentsline {subsection}{\numberline {4.1.3}Spring Data}{41}{subsection.4.1.3}
 \contentsline {subsection}{\numberline {4.1.4}Apache Solr}{41}{subsection.4.1.4}
 \contentsline {section}{\numberline {4.2}Om\IeC {\'o}wienie kod\IeC {\'o}w \IeC {\'z}r\IeC {\'o}d\IeC {\l }owych}{42}{section.4.2}
-\contentsline {chapter}{\numberline {5}Instalacja i wdro\IeC {\.z}enie}{45}{chapter.5}
-\contentsline {chapter}{\numberline {6}Podsumowanie}{47}{chapter.6}
-\contentsline {chapter}{Bibliografia}{49}{chapter*.33}
-\contentsline {chapter}{\numberline {A}Zawarto\IeC {\'s}\IeC {\'c} p\IeC {\l }yty CD}{51}{appendix.A}
+\contentsline {chapter}{\numberline {5}Wdro\IeC {\.z}enie i prezentacja dzia\IeC {\l }ania}{45}{chapter.5}
+\contentsline {section}{\numberline {5.1}Wymagania pocz\IeC {\k a}tkowe}{45}{section.5.1}
+\contentsline {section}{\numberline {5.2}Instalacja aplikacji}{45}{section.5.2}
+\contentsline {section}{\numberline {5.3}Prezentacja wybranych funkcjonalno\IeC {\'s}ci}{45}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Funkcjonalno\IeC {\'s}ci przewidziane dla administratora sklepu}{45}{subsection.5.3.1}
+\contentsline {subsubsection}{Widok panelu administracyjnego}{45}{subsubsection*.33}
+\contentsline {subsubsection}{Zmiana w\IeC {\l }a\IeC {\'s}ciwo\IeC {\'s}ci encji}{45}{subsubsection*.35}
+\contentsline {subsection}{\numberline {5.3.2}Funkcjonalno\IeC {\'s}ci przewidziane dla programisty}{47}{subsection.5.3.2}
+\contentsline {subsubsection}{Dodanie encji do systemu}{47}{subsubsection*.37}
+\contentsline {chapter}{\numberline {6}Podsumowanie}{49}{chapter.6}
+\contentsline {chapter}{Bibliografia}{51}{chapter*.38}
+\contentsline {chapter}{\numberline {A}Zawarto\IeC {\'s}\IeC {\'c} p\IeC {\l }yty CD}{53}{appendix.A}
