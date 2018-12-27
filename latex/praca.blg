@@ -3,51 +3,51 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: praca.aux
 The style file: plabbrv.bst
 Database file #1: literatura.bib
-Warning--I didn't find a database entry for "Solr"
+Warning--to sort, need author or key in Solr-doc
 Warning--to sort, need author or key in Java-doc
 Warning--to sort, need author or key in sb
 Warning--to sort, need author or key in springb-docs
-Warning--to sort, need author or key in Solr-doc
 Warning--to sort, need author or key in solrJ
-You've used 9 entries,
+Warning--to sort, need author or key in docker-ins
+You've used 10 entries,
             2129 wiz_defined-function locations,
-            541 strings with 4533 characters,
-and the built_in function-call counts, 1664 in all, are:
-= -- 151
-> -- 33
+            542 strings with 4663 characters,
+and the built_in function-call counts, 1825 in all, are:
+= -- 166
+> -- 34
 < -- 0
-+ -- 17
++ -- 18
 - -- 8
-* -- 56
-:= -- 242
-add.period$ -- 22
-call.type$ -- 9
-change.case$ -- 28
+* -- 61
+:= -- 261
+add.period$ -- 24
+call.type$ -- 10
+change.case$ -- 31
 chr.to.int$ -- 0
-cite$ -- 14
-duplicate$ -- 78
-empty$ -- 204
+cite$ -- 16
+duplicate$ -- 85
+empty$ -- 227
 format.name$ -- 8
-if$ -- 384
+if$ -- 424
 int.to.chr$ -- 0
-int.to.str$ -- 9
+int.to.str$ -- 10
 missing$ -- 6
-newline$ -- 43
+newline$ -- 47
 num.names$ -- 8
-pop$ -- 72
+pop$ -- 80
 preamble$ -- 1
-purify$ -- 22
+purify$ -- 24
 quote$ -- 0
-skip$ -- 66
+skip$ -- 73
 stack$ -- 0
-substring$ -- 45
-swap$ -- 9
+substring$ -- 50
+swap$ -- 10
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 30
-warning$ -- 5
+type$ -- 34
+warning$ -- 6
 while$ -- 8
-width$ -- 10
-write$ -- 76
+width$ -- 12
+write$ -- 83
 (There were 6 warnings)

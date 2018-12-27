@@ -1,8 +1,13 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{Solr-doc}
 Apache solr technology.
 \newblock Web pages: \url{https://lucene.apache.org/solr/guide/}.
+
+\bibitem{docker-ins}
+Instalacja aplikacji docker.
+\newblock Web pages:
+  \url{https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-repository}.
 
 \bibitem{Java-doc}
 Java technology.
