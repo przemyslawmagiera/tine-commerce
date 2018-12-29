@@ -242,16 +242,10 @@ Wart zauważenia jest region \textit{cached} w ramce, otóż jednym z postulató
 
 
 \subsection{Proces zakupowy}
-Proces zakupowy jest standardowym mechanizmem koniecznym do przeprowadzenia transakcji, nie wymaga on szczególnej optymalizacji, ze względu na to, że nie jest to obciążona część platformy. Klient końcowy, po wejściu na sklep może wyszukać produkt oraz zdefiniować kryteria wyszukiwania. Po znalezieniu szukanych produktów może umieścić je w koszyku, a następnie zamówić elementy dodane do koszyka. Szczególnym rozwiązaniem dla frameworka jest tworzenie kopii produktu w momencie składania zamówienia, aby klient w razie reklamacji miał się do czego odwołać. Ta funkcjonalność jest umotywowana tym, że cechy produktu w systemie są bardzo dynamiczne i mogą być dowolnie zmieniane, więc produkt sprzedany w danym miesiącu może być niemożliwy do odnalezienia po pewnym czasie. Całość została umieszczona na diagramie z rysunku \ref{procZakup}.
-\begin{figure}
-	\begin{center}
-	%	\includegraphics[scale=0.4]{procZakup.png}
-	\end{center}
-	\caption{{\color{black}Diagram sekwencji opisujący proces zakupowy.}} \label{procZakup}
-\end{figure}
+Proces zakupowy jest standardowym mechanizmem koniecznym do przeprowadzenia transakcji, nie wymaga on szczególnej optymalizacji, ze względu na to, że nie jest to obciążona część platformy. Klient końcowy, po wejściu na sklep może wyszukać produkt oraz zdefiniować kryteria wyszukiwania. Po znalezieniu szukanych produktów może umieścić je w koszyku, a następnie zamówić elementy dodane do koszyka. Szczególnym rozwiązaniem dla frameworka jest tworzenie kopii produktu w momencie składania zamówienia, aby klient w razie reklamacji miał się do czego odwołać. Ta funkcjonalność jest umotywowana tym, że cechy produktu w systemie są bardzo dynamiczne i mogą być dowolnie zmieniane, więc produkt sprzedany w danym miesiącu może być niemożliwy do odnalezienia po pewnym czasie.
 
 
-\newpage
+
 \section{Diagramy klas}
 
 Na podstawie wcześniejszych rozważań możliwe jest zdefiniowanie następujących części frameworku: 

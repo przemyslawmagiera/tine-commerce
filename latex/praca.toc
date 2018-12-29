@@ -23,24 +23,24 @@
 \contentsline {subsection}{\numberline {3.4.3}Dodanie dowolnej encji na przyk\IeC {\l }adzie atrybutu klasyfikacyjnego}{23}{subsection.3.4.3}
 \contentsline {subsection}{\numberline {3.4.4}Wyszukiwanie produktu}{23}{subsection.3.4.4}
 \contentsline {subsection}{\numberline {3.4.5}Proces zakupowy}{23}{subsection.3.4.5}
-\contentsline {section}{\numberline {3.5}Diagramy klas}{26}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}Konfigurowalne menu}{26}{subsection.3.5.1}
+\contentsline {section}{\numberline {3.5}Diagramy klas}{25}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Konfigurowalne menu}{25}{subsection.3.5.1}
 \contentsline {subsection}{\numberline {3.5.2}Dynamiczna tabela encyjna}{26}{subsection.3.5.2}
 \contentsline {subsection}{\numberline {3.5.3}Dynamiczny formularz encyjny}{27}{subsection.3.5.3}
-\contentsline {subsection}{\numberline {3.5.4}Model systemu klasyfikacyjnego}{28}{subsection.3.5.4}
-\contentsline {subsection}{\numberline {3.5.5}Warstwa serwisowa systemu klasyfikacyjnego}{30}{subsection.3.5.5}
-\contentsline {subsection}{\numberline {3.5.6}Warstwa kontroler\IeC {\'o}w systemu klasyfikacyjnego}{32}{subsection.3.5.6}
-\contentsline {subsection}{\numberline {3.5.7}Struktura uprawnie\IeC {\'n} w panelu administracyjnym}{32}{subsection.3.5.7}
-\contentsline {subsection}{\numberline {3.5.8}Indeksacja i wyszukiwanie produkt\IeC {\'o}w}{33}{subsection.3.5.8}
+\contentsline {subsection}{\numberline {3.5.4}Model systemu klasyfikacyjnego}{29}{subsection.3.5.4}
+\contentsline {subsection}{\numberline {3.5.5}Warstwa serwisowa systemu klasyfikacyjnego}{29}{subsection.3.5.5}
+\contentsline {subsection}{\numberline {3.5.6}Warstwa kontroler\IeC {\'o}w systemu klasyfikacyjnego}{30}{subsection.3.5.6}
+\contentsline {subsection}{\numberline {3.5.7}Struktura uprawnie\IeC {\'n} w panelu administracyjnym}{30}{subsection.3.5.7}
+\contentsline {subsection}{\numberline {3.5.8}Indeksacja i wyszukiwanie produkt\IeC {\'o}w}{32}{subsection.3.5.8}
 \contentsline {subsection}{\numberline {3.5.9}Proces zam\IeC {\'o}wienia}{33}{subsection.3.5.9}
-\contentsline {section}{\numberline {3.6}Projekt bazy danych}{35}{section.3.6}
-\contentsline {subsection}{\numberline {3.6.1}Menu w panelu administracyjnym}{35}{subsection.3.6.1}
-\contentsline {subsection}{\numberline {3.6.2}System klasyfikacyjny}{36}{subsection.3.6.2}
-\contentsline {subsection}{\numberline {3.6.3}Mechanizm uprawnie\IeC {\'n}}{36}{subsection.3.6.3}
+\contentsline {section}{\numberline {3.6}Projekt bazy danych}{34}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Menu w panelu administracyjnym}{34}{subsection.3.6.1}
+\contentsline {subsection}{\numberline {3.6.2}System klasyfikacyjny}{35}{subsection.3.6.2}
+\contentsline {subsection}{\numberline {3.6.3}Mechanizm uprawnie\IeC {\'n}}{35}{subsection.3.6.3}
 \contentsline {subsection}{\numberline {3.6.4}Proces zakupowy}{36}{subsection.3.6.4}
 \contentsline {subsection}{\numberline {3.6.5}Po\IeC {\l }\IeC {\k a}czenie bazy relacyjnej z p\IeC {\l }ask\IeC {\k a} struktur\IeC {\k a} noSQL Apache Solr}{38}{subsection.3.6.5}
 \contentsline {subsection}{\numberline {3.6.6}System utrzymania bazy danych}{39}{subsection.3.6.6}
-\contentsline {subsection}{\numberline {3.6.7}Normalizacja bazy danych}{40}{subsection.3.6.7}
+\contentsline {subsection}{\numberline {3.6.7}Normalizacja bazy danych}{39}{subsection.3.6.7}
 \contentsline {chapter}{\numberline {4}Implementacja systemu}{41}{chapter.4}
 \contentsline {section}{\numberline {4.1}Opis technologii}{41}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Spring Framework/Spring Boot}{41}{subsection.4.1.1}
@@ -50,15 +50,21 @@
 \contentsline {section}{\numberline {4.2}Om\IeC {\'o}wienie kod\IeC {\'o}w \IeC {\'z}r\IeC {\'o}d\IeC {\l }owych}{42}{section.4.2}
 \contentsline {chapter}{\numberline {5}Wdro\IeC {\.z}enie i prezentacja dzia\IeC {\l }ania}{45}{chapter.5}
 \contentsline {section}{\numberline {5.1}Konfiguracja i instalacja aplikacji}{45}{section.5.1}
-\contentsline {subsubsection}{Instalacja Javy}{45}{subsubsection*.33}
-\contentsline {subsubsection}{Instalacja Dockera}{45}{subsubsection*.34}
-\contentsline {subsubsection}{Instalacja bazy danych PSQL}{45}{subsubsection*.35}
-\contentsline {subsubsection}{Skrypty tworz\IeC {\k a}ce u\IeC {\.z}ytkownika i baz\IeC {\k e} danych}{45}{subsubsection*.36}
-\contentsline {subsubsection}{Serwer Apache Solr}{45}{subsubsection*.37}
-\contentsline {subsubsection}{Instalacja aplikacji testowej}{46}{subsubsection*.38}
+\contentsline {subsubsection}{Instalacja Javy}{45}{subsubsection*.32}
+\contentsline {subsubsection}{Instalacja Dockera}{45}{subsubsection*.33}
+\contentsline {subsubsection}{Instalacja bazy danych PSQL}{45}{subsubsection*.34}
+\contentsline {subsubsection}{Skrypty tworz\IeC {\k a}ce u\IeC {\.z}ytkownika i baz\IeC {\k e} danych}{45}{subsubsection*.35}
+\contentsline {subsubsection}{Serwer Apache Solr}{45}{subsubsection*.36}
+\contentsline {subsubsection}{Instalacja aplikacji testowej}{46}{subsubsection*.37}
 \contentsline {section}{\numberline {5.2}Prezentacja dzia\IeC {\l }ania}{46}{section.5.2}
-\contentsline {subsubsection}{Widok panelu administracyjnego}{46}{subsubsection*.39}
-\contentsline {subsubsection}{Zmiana w\IeC {\l }a\IeC {\'s}ciwo\IeC {\'s}ci encji}{46}{subsubsection*.41}
-\contentsline {chapter}{\numberline {6}Podsumowanie}{49}{chapter.6}
-\contentsline {chapter}{Bibliografia}{51}{chapter*.43}
-\contentsline {chapter}{\numberline {A}Zawarto\IeC {\'s}\IeC {\'c} p\IeC {\l }yty CD}{53}{appendix.A}
+\contentsline {subsubsection}{Widok panelu administracyjnego}{46}{subsubsection*.38}
+\contentsline {subsubsection}{Widok formularza edycji encji}{46}{subsubsection*.40}
+\contentsline {subsubsection}{Dodanie do formularza edycji pola relacyjnego}{48}{subsubsection*.42}
+\contentsline {subsubsection}{Zmiana w\IeC {\l }a\IeC {\'s}ciwo\IeC {\'s}ci encji}{48}{subsubsection*.44}
+\contentsline {subsubsection}{Dzia\IeC {\l }anie systemu klasyfikacyjnego}{48}{subsubsection*.46}
+\contentsline {subsubsection}{Nadpisanie klasy i dodanie do niej niestandardowego pola}{48}{subsubsection*.48}
+\contentsline {subsubsection}{Dzia\IeC {\l }anie mechanizmu uprawnie\IeC {\'n}}{50}{subsubsection*.50}
+\contentsline {subsubsection}{Proces zakupowy}{50}{subsubsection*.52}
+\contentsline {chapter}{\numberline {6}Podsumowanie}{53}{chapter.6}
+\contentsline {chapter}{Bibliografia}{55}{chapter*.55}
+\contentsline {chapter}{\numberline {A}Zawarto\IeC {\'s}\IeC {\'c} p\IeC {\l }yty CD}{57}{appendix.A}

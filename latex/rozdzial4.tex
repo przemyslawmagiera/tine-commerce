@@ -6,7 +6,7 @@ W dalszej części rozdziału umieszczono prezentację działania aplikacji.
 
 %W tym rozdziale należy omówić zawartość pakietu instalacyjnego oraz założenia co do środowiska, w którym realizowany system będzie instalowany. Należy przedstawić procedurę instalacji i wdrożenia systemu. Czynności instalacyjne powinny być szczegółowo rozpisane na kroki. Procedura wdrożenia powinna obejmować konfigurację platformy sprzętowej, OS (np. konfiguracje niezbędnych sterowników) oraz konfigurację wdrażanego systemu, m.in.\ tworzenia niezbędnych kont użytkowników. Procedura instalacji powinna prowadzić od stanu, w którym nie są zainstalowane żadne składniki systemu, do stanu w którym system jest gotowy do pracy i oczekuje na akcje typowego użytkownika.%
 \section{Konfiguracja i instalacja aplikacji}
-Aplikację można uruchomić na każdym systemie, na którym jest możliwa instalacja bazy danych PostgreSQL. Najprościej pobrać jej obraz z repozytorium Docker-Hub i uruchomić aplikacją Docker. Przykładowa instalacja odbędzie się na przykładzie komputera z systemem Ubuntu 16.04. 
+Aplikację można uruchomić na każdym systemie, na którym jest możliwa instalacja bazy danych PostgreSQL. Najprościej pobrać jej obraz z repozytorium Docker-Hub i uruchomić aplikacją Docker. Instalacja odbędzie się na przykładzie komputera z systemem Ubuntu 16.04. 
 
 \subsubsection{Instalacja Javy}
 Javę na Ubuntu 16.04 wystarczy zainstalować za pomocą polecenia:
@@ -24,7 +24,7 @@ Docker na Ubuntu jest bardzo prosty w instalacji, pełny (pięciominutowy) porad
 Obraz bazy danych zostanie pobrany przez aplikację Docker po wpisaniu poniższej komendy: 
 
 \noindent
-\texttt{\$ docker run --name postgres -e POSTGRES\_PASSWORD=postgres -d postgres}
+\texttt{\$ sudo docker run --name postgres -e POSTGRES\_PASSWORD=postgres -d postgres}
 
 \subsubsection{Skrypty tworzące użytkownika i bazę danych}
 W głównym folderze pakietu instalacyjnego należy odszukać katalog \textbf{sql} i uruchomić skrypty \texttt{1.sql, 2.sql, 3.sql, 4.sql} na postawionej w poprzednim kroku bazie danych.
@@ -33,7 +33,13 @@ W głównym folderze pakietu instalacyjnego należy odszukać katalog \textbf{sq
 Serwer Apache Solr również zostanie pobrany z obrazu Docker'owego. Aby uruchomić instancję Apache Solr na komputerze należy wpisać polecenie: 
 
 \noindent
-\texttt{\$ docker run --name my\_solr -d -p 8983:8983 -t solr}
+\texttt{\$ sudo docker run --name my\_solr -d -p 8983:8983 -t solr}
+
+\noindent
+Następnie należy utworzyć bazę danych w Solarze poleceniem:
+
+\noindent
+\texttt{\$ sudo docker exec -it --user=solr my\_solr bin/solr create\_core -c tinecommerce}
 
 
 
@@ -44,20 +50,40 @@ W głównym folderze pakietu instalacyjnego znajdują się dwie paczki: \texttt{
 \texttt{\$ java -jar nazwa.jar}
 
 \noindent
-gdzie \textit{nazwa} to \textit{admin} lub \textit{shop}. Sklep z wszystkimi produktami będzie dostępny pod adresem http://localhost:9001/search?query=*, natomiast panel administracyjny z wylistowanymi kategoriami pod adresem http://localhost:9000/entities/category. System administracyjny będzie wymagał zalogowania. Dane do logowania: \texttt{login: admin, hasło: test}. Aby zakupić przedmiot w sklepie, również są potrzebne dane do logowania: \texttt{login: test, hasło: test}
+gdzie \textit{nazwa} to \textit{admin} lub \textit{shop}. Sklep z wszystkimi produktami będzie dostępny pod adresem http://localhost:9001/search?query=*, natomiast panel administracyjny z wylistowanymi kategoriami pod adresem http://localhost:9000/entities/category. System administracyjny będzie wymagał zalogowania. Dane do logowania: \texttt{login: admin, hasło: test}. Aby zakupić przedmiot w sklepie, również są potrzebne dane do logowania: \texttt{login: test, hasło: test}. W razie problemów z aplikacją administracyjną, można uruchomić ją poprzez program Maven poleceniem: 
+
+\noindent
+\texttt{\$ mvn spring-boot:run}
 
 \section{Prezentacja działania}
 W ramach tej sekcji zostaną przedstawione kluczowe elementy systemu, które pojawiły się w rozdziale \textbf{Projekt systemu}.  
 
 \subsubsection{Widok panelu administracyjnego}
 Na rysunku \ref{scr_adminmain} został przedstawiony panel administracyjny. Literkami A, B, C i D oznaczono ważne elementy. \textbf{A} -- konfigurowalne menu, \textbf{B} -- dynamiczna tabela encyjna ze wszystkim encjami rodzaju \texttt{price} (tabela cen). \textbf{C} przycisk dodania nowego egzemplarza encji, \textbf{D} -- linki z ID przekierowują do dynamicznego formularza edycji encji. 
-\begin{figure}[h]
+\begin{figure}
 	\begin{center}
 		\includegraphics[width=1\textwidth]{admin-main.png}
 	\end{center}
 	\caption{{\color{black}Widok panelu administracyjnego}} \label{scr_adminmain}
 \end{figure}
 
+\subsubsection{Widok formularza edycji encji}
+Na rysunku \ref{scr_adminmain} został przedstawiony dynamiczny formularz encyjny. Literkami A, B i C oznaczono ważne elementy. \textbf{A} -- sekcja formularza z generowanymi polami prostymi, \textbf{B} -- sekcja komponentów edycji relacji, dla każdej jeden komponent, \textbf{C} przyciski zatwierdzenia lub usunięcia encji. 
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=1\textwidth]{admin-dfe.png}
+	\end{center}
+	\caption{{\color{black}Widok formularza edycji encji}} \label{scr_admindfe}
+\end{figure}
+
+\subsubsection{Dodanie pola relacyjnego do formularza edycji encji}
+Na rysunku \ref{relacjarys} przedstawiono fragment klasy \texttt{Product}, nad polem relacyjnym (zbiór cen w produkcie) umieszczono adnotację \texttt{@AdminVisible}, która powoduje wyświetlenie w formularzu edycji produktu zbioru jego cen.
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.4]{relacjeWDFE.png}
+	\end{center}
+	\caption{{\color{black}Dodanie do formularza edycji pola relacyjnego}} \label{relacjarys}
+\end{figure}
 
 \subsubsection{Zmiana właściwości encji} 
 Zmiana właściwości dowolnej encji zostanie przedstawiona na podstawie produktu.
@@ -72,10 +98,55 @@ Zmiana właściwości dowolnej encji zostanie przedstawiona na podstawie produkt
 \end{itemize}
 \begin{figure}
 	\begin{center}
-		\includegraphics[scale=1.3]{zmianacenyproduktu.png}
+		\includegraphics[scale=1.2]{zmianacenyproduktu.png}
 	\end{center}
 	\caption{{\color{black}Zmiana ceny w produkcie}} \label{zmianacenyproduktu}
 \end{figure}
+
+\subsubsection{Działanie systemu klasyfikacyjnego}
+Rysunek \ref{sysklasdzial} przedstawia proces dodania nowego filtra do wyszukiwania w sklepie internetowym. Zdefiniowanie atrybutu klasyfikacyjnego odbywa się w panelu administracyjnym, następnie należy przypisać go do kategorii. System każdemu powiązanemu produktowi przypisze ten atrybut i da administratorowi możliwość zdefiniowania jego wartości. Określeniu atrybutu produktu (marka -- nike), pojawi się w sklepie nowy filtr \textit{marka}.
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.4]{sysklas-wyszfacet.png}
+	\end{center}
+	\caption{{\color{black}Działanie systemu klasyfikacyjnego}} \label{sysklasdzial}
+\end{figure}
+
+\subsubsection{Nadpisanie klasy i dodanie do niej niestandardowego pola}
+Ważną cechą systemu jest elastyczność panelu administracyjnego. Każda klasa, która jest w nim widoczna (np. Zamówienie, Produkt), może zostać nadpisana w kodzie i mogą zostać do niej dodane niestandardowe pola. Na rysunku \ref{nadpisanieklasyadmin} przedstawiono fragment klasy \texttt{MyOrder} rozszerzającą standardową klasę \texttt{Order}. Do klasy Zamówienie dodano pole \textit{status}, pole to zostało oznaczone adnotacją \texttt{@AdminVisible}. Spowodowało to wyświetlenie się nowego pola \texttt{orderStatus} w tabelce encji Zamówienie (A) oraz jej formularzu edycyjnym(B).  
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.38]{nadpisanieKlasNaPolaWAdminie.png}
+	\end{center}
+	\caption{{\color{black}Nadpisanie klasy i dodanie do niej niestandardowego pola}} \label{nadpisanieklasyadmin}
+\end{figure}
+
+\subsubsection{Działanie mechanizmu uprawnień}
+Uprawnienia w panelu administracyjnym określają, które encje mogą zostać edytowane i wyświetlone przez danego administratora. Na rysunku \ref{uprawnienia} przedstawiono proces przypisania uprawnienia \textit{catalogPermission}(A), które dotyczy encji \textit{product, category i price} (B). Możemy je przypisać administratorowi w jego formularzu edycji (C). Dzięki temu użytkownik, któremu nadaliśmy to uprawnienie, będzie mógł wyświetlić i edytować wspomniane trzy encje (D). 
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.4]{uprawnienia.png}
+	\end{center}
+	\caption{{\color{black}Proces nadawania uprawnień}} \label{uprawnienia}
+\end{figure}
+
+\subsubsection{Proces zakupowy}
+Na rysunkach \ref{produktscr} i \ref{koszykscr} przedstawiono przykładowy sklep internetowy, który korzysta z platformy. Na rysunku \ref{produktscr} widoczny jest widok wyszukiwania produktów z sekcją filtrów (A), wyszukiwarką pełnotekstową (B) oraz kafelkami z produktami (C). Rysunek \ref{koszykscr} przedstawia widok koszyka.
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.4]{produktu.png}
+	\end{center}
+	\caption{{\color{black}Widok wyszukiwarki}} \label{produktscr}
+\end{figure}
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.4]{koszyk.png}
+	\end{center}
+	\caption{{\color{black}Widok koszyka}} \label{koszykscr}
+\end{figure}
+
+
 
 
 

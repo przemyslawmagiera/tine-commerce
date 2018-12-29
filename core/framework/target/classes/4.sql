@@ -89,9 +89,9 @@ insert into Price values
   (-100, 'kod1', 249.90, 'PLN',-100),
   (-101, 'kod2', 229.90, 'PLN',-101),
   (-102, 'kod3', 149.00, 'PLN',-102),
-  (-103, 'kod4', 349.90, 'PLN',-102),
-  (-104, 'kod5', 299.90, 'PLN',-102),
-  (-105, 'kod6', 179.90, 'PLN',-102);
+  (-103, 'kod4', 349.90, 'PLN',-103),
+  (-104, 'kod5', 299.90, 'PLN',-104),
+  (-105, 'kod6', 179.90, 'PLN',-105);
   
   
 insert into search_field values 
@@ -100,6 +100,15 @@ insert into search_field values
   (3,'cds',FALSE,'description',FALSE),
   (4,'kod1',FALSE,'photos',FALSE),
   (5,'kod33',FALSE,'code',FALSE);
+
+insert into customer(id,code,password,role,username,email,name) values 
+  (1,'kod1','$2a$04$qUMlgb.d1K7dnx2UGYVShOUACsIeLRbWGFDteuPdzGv6UdeVJDIRq','ROLE_CUSTOMER','test','email','test');
+
+insert into admin_user(id,code,password,role,username) values
+  (1,'kod1','$2a$04$qUMlgb.d1K7dnx2UGYVShOUACsIeLRbWGFDteuPdzGv6UdeVJDIRq','ROLE_ADMIN','admin');
+
+insert into admin_user_permission values
+  (1,1);
 
 
 
