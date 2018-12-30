@@ -39,8 +39,8 @@
 \contentsline {subsection}{\numberline {3.6.3}Mechanizm uprawnie\IeC {\'n}}{35}{subsection.3.6.3}
 \contentsline {subsection}{\numberline {3.6.4}Proces zakupowy}{36}{subsection.3.6.4}
 \contentsline {subsection}{\numberline {3.6.5}Po\IeC {\l }\IeC {\k a}czenie bazy relacyjnej z p\IeC {\l }ask\IeC {\k a} struktur\IeC {\k a} noSQL Apache Solr}{38}{subsection.3.6.5}
-\contentsline {subsection}{\numberline {3.6.6}System utrzymania bazy danych}{39}{subsection.3.6.6}
-\contentsline {subsection}{\numberline {3.6.7}Normalizacja bazy danych}{39}{subsection.3.6.7}
+\contentsline {subsection}{\numberline {3.6.6}System utrzymania bazy danych}{38}{subsection.3.6.6}
+\contentsline {subsection}{\numberline {3.6.7}Normalizacja bazy danych}{38}{subsection.3.6.7}
 \contentsline {chapter}{\numberline {4}Implementacja systemu}{41}{chapter.4}
 \contentsline {section}{\numberline {4.1}Opis technologii}{41}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Spring Framework/Spring Boot}{41}{subsection.4.1.1}
@@ -59,7 +59,7 @@
 \contentsline {section}{\numberline {5.2}Prezentacja dzia\IeC {\l }ania}{46}{section.5.2}
 \contentsline {subsubsection}{Widok panelu administracyjnego}{46}{subsubsection*.38}
 \contentsline {subsubsection}{Widok formularza edycji encji}{46}{subsubsection*.40}
-\contentsline {subsubsection}{Dodanie do formularza edycji pola relacyjnego}{48}{subsubsection*.42}
+\contentsline {subsubsection}{Dodanie pola relacyjnego do formularza edycji encji}{48}{subsubsection*.42}
 \contentsline {subsubsection}{Zmiana w\IeC {\l }a\IeC {\'s}ciwo\IeC {\'s}ci encji}{48}{subsubsection*.44}
 \contentsline {subsubsection}{Dzia\IeC {\l }anie systemu klasyfikacyjnego}{48}{subsubsection*.46}
 \contentsline {subsubsection}{Nadpisanie klasy i dodanie do niej niestandardowego pola}{48}{subsubsection*.48}

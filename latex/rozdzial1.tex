@@ -8,24 +8,24 @@ W tym rozdziale została przedstawiona analiza zagadnienia. Nakreślono problemy
 \section{Charakterystyka problemu}
 Aplikacje webowe, a w szczególności systemy e-commerce, są często wolne. Jak więc powinny być napisane? W pierwszej kolejności muszą być dobrze przemyślane, a co za tym idzie, ich architektura powinna być przygotowana na rozszerzenia i modyfikacje. Powiedzmy, że mamy sklep internetowy, na którego bazie chcielibyśmy stworzyć jakiś inny sklep. Często jest to niemożliwe ze względu na budowę i obsługę komponentów. Dobrym przykładem problemu jest indeksowanie produktów przez mechanizm wyszukujący.
 \begin{example}
-	W systemie istnieje klasa Product z zadeklarowanymi polami biznesowymi. Powiedzmy, że klient chce nowe pole o nazwie myCustomField, oczywiście ma być ono wyszukiwalne. Rozszerzamy więc klasę Produkt do MyProdukt i dodajemy pole myCustomField. Mechanizm indeksacji nie ma możliwości wyciągnąć z Produktu pola dotyczącego klasy MyProdukt, ponieważ zaprzeczałoby to zasadom polimorfizmu.
+	W systemie istnieje klasa Product z zadeklarowanymi polami biznesowymi. Powiedzmy, że klient zażyczył sobie nowe pole o nazwie myCustomField, oczywiście ma być ono wyszukiwalne. Rozszerzamy więc klasę Produkt do MyProdukt i dodajemy pole myCustomField. Mechanizm indeksacji nie ma możliwości wyciągnąć z Produktu pola dotyczącego klasy MyProdukt, ponieważ zaprzeczałoby to zasadom polimorfizmu.
 \end{example} 
 To tylko konkretny przykład, ale warto zwrócić uwagę, że dotyczy on nie tylko produktów, ale i również jakichkolwiek encji, którymi chcemy zarządzać w systemie. To pierwszy problem rozwiązań e-commerce, które nie są oparte o elastyczne frameworki. 
 
 Kolejną problemem są tak zwane bottlenecki\footnote{bottleneck — wspólny punkt dla aplikacji, przez który muszą przejść użytkownicy korzystający z różnych funkcjonalności}, które blokują szybkie działanie aplikacji. Przykład z życia: 
 \begin{example}
-	Nasza platforma jest oparta o framework stworzony parę lat temu, do tego taki, który nie jest open-source, ma architekturę monolityczną. Nasz sklep zyskał na popularności i coraz częściej zdarzają nam się awarię związane z ograniczoną wydajnością, najszybszą i naturalną reakcją jest dokupienie nowego serwera do obsługi większej ilości klientów, jednak wiąże się to z bardzo dużymi kosztami.
+	Nasza platforma jest oparta o framework stworzony parę lat temu, do tego taki, który nie jest open-source, ma architekturę monolityczną. Nasz sklep zyskał na popularności i coraz częściej zdarzają nam się awarie związane z ograniczoną wydajnością. Najszybszą i naturalną reakcją jest dokupienie nowego serwera do obsługi większej liczby klientów, jednak wiąże się to z bardzo dużymi kosztami.
 \end{example} 
-W tym przykładzie warto zwrócić uwagę na zamknięty charakter frameworku. Brak licencji open-source często skutkuje to tym, że projekt jest skazany na zamknięty cykl rozwoju (o ile w ogóle jest dalej rozwijany), ewentualne błędy nie mogą być naprawione \textit{od ręki}. Raz napisana platforma komercyjna nie będzie po 5 latach wcale aktualna. Inaczej sprawy się mają w przypadku open-source'wych frameworków, gdzie istnieje możliwość zmiany technologi, a aktualizacje są dostępne praktycznie zawsze. To dzięki zasadzie \textit{inversion of control}, kiedy to programista decyduje się na oddanie kontroli nad częścią swojej funkcjonalności w ręce używanego przez siebie frameworku, aktualizacja do nowszych wersji używanych technologii jest zwykle bezbolesna i opiera się głównie na zmianie wersji w pliku konfiguracyjnym zależności projektowe.
+W tym przykładzie warto zwrócić uwagę na zamknięty charakter frameworku. Brak licencji open-source często skutkuje tym, że projekt jest skazany na zamknięty cykl rozwoju (o ile w ogóle jest dalej rozwijany), ewentualne błędy nie mogą być naprawione \textit{od ręki}. Raz napisana platforma komercyjna nie będzie po 5 latach wcale aktualna. Inaczej sprawy się mają w przypadku open-source'wych frameworków, gdzie istnieje możliwość zmiany technologi, a aktualizacje są dostępne praktycznie zawsze. To dzięki zasadzie \textit{inversion of control}\footnote{inversion of control -- zasada odwrócenia sterowania}, kiedy to programista decyduje się na oddanie kontroli nad częścią swojej funkcjonalności w ręce używanego przez siebie frameworku, aktualizacja do nowszych wersji używanych technologii jest zwykle bezbolesna i opiera się głównie na zmianie wersji w pliku konfiguracyjnym.
 
-Następny problem związany ze środowiskiem e-commerce to brak dobrych wyszukiwarek produktów na stronach. Często zdarza się, że wyszukiwarki przeszukują relacyjne bazy danych, zamiast korzystać z płaskich struktur, jakie oferują nam rozwiązania typu noSQL. Do tego nie obsługują facetów \footnote{wyjaśnienie terminu dostępne w sekcji \textbf{Słowniczek}}, co sprawia trudności z wyszukaniem produktu i dopasowaniem go pod klienta, a przecież to jest główny założenie tego biznesu. Jasne i wiadome jest, że istnieją sklepy z dobrymi wyszukiwarkami, do tego mogące pochwalić się wysokim miernikiem TPS\footnote{\textit{TPS — transaction per second, ilość pełnych requestów wraz z odpowiedzią, jaką może obsłużyć serwer na sekundę.}}. Jednakże są to rozwiązania bardzo drogie i niedostępne dla małych przedsiębiorstw. Z drugiej strony implementowanie takich funkcjonalności na własną rękę jest również bardzo drogie, a do tego skomplikowane. W tym momencie z pomocą przychodzą właśnie darmowe frameworki, jednak nie wszystkie maja pełna obsługę mechanizmu indeksującego.
+Następny problem związany ze środowiskiem e-commerce to brak dobrych wyszukiwarek produktów na stronach. Często zdarza się, że wyszukiwarki przeszukują relacyjne bazy danych, zamiast korzystać z płaskich struktur, jakie oferują nam rozwiązania typu noSQL. Do tego nie obsługują facetów \footnote{wyjaśnienie terminu dostępne w sekcji \textbf{Słowniczek}}, co sprawia trudności z wyszukaniem produktu i dopasowaniem go pod klienta, a przecież to jest główne założenie tego biznesu. Jasne i wiadome jest, że istnieją sklepy z dobrymi wyszukiwarkami, do tego mogące pochwalić się wysokim miernikiem TPS\footnote{\textit{TPS — transaction per second, ilość pełnych requestów wraz z odpowiedzią, jaką może obsłużyć serwer na sekundę.}}. Jednakże są to rozwiązania bardzo drogie i niedostępne dla małych przedsiębiorstw. Z drugiej strony implementowanie takich funkcjonalności na własną rękę jest również bardzo drogie, a do tego skomplikowane. W tym momencie z pomocą przychodzą właśnie darmowe frameworki, jednak nie wszystkie mają pełną obsługę mechanizmu indeksującego.
 
-Istotną sprawą w opisywanych systemach jest archiwizacja produktu bądź jej zupełny brak. Problem został opisany na poniższym przykładzie:
+Istotną sprawą w opisywanych systemach jest archiwizacja produktu bądź jej zupełny brak. Problem został opisany w poniższym przykładzie:
 \begin{example}
-	Klient zakupił produkt A o atrybutach (a, b, c, d) w sierpniu. W październiku manager sklepu zmienił atrybuty produktu A na (e, f, g), co wpłynęło również na cenę. W listopadzie klient zdecydował się na reklamację produktu. Obsługa sklepu otrzymała zgłoszenie, ma id produktu, jednak niewiele to pomoże, gdyż atrybuty i cena uległy zmianie. 
+	Klient zakupił produkt A o atrybutach (a, b, c, d) w sierpniu. W październiku manager sklepu zmienił atrybuty produktu A na (e, f, g), co wpłynęło również na cenę. W listopadzie klient zdecydował się na reklamację produktu. Obsługa sklepu otrzymała zgłoszenie z id produktu, jednak będzie to bez sensu, gdyż atrybuty i cena uległy zmianie. 
 \end{example}
 
-Ostatnią, nie mniej jednak ważną rzeczą, która warta jest opisania to sposób, w jaki charakteryzuje się produkty\footnote{ lub cokolwiek innego podlegającego klasyfikacji} w sklepach internetowych. Produkty należy opisywać w konsekwentny i najbardziej jednoznaczny sposób, jednak nie da się tego osiągnąć, bazując tylko na polach ewentualnej klasy Produkt, ponieważ jest to wybitnie nieelastyczne, każda zmiana wymaga wtedy trwałej ingerencji w kod i ponowny release.
+Ostatnią, nie mniej jednak ważną rzeczą, która warta jest opisania to sposób, w jaki charakteryzuje się produkty\footnote{ lub cokolwiek innego podlegającego klasyfikacji} w sklepach internetowych. Produkty należy opisywać w konsekwentny i najbardziej jednoznaczny sposób, jednak nie da się tego osiągnąć, bazując tylko na polach ewentualnej klasy Produkt, ponieważ jest to wybitnie nieelastyczne, każda zmiana wymaga wtedy trwałej ingerencji w kod i ponowny release\footnote{release — wypuszczenie nowej wersji aplikacji i ponowne umieszczenie jej na serwerze}.
 
 Powyższe problemy niektórych systemów e-commerce można sprowadzić do następujących stwierdzeń:
 \begin{itemize}
@@ -33,14 +33,14 @@ Powyższe problemy niektórych systemów e-commerce można sprowadzić do nastę
 	\item najczęściej używane punkty aplikacji nie są odseparowane od reszty
 	\item brak dobrych wyszukiwarek i mechanizmów filtrujących
 	\item niekonkretny i mało abstrakcyjny sposób opisu encji biznesowych
-	\item użycie zamkniętych technologi, niekorzystanie z open-source, brak zastosowania \textit{inversion of control}
+	\item użycie zamkniętych technologi, niekorzystanie z open-source, brak zastosowania \textit{odwórcenia sterowania}
 	\item brak archiwizacji produktów
 \end{itemize}
 
 \section{Proponowane rozwiązania - wymagania funkcjonalne}
 Jasno zdefiniowane problemy same nasuwają pewne rozwiązania, dlatego poniżej określono listę następujących wymagań funkcjonalnych:
 \begin{itemize}
-	\item wykorzystanie najnowszych technologii oraz IoC
+	\item wykorzystanie najnowszych technologii oraz IoC\footnote{IoC -- Inversion of Control}
 	\item podłączony zewnętrzny serwer Apache Solr, służący do bardzo szybkiej obsługi zapytań związanych z katalogiem produktowym,
 	\item prosty i efektywny system klasyfikacyjny dla produktów,
 	\item reużywalny i rozszerzalny panel administracyjny 
@@ -52,7 +52,7 @@ Jasno zdefiniowane problemy same nasuwają pewne rozwiązania, dlatego poniżej 
 	\item mechanizm archiwizacji produktu.
 \end{itemize} 
 
-Rysunek \ref{wymagania} ilustruje pokrycie znalezionych problemów wymaganiami funkcjonalnymi opisywanego frameworka. Wynika z niego, że \textit{bez pokrycia} zostają dwa wymagania, nie oznacza to, że są to niepotrzebne funkcjonalności. Są jednak powszechnie spotykane w frameworkach e-commerce, można nazwać je standardem. Jednak co jest mniej oczywiste, system uprawnień został oparty na strukturze drzewiastej, uprawnienia są dziedziczone pomiędzy użytkownikami finalnego systemu opartego o framework.
+Rysunek \ref{wymagania} ilustruje pokrycie znalezionych problemów wymaganiami funkcjonalnymi opisywanego frameworka. Wynika z niego, że \textit{bez pokrycia} zostają dwa wymagania, nie oznacza to, że są to niepotrzebne funkcjonalności. Są jednak powszechnie spotykane w frameworkach e-commerce, można nazwać je standardem. 
 \begin{figure}
 	\begin{center}
 		\includegraphics[width=1\textwidth]{wymagania.jpg}
