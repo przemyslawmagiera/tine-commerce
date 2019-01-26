@@ -2,6 +2,6 @@
 \select@language {polish}
 \beamer@sectionintoc {1}{Wymagania}{2}{0}{1}
 \beamer@subsectionintoc {1}{1}{Wsp\IeC {\'o}\IeC {\l }czesne frameworki e-commerce}{2}{0}{1}
-\beamer@sectionintoc {2}{Zastosowane rozwi\IeC {\k a}zania}{3}{0}{2}
-\beamer@subsectionintoc {2}{1}{Dynamiczny panel administracyjny}{3}{0}{2}
-\beamer@subsectionintoc {2}{2}{Funkcjonalno\IeC {\'s}ci budowane w platform\IeC {\k e}}{7}{0}{2}
+\beamer@sectionintoc {2}{Zastosowane rozwi\IeC {\k a}zania}{4}{0}{2}
+\beamer@subsectionintoc {2}{1}{Dynamiczny panel administracyjny}{4}{0}{2}
+\beamer@subsectionintoc {2}{2}{Funkcjonalno\IeC {\'s}ci budowane w platform\IeC {\k e}}{9}{0}{2}

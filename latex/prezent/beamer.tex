@@ -83,6 +83,26 @@
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Zdefiniowani aktorzy}
+\begin{itemize}
+	\item<1-> Programista
+	\begin{itemize}
+		\item<1-> łatwe dodawanie nowych funkcjonalności
+	\end{itemize}
+	\item<1-> Administrator sklepu
+	\begin{itemize}
+		\item<1-> zarządzanie i możliwość konfiguracji każdej funkcjonalności
+	\end{itemize}
+	\item<1-> Klient końcowy
+	\begin{itemize}
+		\item<1-> wydajny katalog produktowy mogący obsłużyć duży ruch
+		\item<1-> szybki i nieskomplikowany dostęp do informacji, której wymaga klient
+	\end{itemize}
+	
+\end{itemize}
+\end{frame}
+
+
 
 \section{Zastosowane rozwiązania}
 
@@ -151,6 +171,15 @@
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Realizacja połączeń między encjami}{Baza danych}
+\begin{itemize}
+	\item<1-> do mapowania relacyjno-obiektowego wykorzystano standard JPA z frameworkiem Hibernate
+	\item<1-> jest kilka sposobów realizacji zaczytywania z bazy danych połączeń między encjami
+	\item<1-> efektywnie, lecz kłopotliwie jest wyciągać relacje z encji w leniwy sposób
+	\item<1-> konieczność wykonywania operacji związanych z edycją encji w transakcji 
+\end{itemize}
+\end{frame}
+
 
 
 \subsection{Funkcjonalności budowane w platformę}
@@ -175,15 +204,30 @@
 	\end{figure}
 \end{frame}
 
-
+\begin{frame}
+\begin{figure}
+	Podsumowanie - hasła kluczowe:
+	
+	\begin{itemize}
+		\item<1-> 3 aktorów
+		\item<1-> adnotacja @AdminVisible
+		\item<1-> dwie bazy danych, relacyjna i nierelacyjna
+		\item<1-> indeksacja danych
+		\item<1-> system dziedziczenia cech między kategoriami (klasyfikacyjny)
+		\item<1-> leniwe połączenia między encjami
+	\end{itemize}
+	
+	Dziękuje za uwagę.
+\end{figure}
+\end{frame}
 
 \begin{frame}{Funkcjonalności systemu}{Przykład działania systemu klasyfikacyjnego z mechanizmem wyszukiwania}
-	\begin{figure}
-		\begin{center}
-			\includegraphics[scale=0.3]{sysklas-wyszfacet.png}
-		\end{center}
-		\caption{{\color{black}Działanie systemmu klasyfikacyjnego z wyszukiwarką}} 
-	\end{figure}
+\begin{figure}
+	\begin{center}
+		\includegraphics[scale=0.3]{sysklas-wyszfacet.png}
+	\end{center}
+	\caption{{\color{black}Działanie systemmu klasyfikacyjnego z wyszukiwarką}} 
+\end{figure}
 \end{frame}
 
 \begin{frame}{Funkcjonalności sklepu}{Inne funkcjonalności, które zostały zaimplementowane z pomocą frameworka}
@@ -193,17 +237,7 @@
 	\item<1-> strona szegółowa produktu
 	\item<1-> strona wyszukiwania produktu
 	\item<1-> zdjęcia produktowe
-	\item<1-> zarządzanie zamówieniami/użytkownikami/adresami 
 \end{itemize}
 \end{frame}
-
-\begin{frame}
-\begin{figure}
-	Dziękuje za uwagę
-\end{figure}
-\end{frame}
-
-
-
 
 \end{document}
